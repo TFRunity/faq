@@ -21,17 +21,27 @@ export function createFaqModule() : Module {
 
     //ToHigherFunction => Если функция использует ещё и зависимости
     //В этом случае просто toFunction, т.к. контроллер не использует другие зависимости
+    //ОШИБКА, В ЭТОМ СЛУЧАЕ ToHigherFunction, т.к. используется зависимость на FaqRepository
     faqModule.bind(DI_SYMBOLS.IAddFaqController)
-        .toFunction(addFaqController)
+        .toHigherOrderFunction(addFaqController, [
+            DI_SYMBOLS.IFaqRepository
+        ])
     faqModule.bind(DI_SYMBOLS.IDeleteFaqController)
-        .toFunction(deleteFaqController)
+        .toHigherOrderFunction(deleteFaqController, [
+            DI_SYMBOLS.IFaqRepository
+        ])
     faqModule.bind(DI_SYMBOLS.IGetFaqController)
-        .toFunction(getFaqController)
+        .toHigherOrderFunction(getFaqController, [
+            DI_SYMBOLS.IFaqRepository
+        ])
     faqModule.bind(DI_SYMBOLS.IUpdateAnswerFaqController)
-        .toFunction(updateAnswerFaqController)
+        .toHigherOrderFunction(updateAnswerFaqController, [
+            DI_SYMBOLS.IFaqRepository
+        ])
     faqModule.bind(DI_SYMBOLS.IUpdateQuestionFaqController)
-        .toFunction(updateQuestionFaqController)
-
+        .toHigherOrderFunction(updateQuestionFaqController, [
+            DI_SYMBOLS.IFaqRepository
+        ])
 
     return faqModule
 }
