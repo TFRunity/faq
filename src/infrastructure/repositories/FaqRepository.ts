@@ -24,7 +24,7 @@ export class FaqRepository implements IFaqRepository {
             return all
         }
         catch(error){
-            throw error;
+            throw Error(`Не удалось установить соединение`)
         }
     }
 
@@ -73,6 +73,9 @@ export class FaqRepository implements IFaqRepository {
      */
     async updateFaqQuestion(id: number, question: string): Promise<Faq> {
         try{
+            if (id < 0) {
+                throw Error('Не существует Faq с id < 0')
+            }
             const connection = db!;
             const returning : Faq[] = await connection
                 .update(faqs)
@@ -104,6 +107,9 @@ export class FaqRepository implements IFaqRepository {
      */
     async updateFaqAnswer(id: number, answer: string): Promise<Faq> {
         try{
+            if (id < 0) {
+                throw Error('Не существует Faq с id < 0')
+            }
             const connection = db!;
             const returning : Faq[] = await connection
                 .update(faqs)
@@ -130,6 +136,9 @@ export class FaqRepository implements IFaqRepository {
      */
     async deleteFaq(id: number): Promise<boolean> {
         try{
+            if (id < 0) {
+                return false
+            }
             const connection = db!;
             const returning = await connection
                 .delete(faqs)
