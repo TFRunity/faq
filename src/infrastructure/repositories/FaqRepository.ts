@@ -1,10 +1,10 @@
-import {IFaqRepostiory} from "@/src/application/repositories/IFaqRepostiory";
+import {IFaqRepository} from "@/src/application/repositories/IFaqRepository";
 import { Faq, FaqInsert } from "@/src/entities/models/faq";
 import { db } from "@/drizzle/index"
 import {dbFaq, dbFaqToInsert, faqs} from "@/drizzle/schema";
 import { eq } from 'drizzle-orm'
 
-export class FaqRepository implements IFaqRepostiory {
+export class FaqRepository implements IFaqRepository {
     constructor() {
     }
 
@@ -128,15 +128,18 @@ export class FaqRepository implements IFaqRepostiory {
      * Этот метод удаляет faq
      *
      */
-    async deleteFaq(id: number): Promise<void> {
+    async deleteFaq(id: number): Promise<boolean> {
         try{
             const connection = db!;
-            const returning = connection
+            const returning = await connection
                 .delete(faqs)
                 .where(eq(faqs.id, id))
-                .returning({ id : faqs.id })
+                .returning()
             if (!returning) {
-                throw Error("Не удалось удалить элемент с id" + id.toString())
+                return false
+            }
+            else{
+                return true
             }
         }catch (error){
             throw Error("Не удалось удалить элемент с id" + id.toString())
