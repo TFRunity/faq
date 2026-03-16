@@ -83,6 +83,9 @@ export class FaqRepositoryMock implements IFaqRepository {
      *
      */
     async deleteFaq(id: number): Promise<boolean> {
+        if (id < 0) {
+            return (false)
+        }
         return (true)
     }
 
