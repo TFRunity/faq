@@ -38,3 +38,24 @@ export async function updateAnswerFaq( faqToUpdate : Faq ) : Promise<Faq> {
         throw new Error("Ошибка подключения к БД")
     }
 }
+
+export async function updateQuestionFaq( faqToUpdate : Faq ) : Promise<Faq> {
+    const updateQuestionFaqController = getInjection('IUpdateQuestionFaqController')
+    try{
+        const faq : Faq = await updateQuestionFaqController(faqToUpdate)
+        return faq
+    }catch (error) {
+        throw new Error("Ошибка подключения к БД")
+    }
+}
+
+
+export async function deleteFaq( id : number ) : Promise<boolean> {
+    const deleteFaqController = getInjection('IDeleteFaqController')
+    try{
+        const result : boolean = await deleteFaqController(id)
+        return result
+    }catch (error) {
+        throw new Error("Ошибка подключения к БД")
+    }
+}
