@@ -1,6 +1,23 @@
 import '@/app/global-styles.css'
 import {ReactElement} from "react";
 
+/**
+ *
+ * @remarks
+ * Внутри рендерится весь faq
+ * Будут компоненты:
+ * <AdminPanel/>
+ * <List/>
+ *
+ * @param title = Заголовок компонента
+ * @param path = Адрес картинки, используемой в компоненте НАД заголовком
+ *
+ * @returns
+ * Компонент
+ *
+ *
+ */
+
 export type ContainerProps = {
     title: string,
     path: string | null,
