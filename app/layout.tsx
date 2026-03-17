@@ -7,7 +7,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className='bg-purple-50'>
+      <body className='flex bg-blue-30 justify-center align-center'>
         {children}
       </body>
     </html>
