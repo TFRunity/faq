@@ -10,3 +10,40 @@
  * Компонент
  *
  */
+
+'use client'
+
+import '@/app/global-styles.css'
+import {ReactElement, useEffect, useState} from "react";
+import React from "react";
+
+export type AdminPanelProps = {
+    givePermissions: () => void
+}
+
+export default function AdminPanel({givePermissions} : AdminPanelProps) : ReactElement {
+
+    const [name, setName] = useState("")
+    const [password, setPassword] = useState("")
+
+    function compare() : boolean {
+        if (process.env.PASSWORD === password && process.env.NAME === name) {
+            return true
+        }
+        return false
+    }
+
+    useEffect(() => {
+        const res : boolean = compare()
+        if (res === true) {
+            givePermissions()
+        }
+    }, [name, password])
+
+
+    return (
+        <div className="modal">
+
+        </div>
+    )
+}

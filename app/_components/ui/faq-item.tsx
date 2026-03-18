@@ -1,6 +1,4 @@
 //Вся реализация вывода Faq
-
-
 /**
  *
  * @remarks
@@ -26,3 +24,28 @@
  * </div>
  *
  */
+
+'use client'
+
+import {Faq} from "@/app/_actions/faqActions";
+import {ReactElement, useEffect, useState} from "react";
+import '@/app/global-styles.css'
+
+export default function FaqItem (faq : Faq) : ReactElement {
+
+    const [question, setQuestion] = useState(faq!.question)
+    const [answer, setAnswer] = useState(faq!.answer)
+
+    function changeQuestion(text: string) : void {
+        setQuestion(text)
+    }
+    function changeAnswer(text: string) : void {
+        setAnswer(text)
+    }
+
+    return (
+        <div>
+            <
+        </div>
+    )
+}
