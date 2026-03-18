@@ -45,11 +45,14 @@ export default function FaqItem ({faq, isLoggedIn} : FaqProps): ReactElement {
     const [toggle, setToggle] = useState<boolean>(false)
     const [showModal, setShowModal] = useState<boolean>(false)
 
-    function changeQuestion(text: string) : void {
-        setQuestion(text)
-    }
-    function changeAnswer(text: string) : void {
-        setAnswer(text)
+    function changeFaq(faq : Faq) : void {
+        if (faq.answer !== answer) {
+            setAnswer(answer)
+        }
+        if (faq.question !== question) {
+            setQuestion(question)
+        }
+        setShowModal(false)
     }
     function toggleAnswer() : void {
         setToggle(!toggle)
@@ -69,13 +72,11 @@ export default function FaqItem ({faq, isLoggedIn} : FaqProps): ReactElement {
                 </div>
                 {isLoggedIn &&
                     <div className='columns-1'>
-                        <h1 onClick={toggleModal}>button</h1>
+                        <h1 onClick={toggleModal}>Изменить</h1>
                     </div>
                 }
                 {showModal && createPortal(
-                    <div>
-                        <ModalUpdateFaq  />
-                    </div>,
+                    <ModalUpdateFaq faq={faq} changeFaq={changeFaq} />,
                     document.body
                 )}
             </div>

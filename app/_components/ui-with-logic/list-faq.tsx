@@ -28,14 +28,18 @@ import FaqItem from "@/app/_components/ui/faq-item";
 
 //Чтобы передавалось зашел ли админ в виде пропсов
 
-export default function ListFaq() {
+export interface ListProps {
+    isLoggedIn: boolean;
+}
+
+export default function ListFaq( { isLoggedIn } : ListProps) {
 
     const [faqs, setFaqs] = useState<Faq[]>([]);
 
     useEffect(() : void => {
         const fetchFaqs = async (): Promise<void> => {
-            //setFaqs(await getFaqs());
-            setFaqs([{id: 1, question : 'que1', answer : 'ans1'}, {id: 2, question : 'que2', answer : 'ans2'}])
+            setFaqs(await getFaqs());
+            //setFaqs([{id: 1, question : 'que1', answer : 'ans1'}, {id: 2, question : 'que2', answer : 'ans2'}])
         }
         fetchFaqs();
     }, [])
@@ -49,7 +53,7 @@ export default function ListFaq() {
             {
                 faqs.map((faq : Faq) => (
                     <div key={faq.id}>
-                        <FaqItem faq={faq} isLoggedIn={} />
+                        <FaqItem faq={faq} isLoggedIn={isLoggedIn} />
                     </div>
                 ))
             }
