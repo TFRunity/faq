@@ -17,17 +17,80 @@
  * </div>
  *
  */
-import {Faq} from '@/app/_actions/faqActions'
+import {Faq, updateAnswerFaq, updateQuestionFaq} from '@/app/_actions/faqActions'
+import {useRef, useState} from "react";
 
 export interface UpdateFaqProps {
     faq : Faq
+    changeFaq : (faq : Faq) => void
 }
 
-export default function ModalUpdateFaq({faq} : UpdateFaqProps) {
+export default function ModalUpdateFaq({faq, changeFaq} : UpdateFaqProps) {
+
+    const questionInputRef = useRef<HTMLInputElement>(null);
+    const answerInputRef = useRef<HTMLInputElement>(null);
+    const [question, setQuestion] = useState<string | null>(faq!.question);
+    const [answer, setAnswer] = useState<string | null>(faq!.answer);
+    const [destruct, setDestruct] = useState<boolean>(false);
+
+    if (question === null) {
+        setQuestion("")
+    }
+    if (answer === null) {
+        setAnswer("")
+    }
+
+    const submitChanges = async () : Promise<void> => {
+        setQuestion(questionInputRef.current!.value)
+        setAnswer(answerInputRef.current!.value)
+
+        if (question !== faq.question) {
+            try{
+                const updatedFaq : Faq = await updateQuestionFaq({id : faq.id, question : question, answer : faq.answer})
+                if (updatedFaq) {
+                    changeFaq(updatedFaq)
+                }
+            }catch(err){
+                console.log("Произошла ошибка при попытке обновить вопрос для faq. Проверьте соединение с БД")
+            }
+        }
+
+        if (answer !== faq.answer) {
+            try{
+                const updatedFaq : Faq = await updateAnswerFaq({id : faq.id, question : faq.question, answer : answer})
+                if (updatedFaq) {
+                    changeFaq(updatedFaq)
+                }
+            }catch(err){
+                console.log("Произошла ошибка при попытке обновить ответ для faq. Проверьте соединение с БД")
+            }
+        }
+
+
+    }
+
+    const closeDialog = () => {
+        setDestruct(true)
+    }
+
+    if (destruct) {
+        return null
+    }
 
     return (
-        <div>
-
+        <div className='modal-bg'>
+            <div className='modal-body'>
+                <div className='modal-header'>
+                    <h3>Обновление Faq</h3>
+                    <div onClick={closeDialog}>КРЕСТИК</div>
+                </div>
+                <div className='w-1 bg-gray-300 cursor-col-resize' ></div>
+                <div className='modal-content'>
+                    {question && <input defaultValue={question} type='text' ref={questionInputRef} />}
+                    {answer && <input defaultValue={answer} type='text' ref={answerInputRef} />}
+                    {question && answer && <button onClick={submitChanges}>Сохранить</button>}
+                </div>
+            </div>
         </div>
     )
 }

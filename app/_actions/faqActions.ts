@@ -59,3 +59,10 @@ export async function deleteFaq( id : number ) : Promise<boolean> {
         throw new Error("Ошибка подключения к БД")
     }
 }
+
+export async function checkAdmin(name : string, password : string) : Promise<boolean> {
+    if (name == process.env.ADMIN_NAME && password == process.env.ADMIN_PASSWORD) {
+        return true;
+    }
+    return false;
+}
