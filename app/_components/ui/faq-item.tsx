@@ -31,10 +31,14 @@ import {Faq} from "@/app/_actions/faqActions";
 import {ReactElement, useEffect, useState} from "react";
 import '@/app/global-styles.css'
 
-export default function FaqItem (faq : Faq) : ReactElement {
+interface FaqProps {
+    faq : Faq
+}
 
-    const [question, setQuestion] = useState(faq!.question)
-    const [answer, setAnswer] = useState(faq!.answer)
+export default function FaqItem ({faq} : FaqProps): ReactElement {
+
+    const [question, setQuestion] = useState(faq.question)
+    const [answer, setAnswer] = useState(faq.answer)
 
     function changeQuestion(text: string) : void {
         setQuestion(text)
@@ -45,7 +49,12 @@ export default function FaqItem (faq : Faq) : ReactElement {
 
     return (
         <div>
-            <
+            <div>
+                <h3>{question}</h3>
+            </div>
+            <div className='hidden'>
+                <h3>{answer}</h3>
+            </div>
         </div>
     )
 }
