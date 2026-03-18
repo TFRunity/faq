@@ -30,15 +30,20 @@
 import {Faq} from "@/app/_actions/faqActions";
 import {ReactElement, useEffect, useState} from "react";
 import '@/app/global-styles.css'
+import {createPortal} from "react-dom";
+import ModalUpdateFaq from "@/app/_components/ui-with-logic/modal-update-faq";
 
 interface FaqProps {
-    faq : Faq
+    faq : Faq,
+    isLoggedIn : boolean,
 }
 
-export default function FaqItem ({faq} : FaqProps): ReactElement {
+export default function FaqItem ({faq, isLoggedIn} : FaqProps): ReactElement {
 
-    const [question, setQuestion] = useState(faq.question)
-    const [answer, setAnswer] = useState(faq.answer)
+    const [question, setQuestion] = useState<string | null>(faq.question)
+    const [answer, setAnswer] = useState<string | null>(faq.answer)
+    const [toggle, setToggle] = useState<boolean>(false)
+    const [showModal, setShowModal] = useState<boolean>(false)
 
     function changeQuestion(text: string) : void {
         setQuestion(text)
@@ -46,13 +51,35 @@ export default function FaqItem ({faq} : FaqProps): ReactElement {
     function changeAnswer(text: string) : void {
         setAnswer(text)
     }
+    function toggleAnswer() : void {
+        setToggle(!toggle)
+    }
+    function toggleModal() : void {
+        setShowModal(true)
+    }
 
     return (
-        <div>
+        <div className='flex flex-col columns-10'>
             <div>
-                <h3>{question}</h3>
+                <div className='bg-amber-50 columns-9'>
+                    <h3>{question}</h3>
+                    <div onClick={toggleAnswer}>
+                        <h2>+</h2>
+                    </div>
+                </div>
+                {isLoggedIn &&
+                    <div className='columns-1'>
+                        <h1 onClick={toggleModal}>button</h1>
+                    </div>
+                }
+                {showModal && createPortal(
+                    <div>
+                        <ModalUpdateFaq  />
+                    </div>,
+                    document.body
+                )}
             </div>
-            <div className='hidden'>
+            <div className='columns-10' style={{ display : toggle ? 'flex' : 'none' }}>
                 <h3>{answer}</h3>
             </div>
         </div>

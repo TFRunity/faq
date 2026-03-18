@@ -26,6 +26,7 @@ import {useState} from "react";
 import { Faq, getFaqs } from '@/app/_actions/faqActions';
 import FaqItem from "@/app/_components/ui/faq-item";
 
+//Чтобы передавалось зашел ли админ в виде пропсов
 
 export default function ListFaq() {
 
@@ -33,7 +34,8 @@ export default function ListFaq() {
 
     useEffect(() : void => {
         const fetchFaqs = async (): Promise<void> => {
-            setFaqs(await getFaqs());
+            //setFaqs(await getFaqs());
+            setFaqs([{id: 1, question : 'que1', answer : 'ans1'}, {id: 2, question : 'que2', answer : 'ans2'}])
         }
         fetchFaqs();
     }, [])
@@ -47,7 +49,7 @@ export default function ListFaq() {
             {
                 faqs.map((faq : Faq) => (
                     <div key={faq.id}>
-                        <FaqItem faq={faq} />
+                        <FaqItem faq={faq} isLoggedIn={} />
                     </div>
                 ))
             }

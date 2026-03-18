@@ -5,7 +5,7 @@ import { Container } from "@/app/_components/ui/ui-container";
 export default function Page() {
     return (
         <>
-            <Container title={'ААААААААААААААА'} />
+            <Container title={'Page'} path={null} />
         </>
     )
 }
