@@ -1,5 +1,4 @@
 //модальное окно для обновления faq, делать через createportal
-
 /**
  *
  * @remarks
@@ -18,3 +17,17 @@
  * </div>
  *
  */
+import {Faq} from '@/app/_actions/faqActions'
+
+export interface UpdateFaqProps {
+    faq : Faq
+}
+
+export default function ModalUpdateFaq({faq} : UpdateFaqProps) {
+
+    return (
+        <div>
+
+        </div>
+    )
+}
