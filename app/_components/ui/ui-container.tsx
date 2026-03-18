@@ -33,7 +33,7 @@ export function Container( {title, path}: ContainerProps  ) : ReactElement {
         md:shadow-[0_5px_15px_3px_rgba(0,0,0,0.1)] '>
             {path &&   }
             <h1 className='flex-auto flex justify-center' >{title}</h1>
-
+            {isLogiIn && <ListFaq />}
             <AdminPanel givePermissions={}/>
         </div>
     )
