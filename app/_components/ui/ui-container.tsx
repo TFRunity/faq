@@ -1,5 +1,7 @@
 import '@/app/global-styles.css'
 import {ReactElement} from "react";
+import {AdminPanelProps} from "@/app/_components/ui/admin-panel";
+import AdminPanel from "@/app/_components/ui/admin-panel"
 
 /**
  *
@@ -31,9 +33,8 @@ export function Container( {title, path}: ContainerProps  ) : ReactElement {
         md:shadow-[0_5px_15px_3px_rgba(0,0,0,0.1)] '>
             {path &&   }
             <h1 className='flex-auto flex justify-center' >{title}</h1>
-            <div className='flex-auto flex justify-center align-center'>
-                AAAAAAAA
-            </div>
+
+            <AdminPanel givePermissions={}/>
         </div>
     )
 }
