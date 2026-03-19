@@ -38,21 +38,32 @@ interface FaqProps {
     faq : Faq,
     isLoggedIn : boolean,
     deleteFaqFunc : (idtodelete : number) => void,
+    updateFaqFunc : (updatedFaq : Faq) => void,
 }
 
-export default function FaqItem ({faq, isLoggedIn, deleteFaqFunc} : FaqProps): ReactElement | null {
+export default function FaqItem ({faq, isLoggedIn, deleteFaqFunc, updateFaqFunc} : FaqProps): ReactElement | null {
 
     const [question, setQuestion] = useState<string | null>(faq.question)
     const [answer, setAnswer] = useState<string | null>(faq.answer)
     const [toggle, setToggle] = useState<boolean>(false)
     const [showModal, setShowModal] = useState<boolean>(false)
 
+    useEffect(() => {
+
+    }, [question, answer]);
+
     const changeFaq = (faq : Faq) : void  => {
+        let a : boolean = false;
         if (faq.answer !== answer) {
             setAnswer(answer)
+            a = true;
         }
         if (faq.question !== question) {
             setQuestion(question)
+            a = true;
+        }
+        if (a) {
+            updateFaqFunc(faq)
         }
         setShowModal(false)
     }
@@ -68,10 +79,10 @@ export default function FaqItem ({faq, isLoggedIn, deleteFaqFunc} : FaqProps): R
 
     return (
         <div className='flex flex-col columns-10'>
-            <div>
-                <div className='bg-amber-50 columns-9'>
-                    <h3>{question}</h3>
-                    <div onClick={toggleAnswer}>
+            <div className='m-1'>
+                <div className='rounded-lg bg-slate-100 flex justify-between'>
+                    <h3 className=' text-slate-900 text-[120%] mt-3 ml-3 mb-2'>{question}</h3>
+                    <div className=' text-slate-600 text-[130%] cursor-pointer mt-3 mr-3 mb-2' onClick={toggleAnswer}>
                         <h2>+</h2>
                     </div>
                 </div>
@@ -88,8 +99,8 @@ export default function FaqItem ({faq, isLoggedIn, deleteFaqFunc} : FaqProps): R
                     document.body
                 )}
             </div>
-            <div className='columns-10' style={{ display : toggle ? 'flex' : 'none' }}>
-                <h3>{answer}</h3>
+            <div className='text-slate-600 mt-3 ml-3 mb-2' style={{ display : toggle ? 'flex' : 'none' }}>
+                <h3 className='text-slate-700 text-[120%] '>{answer}</h3>
             </div>
         </div>
     )

@@ -51,15 +51,17 @@ export default function AdminPanel({givePermissions} : AdminPanelProps) : ReactE
     return (
         <div className="modal-bg">
             <div className="modal-body">
-                <div className="modal-header">
+                <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
                     <h3>Админ-панель</h3>
-                    <div onClick={closeDialog}>КРЕСТИК</div>
+                    <div className='cursor-pointer mt-1' onClick={closeDialog}>
+                        <img src='/icons/close.png' width='15' height='15'></img>
+                    </div>
                 </div>
                 <div className='w-1 bg-gray-300 cursor-col-resize'></div>
-                <div className='modal-content'>
-                    <input type='text' defaultValue={name} ref={nameInputRef} />
-                    <input type='text' defaultValue={password} ref={passwordInputRef} />
-                    <button onClick={logIn} >Войти</button>
+                <div className='modal-content flex flex-col gap-3'>
+                    <input className='border border-slate-400 rounded-md p-1' type='text' defaultValue={name} ref={nameInputRef} />
+                    <input className='border border-slate-400 rounded-md p-1' type='text' defaultValue={password} ref={passwordInputRef} />
+                    <button className='cursor-pointer mt-3 bg-slate-100 p-2' onClick={logIn} >Войти</button>
                 </div>
             </div>
         </div>
