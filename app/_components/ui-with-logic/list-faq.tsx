@@ -38,11 +38,12 @@ export interface ListProps {
 export default function ListFaq( { isLoggedIn } : ListProps) {
 
     const [faqs, setFaqs] = useState<Faq[]>([]);
+    const [shouldRewrite, setShouldRewrite] = useState(false);
 
     useEffect(() : void => {
         const fetchFaqs = async (): Promise<void> => {
             setFaqs(await getFaqs());
-            //setFaqs([{id: 1, question : 'que1', answer : 'ans1'}, {id: 2, question : 'que2', answer : 'ans2'}])
+
         }
         fetchFaqs();
     }, [])
@@ -56,21 +57,27 @@ export default function ListFaq( { isLoggedIn } : ListProps) {
     }
     const createFaqFunc =  (newFaq : Faq):void => {
         const newFaqs : Faq[] = [...faqs, newFaq];
-        console.log("Должен добавиться")
         setFaqs(newFaqs);
     }
     const updateFaqFunc = (updatedFaq : Faq) => {
-        const oldFaqs : Faq[] = faqs;
-        const id = faqs.findIndex(faq => faq.id === updatedFaq.id)
-        const newFaqs = oldFaqs.splice(id, 1, updatedFaq);
-        setFaqs(newFaqs);
+        let oldFaqs : Faq[] = faqs.filter(faq => faq.id !== updatedFaq.id);
+        oldFaqs = [...oldFaqs, updatedFaq];
+        setFaqs(oldFaqs);
+        setShouldRewrite(!shouldRewrite);
     }
 
     return (
         <div className='ml-7 mr-7'>
-            {
-                faqs.map((faq : Faq) => (
-                    <div key={faq.id}>
+            {!shouldRewrite &&
+                faqs.map((faq : Faq, index : number) => (
+                    <div key={index}>
+                        <FaqItem faq={faq} isLoggedIn={isLoggedIn} deleteFaqFunc={deleteFaqFunc} updateFaqFunc={updateFaqFunc}/>
+                    </div>
+                ))
+            }
+            {shouldRewrite &&
+                faqs.map((faq : Faq, index : number) => (
+                    <div key={index}>
                         <FaqItem faq={faq} isLoggedIn={isLoggedIn} deleteFaqFunc={deleteFaqFunc} updateFaqFunc={updateFaqFunc}/>
                     </div>
                 ))
