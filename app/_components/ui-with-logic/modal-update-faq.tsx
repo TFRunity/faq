@@ -84,11 +84,11 @@ export default function ModalUpdateFaq({faq, changeFaq} : UpdateFaqProps) {
                 <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
                     <h3>Обновление Faq</h3>
                     <div onClick={closeDialog}>
-                        <img src='/icons/close.png' />
+                        <img src='/icons/close.png'  width='15' height='15' />
                     </div>
                 </div>
                 <div className='w-1 bg-gray-300 cursor-col-resize' ></div>
-                <div className='modal-content'>
+                <div className='modal-content flex flex-col gap-3'>
                     {question && <input defaultValue={question} type='text' ref={questionInputRef} />}
                     {answer && <input defaultValue={answer} type='text' ref={answerInputRef} />}
                     {question && answer && <button onClick={submitChanges}>Сохранить</button>}
