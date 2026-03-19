@@ -3,11 +3,12 @@
 //Функции работы с вопросами-ответами
 //НЕ ДОЛЖНО БЫТЬ НИЧЕГО СВЯЗАНО С ONION-ARCH
 
-import { revalidatePath } from "next/cache";
 import { getInjection } from "@/di/container";
 
 export type InsertFaq = { question: string; answer: string };
 export type Faq = { id: number, question: string | null, answer: string | null };
+
+let isLoggedIn = false;
 
 export async function getFaqs() : Promise<Faq[]> {
     const getFaqController = getInjection('IGetFaqController')
@@ -62,7 +63,12 @@ export async function deleteFaq( id : number ) : Promise<boolean> {
 
 export async function checkAdmin(name : string, password : string) : Promise<boolean> {
     if (name == process.env.ADMIN_NAME && password == process.env.ADMIN_PASSWORD) {
+        isLoggedIn = true
         return true;
     }
     return false;
+}
+
+export async function isResponsible() : Promise<boolean> {
+    return isLoggedIn;
 }
