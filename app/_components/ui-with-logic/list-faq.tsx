@@ -25,6 +25,7 @@ import React, {useEffect} from "react";
 import {useState} from "react";
 import { Faq, getFaqs } from '@/app/_actions/faqActions';
 import FaqItem from "@/app/_components/ui/faq-item";
+import CreateFaqButton from "@/app/_components/ui/create-faq-button";
 
 //Чтобы передавалось зашел ли админ в виде пропсов
 
@@ -44,18 +45,26 @@ export default function ListFaq( { isLoggedIn } : ListProps) {
         fetchFaqs();
     }, [])
 
-    useEffect(() => {
-
-    }, [faqs])
+    const deleteFaqFunc = (id : number): void => {
+        setFaqs(faqs.filter(faq  => faq.id !== id))
+    }
+    const createFaqFunc =  (newFaq : Faq):void => {
+        const newFaqs : Faq[] = faqs;
+        newFaqs.push(newFaq)
+        setFaqs(newFaqs);
+    }
 
     return (
         <div>
             {
                 faqs.map((faq : Faq) => (
                     <div key={faq.id}>
-                        <FaqItem faq={faq} isLoggedIn={isLoggedIn} />
+                        <FaqItem faq={faq} isLoggedIn={isLoggedIn} deleteFaqFunc={deleteFaqFunc} />
                     </div>
                 ))
+            }
+            {isLoggedIn &&
+                <CreateFaqButton createFaqPropMethod={createFaqFunc} isLoggedIn={isLoggedIn} />
             }
         </div>
     )
