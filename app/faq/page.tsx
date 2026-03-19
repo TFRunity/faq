@@ -5,7 +5,7 @@ import { Container } from "@/app/_components/ui/ui-container";
 export default function Page() {
     return (
         <>
-            <Container title={'Page'} path={null} />
+            <Container title={'Часто задаваемые вопросы'} path={null} />
         </>
     )
 }

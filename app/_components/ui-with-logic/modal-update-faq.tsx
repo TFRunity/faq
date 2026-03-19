@@ -19,6 +19,7 @@
  */
 import {Faq, updateAnswerFaq, updateQuestionFaq} from '@/app/_actions/faqActions'
 import {useRef, useState} from "react";
+import '@/app/global-styles.css'
 
 export interface UpdateFaqProps {
     faq : Faq
@@ -80,9 +81,11 @@ export default function ModalUpdateFaq({faq, changeFaq} : UpdateFaqProps) {
     return (
         <div className='modal-bg'>
             <div className='modal-body'>
-                <div className='modal-header'>
+                <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
                     <h3>Обновление Faq</h3>
-                    <div onClick={closeDialog}>КРЕСТИК</div>
+                    <div onClick={closeDialog}>
+                        <img src='/icons/close.png' />
+                    </div>
                 </div>
                 <div className='w-1 bg-gray-300 cursor-col-resize' ></div>
                 <div className='modal-content'>
