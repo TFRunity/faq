@@ -32,7 +32,7 @@ import {ReactElement, useEffect, useState} from "react";
 import '@/app/global-styles.css'
 import {createPortal} from "react-dom";
 import ModalUpdateFaq from "@/app/_components/ui-with-logic/modal-update-faq";
-import DeleteFaqButton from "@/app/_components/ui/delete-faq-button";
+import DeleteFaqButton from "@/app/_components/ui-with-logic/delete-faq-button";
 
 interface FaqProps {
     faq : Faq,
@@ -83,17 +83,17 @@ export default function FaqItem ({faq, isLoggedIn, deleteFaqFunc, updateFaqFunc}
                 <div className='rounded-lg bg-slate-100 flex justify-between'>
                     <h3 className=' text-slate-900 text-[120%] mt-3 ml-3 mb-2'>{question}</h3>
                     <div className=' text-slate-600 text-[130%] cursor-pointer mt-3 mr-3 mb-2' onClick={toggleAnswer}>
+                        {isLoggedIn &&
+                            <div>
+                                <div className='columns-1'>
+                                    <h1 onClick={toggleModal}></h1>
+                                </div>
+                                <DeleteFaqButton deleteFaqPropMethod={setDestruct} id={faq.id} isLoggedIn={isLoggedIn} />
+                            </div>
+                        }
                         <h2>+</h2>
                     </div>
                 </div>
-                {isLoggedIn &&
-                    <div>
-                        <div className='columns-1'>
-                            <h1 onClick={toggleModal}>Изменить</h1>
-                        </div>
-                        <DeleteFaqButton deleteFaqPropMethod={setDestruct} id={faq.id} isLoggedIn={isLoggedIn} />
-                    </div>
-                }
                 {showModal && createPortal(
                     <ModalUpdateFaq faq={faq} changeFaq={changeFaq} />,
                     document.body

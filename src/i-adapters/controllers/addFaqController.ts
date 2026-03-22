@@ -1,4 +1,4 @@
-import {Faq, FaqInsert} from "@/src/entities/models/faq";
+import {Faq, FaqInsert} from "@/src/entities/models/view-models";
 import {IFaqRepository} from "@/src/application/repositories/IFaqRepository";
 
 

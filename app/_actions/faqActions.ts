@@ -20,6 +20,7 @@ export async function getFaqs() : Promise<Faq[]> {
     }
 }
 
+
 export async function createFaq( faqToInsert : InsertFaq ) : Promise<Faq> {
     const addFaqController = getInjection('IAddFaqController')
     try{

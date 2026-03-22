@@ -26,10 +26,8 @@ import React, {useEffect} from "react";
 import {useState} from "react";
 import { Faq, getFaqs } from '@/app/_actions/faqActions';
 import FaqItem from "@/app/_components/ui/faq-item";
-import CreateFaqButton from "@/app/_components/ui/create-faq-button";
-import {useErrorDetails} from "next/dist/next-devtools/dev-overlay/container/errors";
+import CreateFaqButton from "@/app/_components/ui-with-logic/create-faq-button";
 
-//Чтобы передавалось зашел ли админ в виде пропсов
 
 export interface ListProps {
     isLoggedIn: boolean;
