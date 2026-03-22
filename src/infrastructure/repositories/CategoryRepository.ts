@@ -13,23 +13,8 @@ export class CategoryRepository implements ICategoryRepository {
         private readonly mappingService : IMappingFAQService
     ) {}
 
-    async addClean(): Promise<CategoryWithQuestions> {
-        const category : InsertCategory = {
-            title: "New Category"
-        }
-        const raw : rawCategoryWithQuestions[] = await db!.query.categories.findMany({
-            with : {
-                questions : {
-                    with : {
-                        answers : {
-                            where : eq(questions.answer_id, answers.id),
-                        }
-                    }
-                }
-            }
-        });
-
-
+    addClean(): Promise<CategoryWithQuestions> {
+        throw new Error("Method not implemented.");
     }
 
     changeName(category: Category): Promise<boolean> {
@@ -40,8 +25,25 @@ export class CategoryRepository implements ICategoryRepository {
         return Promise.resolve(false);
     }
 
-    getAll(): Promise<CategoryWithQuestions[]> {
-        return Promise.resolve([]);
+    async getAll(): Promise<CategoryWithQuestions[]> {
+        try{
+            const raw : rawCategoryWithQuestions[] = await db!.query.categories.findMany({
+                with : {
+                    questions : {
+                        with : {
+                            answers : {
+                                where : eq(questions.answer_id, answers.id),
+                            }
+                        }
+                    }
+                }
+            });
+            return this.mappingService.convertRawCategoriesWithQuestions(raw)
+        }
+        catch(error){
+            throw new Error("Не получилось подключиться к БД");
+        }
     }
+
 
 }

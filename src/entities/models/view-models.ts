@@ -10,7 +10,7 @@ export interface QuestionWithAnswers {
 //Когда хотим вывести весь список, (ПОЛЬЗОВАТЕЛЬ)
 export interface CategoryWithQuestions {
     category: SelectCategory,
-    questions: QuestionWithLatestAnswer[] | null,
+    questions: QuestionWithAnswers[] | null,
 }
 
 //Когда хотим обновить вопрос/ответ, (АДМИН)
