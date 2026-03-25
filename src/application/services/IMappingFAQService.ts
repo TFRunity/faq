@@ -1,14 +1,12 @@
 import {
     CategoryWithQuestions,
-    QuestionWithAnswers, QuestionWithLatestAnswer,
-    rawCategoryWithQuestions,
-    rawQuestionWithAnswers, rawQuestionWithLatestAnswer
+    QuestionWithAnswers, QuestionWithLatestAnswer, rawCategoryWithQuestionWithAnswer, rawQuestionWithAnswer
 } from "@/src/entities/models/view-models";
 
 //Везде массив, но это не играет важной роли, если нужно только 1 , значит вытащим только 1 (Позже
 
 export interface IMappingFAQService {
-    convertRawCategoriesWithQuestions(raw : rawCategoryWithQuestions[]) : CategoryWithQuestions[];
-    convertRawQuestionWithAnswers(raw : rawQuestionWithAnswers[]) : Promise<QuestionWithAnswers[]>;
-    convertRawQuestionWithLatestAnswer(raw : rawQuestionWithLatestAnswer[]) : Promise<QuestionWithLatestAnswer[]>;
+    convertRawCategoriesWithQuestions(raw : rawCategoryWithQuestionWithAnswer[]) : CategoryWithQuestions[];
+    convertRawQuestionWithAnswers(raw : rawQuestionWithAnswer[]) : Promise<QuestionWithAnswers[]>;
+    convertRawQuestionWithLatestAnswer(raw : rawQuestionWithAnswer[]) : Promise<QuestionWithLatestAnswer[]>;
 }

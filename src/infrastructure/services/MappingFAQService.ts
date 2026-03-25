@@ -1,23 +1,42 @@
 import {IMappingFAQService} from "@/src/application/services/IMappingFAQService";
-import { rawCategoryWithQuestions, CategoryWithQuestions, rawQuestionWithAnswers, QuestionWithAnswers, rawQuestionWithLatestAnswer, QuestionWithLatestAnswer } from "@/src/entities/models/view-models";
+import {
+    CategoryWithQuestions,
+    QuestionWithAnswers,
+    QuestionWithLatestAnswer,
+    rawCategoryWithQuestionWithAnswer,
+    rawQuestionWithAnswer
+} from "@/src/entities/models/view-models";
+import {Category} from "@/app/_actions/faq-actions";
 
 
 export class MappingFAQService implements IMappingFAQService {
-    convertRawCategoriesWithQuestions(raw: rawCategoryWithQuestions[]): CategoryWithQuestions[] {
-        const categories : CategoryWithQuestions[] = raw.map(c => ({
-            category : {id : c.id, title : c.title},
-            questions : c.questions!.map(j => ({
-                question : c.questions![0],
-                answers : j.answers!,
-            })),
+    convertRawQuestionWithAnswers(raw: rawQuestionWithAnswer[]): Promise<QuestionWithAnswers[]> {
+        throw new Error("Method not implemented.");
+    }
+
+    convertRawQuestionWithLatestAnswer(raw: rawQuestionWithAnswer[]): Promise<QuestionWithLatestAnswer[]> {
+        throw new Error("Method not implemented.");
+    }
+
+    convertRawCategoriesWithQuestions(raw: rawCategoryWithQuestionWithAnswer[]): CategoryWithQuestions[] {
+        const categoriesWithRepeats : CategoryWithQuestions[] = raw.map(c => ({
+            category : { ...c.categories },
+            questions : []
         }))
-        return categories
+        const uniqueCategories : CategoryWithQuestions[] = [...new Map(categoriesWithRepeats.map(c => [c.category.id, c])).values()]
+        for (const c of uniqueCategories) {
+            for (const r of raw){
+                if (r.questions.category_id === c.category.id ) {
+                    c.questions!.push({
+                        question : { ...r.questions },
+                        answer : { ...r.answers }}
+                    )
+                }
+            }
+        }
+        return uniqueCategories;
     }
-    convertRawQuestionWithAnswers(raw: rawQuestionWithAnswers[]): Promise<QuestionWithAnswers[]> {
-        throw new Error("Method not implemented.");
-    }
-    convertRawQuestionWithLatestAnswer(raw: rawQuestionWithLatestAnswer[]): Promise<QuestionWithLatestAnswer[]> {
-        throw new Error("Method not implemented.");
-    }
+
+
 
 }

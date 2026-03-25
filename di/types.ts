@@ -2,6 +2,7 @@ import {IMappingFAQService} from "@/src/application/services/IMappingFAQService"
 import {IAnswerRepository} from "@/src/application/repositories/IAnswerRepository";
 import {ICategoryRepository} from "@/src/application/repositories/ICategoryRepository";
 import {IQuestionRepository} from "@/src/application/repositories/IQuestionRepository";
+import {IGetAllController} from "@/src/i-adapters/controllers/getAllController";
 
 
 export const DI_SYMBOLS = {
@@ -14,6 +15,7 @@ export const DI_SYMBOLS = {
     IMappingFAQService: Symbol.for('IMappingFAQService'),
 
     //Controllers
+    IGetAllController: Symbol.for("IGetAllController"),
 
 }
 
@@ -28,5 +30,6 @@ export interface DI_RETURN_TYPES {
     IMappingFAQService : IMappingFAQService
 
     //Controllers
+    IGetAllController: IGetAllController;
 
 }
