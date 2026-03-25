@@ -102,7 +102,6 @@ export type CategoryWithQuestionsWithAnswer = {
 };
 
 export async function getAllWithLatestAnswers() : Promise<CategoryWithQuestionsWithAnswer[]> {
-    const getAllController = getInjection('IGetAllController')
-    const categories : CategoryWithQuestionsWithAnswer[] = await getAllController();
-    return categories;
+    const getAllController = getInjection('IGetAllCategoriesController')
+    return await getAllController();
 }

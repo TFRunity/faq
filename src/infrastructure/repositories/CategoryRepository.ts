@@ -12,25 +12,28 @@ export class CategoryRepository implements ICategoryRepository {
         private readonly mappingService : IMappingFAQService
     ) {}
 
-    addEmpty(): Promise<CategoryWithQuestions> {
-        throw new Error("Method not implemented.");
+    async addEmpty() : Promise<CategoryWithQuestions> {
+        const category : Category[] = await db!.insert(categories).values({title : "Новая категория"}).returning();
+        return {category : category![0], questions : []}
     }
 
-    changeTitle(category: Category): Promise<boolean> {
-        return Promise.resolve(false);
+    async changeTitle(category: Category) : Promise<boolean> {
+        const c : Category[] = await db!.update(categories).set({title : category.title}).where(eq(categories.id, category.id)).returning()
+        return true
     }
 
-    delete(category_id: number): Promise<boolean> {
-        return Promise.resolve(false);
+    async delete(category_id: number) : Promise<boolean> {
+        const c : Category[] = await db!.delete(categories).where(eq(categories.id,category_id)).returning()
+        return true
     }
 
     async getAll() : Promise<CategoryWithQuestions[]> {
-            const raw : rawCategoryWithQuestionWithAnswer[]  = await db!.select()
-                .from(categories)
-                .innerJoin(questions, on => eq(categories.id, questions.category_id))
-                .innerJoin(answers, on => eq(answers.id, questions.answer_id))
-            const mapped : CategoryWithQuestions[] = this.mappingService.convertRawCategoriesWithQuestions(raw);
-            return mapped
+        const raw : rawCategoryWithQuestionWithAnswer[]  = await db!.select()
+            .from(categories)
+            .innerJoin(questions, on => eq(categories.id, questions.category_id))
+            .innerJoin(answers, on => eq(answers.id, questions.answer_id))
+        const mapped : CategoryWithQuestions[] = this.mappingService.convertRawCategoriesWithQuestions(raw);
+        return mapped
     }
 
 

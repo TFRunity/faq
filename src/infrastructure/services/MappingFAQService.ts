@@ -6,16 +6,29 @@ import {
     rawCategoryWithQuestionWithAnswer,
     rawQuestionWithAnswer
 } from "@/src/entities/models/view-models";
-import {Category} from "@/app/_actions/faq-actions";
-
 
 export class MappingFAQService implements IMappingFAQService {
-    convertRawQuestionWithAnswers(raw: rawQuestionWithAnswer[]): Promise<QuestionWithAnswers[]> {
-        throw new Error("Method not implemented.");
+    convertRawQuestionWithAnswers(raw: rawQuestionWithAnswer[]): QuestionWithAnswers[] {
+        const questionsWithRepeats : QuestionWithAnswers[] = raw.map(q => ({
+            question : { ...q.questions },
+            answers : []
+        }))
+        const uniqueQuestions : QuestionWithAnswers[] = [...new Map(questionsWithRepeats.map(q => [q.question.id, q])).values()];
+        for (const q of uniqueQuestions) {
+            for (const r of raw) {
+                if (r.answers.question_id === q.question.id) {
+                    q.answers!.push(r.answers);
+                }
+            }
+        }
+        return uniqueQuestions;
     }
 
-    convertRawQuestionWithLatestAnswer(raw: rawQuestionWithAnswer[]): Promise<QuestionWithLatestAnswer[]> {
-        throw new Error("Method not implemented.");
+    convertRawQuestionWithLatestAnswer(raw: rawQuestionWithAnswer[]): QuestionWithLatestAnswer[] {
+        return raw.map(q => ({
+            question : { ...q.questions },
+            answer : { ...q.answers }
+        }))
     }
 
     convertRawCategoriesWithQuestions(raw: rawCategoryWithQuestionWithAnswer[]): CategoryWithQuestions[] {
@@ -36,7 +49,4 @@ export class MappingFAQService implements IMappingFAQService {
         }
         return uniqueCategories;
     }
-
-
-
 }
