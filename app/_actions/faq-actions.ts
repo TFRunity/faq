@@ -73,3 +73,36 @@
 // export async function isResponsible() : Promise<boolean> {
 //     return isLoggedIn;
 // }
+
+import {getInjection} from "@/di/container";
+
+export type Category = {
+    id : number;
+    title : string | null;
+}
+export type Question = {
+    id : number;
+    question : string | null;
+    category_id : number | null;
+    answer_id : number | null;
+}
+export type Answer = {
+    id : number;
+    answer : string | null;
+    question_id : number;
+}
+export type QuestionWithAnswer = {
+    question : Question;
+    answer : Answer | null;
+}
+
+export type CategoryWithQuestionsWithAnswer = {
+    category : Category;
+    questions : QuestionWithAnswer[] | null;
+};
+
+export async function getAllWithLatestAnswers() : Promise<CategoryWithQuestionsWithAnswer[]> {
+    const getAllController = getInjection('IGetAllController')
+    const categories : CategoryWithQuestionsWithAnswer[] = await getAllController();
+    return categories;
+}
