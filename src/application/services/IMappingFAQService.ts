@@ -7,6 +7,6 @@ import {
 
 export interface IMappingFAQService {
     convertRawCategoriesWithQuestions(raw : rawCategoryWithQuestionWithAnswer[]) : CategoryWithQuestions[];
-    convertRawQuestionWithAnswers(raw : rawQuestionWithAnswer[]) : Promise<QuestionWithAnswers[]>;
-    convertRawQuestionWithLatestAnswer(raw : rawQuestionWithAnswer[]) : Promise<QuestionWithLatestAnswer[]>;
+    convertRawQuestionWithAnswers(raw : rawQuestionWithAnswer[]) : QuestionWithAnswers[];
+    convertRawQuestionWithLatestAnswer(raw : rawQuestionWithAnswer[]) : QuestionWithLatestAnswer[];
 }
