@@ -18,11 +18,13 @@ export class CategoryRepository implements ICategoryRepository {
     }
 
     async changeTitle(category: Category) : Promise<boolean> {
+        if (category.id <= 0) return false
         const c : Category[] = await db!.update(categories).set({title : category.title}).where(eq(categories.id, category.id)).returning()
         return c.length > 0;
     }
 
     async delete(category_id: number) : Promise<boolean> {
+        if (category_id <= 0) return false
         const c : Category[] = await db!.delete(categories).where(eq(categories.id,category_id)).returning()
         return c.length > 0;
     }
