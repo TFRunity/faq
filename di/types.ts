@@ -6,6 +6,7 @@ import {IAddEmptyCategoryController} from "@/src/i-adapters/controllers/addEmpty
 import {IDeleteCategoryController} from "@/src/i-adapters/controllers/deleteCategoryController";
 import {IChangeTitleCategoryController} from "@/src/i-adapters/controllers/changeTitleCategoryController";
 import {IGetAllCategoriesController} from "@/src/i-adapters/controllers/getAllCategoriesController";
+import {IDeleteForceAnswerController} from "@/src/i-adapters/controllers/deleteForceAnswerController";
 
 
 export const DI_SYMBOLS = {
@@ -22,6 +23,7 @@ export const DI_SYMBOLS = {
     IAddEmptyCategoryController: Symbol.for("IAddEmptyCategoryController"),
     IDeleteCategoryController: Symbol.for("IDeleteCategoryController"),
     IChangeTitleCategoryController: Symbol.for("IChangeTitleCategoryController"),
+    IDeleteForceAnswerController: Symbol.for("IDeleteForceAnswerController"),
 }
 
 
@@ -39,4 +41,5 @@ export interface DI_RETURN_TYPES {
     IAddEmptyCategoryController: IAddEmptyCategoryController;
     IDeleteCategoryController: IDeleteCategoryController;
     IChangeTitleCategoryController: IChangeTitleCategoryController;
+    IDeleteForceAnswerController: IDeleteForceAnswerController;
 }

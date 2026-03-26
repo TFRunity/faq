@@ -2,6 +2,7 @@ import {createModule, Module} from "@evyweb/ioctopus";
 import { DI_SYMBOLS } from "@/di/types";
 import {MappingFAQService} from "@/src/infrastructure/services/MappingFAQService";
 import {CategoryRepository} from "@/src/infrastructure/repositories/CategoryRepository";
+import {AnswerRepository} from "@/src/infrastructure/repositories/AnswerRepository";
 
 export function createFaqModule() : Module {
     const faqModule : Module = createModule()
@@ -18,6 +19,9 @@ export function createFaqModule() : Module {
         .toClass(CategoryRepository, [
             DI_SYMBOLS.IMappingFAQService,
         ])
+    faqModule.bind(DI_SYMBOLS.IAnswerRepository)
+        .toClass(AnswerRepository)
+
     faqModule.bind(DI_SYMBOLS.IMappingFAQService)
         .toClass(MappingFAQService)
 
