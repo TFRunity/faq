@@ -6,6 +6,7 @@ import {eq} from "drizzle-orm";
 export class AnswerRepository implements IAnswerRepository {
 
     async forceDelete(answer_id: number): Promise<boolean> {
+        if(answer_id <= 0) return false;
         const a  = await db!.delete(answers).where(eq(answers.id, answer_id)).returning({id : answers.question_id})
         if (a.length > 0) {
             //Очистка зависимости у вопроса, если такой есть
