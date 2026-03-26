@@ -2,7 +2,7 @@ import {ICategoryRepository} from "@/src/application/repositories/ICategoryRepos
 import {CategoryWithQuestions, rawCategoryWithQuestionWithAnswer} from "@/src/entities/models/view-models";
 import {Category} from "@/src/entities/models/category";
 import {answers, categories, questions} from "@/drizzle/schema";
-import {db} from "@/drizzle/index"
+import {db} from "@/drizzle"
 import {IMappingFAQService} from "@/src/application/services/IMappingFAQService";
 import {eq} from "drizzle-orm";
 
@@ -19,12 +19,12 @@ export class CategoryRepository implements ICategoryRepository {
 
     async changeTitle(category: Category) : Promise<boolean> {
         const c : Category[] = await db!.update(categories).set({title : category.title}).where(eq(categories.id, category.id)).returning()
-        return true
+        return c.length > 0;
     }
 
     async delete(category_id: number) : Promise<boolean> {
         const c : Category[] = await db!.delete(categories).where(eq(categories.id,category_id)).returning()
-        return true
+        return c.length > 0;
     }
 
     async getAll() : Promise<CategoryWithQuestions[]> {
@@ -32,9 +32,6 @@ export class CategoryRepository implements ICategoryRepository {
             .from(categories)
             .innerJoin(questions, on => eq(categories.id, questions.category_id))
             .innerJoin(answers, on => eq(answers.id, questions.answer_id))
-        const mapped : CategoryWithQuestions[] = this.mappingService.convertRawCategoriesWithQuestions(raw);
-        return mapped
+        return this.mappingService.convertRawCategoriesWithQuestions(raw);
     }
-
-
 }

@@ -1,7 +1,7 @@
 'use client'
 
-import {CategoryWithQuestionsWithAnswer, QuestionWithAnswer, Answer, Question, getAllWithLatestAnswers} from '@/app/_actions/faq-actions'
-import {ReactElement, useEffect, useState} from "react";
+import {CategoryWithQuestionsWithAnswer, getAllWithLatestAnswers} from '@/app/_actions/faq-actions'
+import {ReactElement, useEffect} from "react";
 import {useCategories} from "@/app/_hooks/faq-hooks";
 
 export default function Home()  : ReactElement | null{
