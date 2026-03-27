@@ -7,6 +7,24 @@ import {ICategoryAddEmptyController} from "@/src/i-adapters/controllers/Category
 import {ICategoryDeleteController} from "@/src/i-adapters/controllers/Category_deleteController";
 import {ICategoryChangeTitleController} from "@/src/i-adapters/controllers/Category_changeTitleController";
 import {IAnswerDeleteForceController} from "@/src/i-adapters/controllers/Answer_deleteForceController";
+import {IQuestionAddAnswerController} from "@/src/i-adapters/controllers/Question_addAnswerController";
+import {IQuestionDeleteController} from "@/src/i-adapters/controllers/Question_deleteController";
+import {IQuestionAddController} from "@/src/i-adapters/controllers/Question_addController";
+import {IQuestionAddRelWithCategoriesController} from "@/src/i-adapters/controllers/Question_addRelWithCategoriesController";
+import {IQuestionAddWithAnswerController} from "@/src/i-adapters/controllers/Question_addWithAnswerController";
+import {
+    IQuestionChangeAnswerToPreviousController
+} from "@/src/i-adapters/controllers/Question_changeAnswerToPreviousController";
+import {
+    IQuestionDeleteRelWithCategoriesController
+} from "@/src/i-adapters/controllers/Question_deleteRelWithCategoriesController";
+import {
+    IQuestionGetWithHistoryOfAnswersController
+} from "@/src/i-adapters/controllers/Question_getWithHistoryOfAnswersController";
+import {IQuestionUpdateQuestionController} from "@/src/i-adapters/controllers/Question_updateQuestionController";
+import {
+    IQuestionGetAllWithoutCategoryController
+} from "@/src/i-adapters/controllers/Question_getAllWithoutCategoryController";
 
 export const DI_SYMBOLS = {
     //Repositories
@@ -22,7 +40,19 @@ export const DI_SYMBOLS = {
     ICategoryAddEmptyController: Symbol.for("ICategoryAddEmptyController"),
     ICategoryDeleteController: Symbol.for("ICategoryDeleteController"),
     ICategoryChangeTitleController: Symbol.for("ICategoryChangeTitleController"),
+
     IAnswerDeleteForceController: Symbol.for("IAnswerDeleteForceController"),
+
+    IQuestionAddAnswerController: Symbol.for("IQuestionAddAnswerController"),
+    IQuestionAddController : Symbol.for("IQuestionAddController"),
+    IQuestionAddRelWithCategoriesController : Symbol.for("IQuestionAddRelWithCategoriesController"),
+    IQuestionAddWithAnswerController : Symbol.for("IQuestionAddWithAnswerController"),
+    IQuestionChangeAnswerToPreviousController : Symbol.for("IQuestionChangeAnswerToPreviousController"),
+    IQuestionDeleteController : Symbol.for("IQuestionDeleteController"),
+    IQuestionDeleteRelWithCategoriesController : Symbol.for("IQuestionDeleteRelWithCategoriesController"),
+    IQuestionGetAllWithoutCategoryController : Symbol.for("IQuestionGetAllWithoutCategoryController"),
+    IQuestionGetWithHistoryOfAnswersController : Symbol.for("IQuestionGetWithHistoryOfAnswersController"),
+    IQuestionUpdateQuestionController : Symbol.for("IQuestionUpdateQuestionController"),
 }
 
 
@@ -40,5 +70,17 @@ export interface DI_RETURN_TYPES {
     ICategoryAddEmptyController : ICategoryAddEmptyController;
     ICategoryDeleteController : ICategoryDeleteController;
     ICategoryChangeTitleController : ICategoryChangeTitleController;
+
     IAnswerDeleteForceController : IAnswerDeleteForceController;
+
+    IQuestionAddAnswerController : IQuestionAddAnswerController;
+    IQuestionAddController : IQuestionAddController;
+    IQuestionAddRelWithCategoriesController : IQuestionAddRelWithCategoriesController;
+    IQuestionAddWithAnswerController : IQuestionAddWithAnswerController;
+    IQuestionChangeAnswerToPreviousController : IQuestionChangeAnswerToPreviousController;
+    IQuestionDeleteController : IQuestionDeleteController;
+    IQuestionDeleteRelWithCategoriesController : IQuestionDeleteRelWithCategoriesController;
+    IQuestionGetAllWithoutCategoryController : IQuestionGetAllWithoutCategoryController;
+    IQuestionGetWithHistoryOfAnswersController : IQuestionGetWithHistoryOfAnswersController;
+    IQuestionUpdateQuestionController : IQuestionUpdateQuestionController;
 }
