@@ -2,12 +2,11 @@ import {IMappingFAQService} from "@/src/application/services/IMappingFAQService"
 import {IAnswerRepository} from "@/src/application/repositories/IAnswerRepository";
 import {ICategoryRepository} from "@/src/application/repositories/ICategoryRepository";
 import {IQuestionRepository} from "@/src/application/repositories/IQuestionRepository";
-import {IAddEmptyCategoryController} from "@/src/i-adapters/controllers/addEmptyCategoryController";
-import {IDeleteCategoryController} from "@/src/i-adapters/controllers/deleteCategoryController";
-import {IChangeTitleCategoryController} from "@/src/i-adapters/controllers/changeTitleCategoryController";
-import {IGetAllCategoriesController} from "@/src/i-adapters/controllers/getAllCategoriesController";
-import {IDeleteForceAnswerController} from "@/src/i-adapters/controllers/deleteForceAnswerController";
-
+import {ICategoryGetAllController} from "@/src/i-adapters/controllers/Category_getAllController";
+import {ICategoryAddEmptyController} from "@/src/i-adapters/controllers/Category_addEmptyController";
+import {ICategoryDeleteController} from "@/src/i-adapters/controllers/Category_deleteController";
+import {ICategoryChangeTitleController} from "@/src/i-adapters/controllers/Category_changeTitleController";
+import {IAnswerDeleteForceController} from "@/src/i-adapters/controllers/Answer_deleteForceController";
 
 export const DI_SYMBOLS = {
     //Repositories
@@ -19,11 +18,11 @@ export const DI_SYMBOLS = {
     IMappingFAQService: Symbol.for('IMappingFAQService'),
 
     //Controllers
-    IGetAllCategoriesController: Symbol.for("IGetAllCategoriesController"),
-    IAddEmptyCategoryController: Symbol.for("IAddEmptyCategoryController"),
-    IDeleteCategoryController: Symbol.for("IDeleteCategoryController"),
-    IChangeTitleCategoryController: Symbol.for("IChangeTitleCategoryController"),
-    IDeleteForceAnswerController: Symbol.for("IDeleteForceAnswerController"),
+    ICategoryGetAllController: Symbol.for("ICategoryGetAllController"),
+    ICategoryAddEmptyController: Symbol.for("ICategoryAddEmptyController"),
+    ICategoryDeleteController: Symbol.for("ICategoryDeleteController"),
+    ICategoryChangeTitleController: Symbol.for("ICategoryChangeTitleController"),
+    IAnswerDeleteForceController: Symbol.for("IAnswerDeleteForceController"),
 }
 
 
@@ -37,9 +36,9 @@ export interface DI_RETURN_TYPES {
     IMappingFAQService : IMappingFAQService
 
     //Controllers
-    IGetAllCategoriesController: IGetAllCategoriesController;
-    IAddEmptyCategoryController: IAddEmptyCategoryController;
-    IDeleteCategoryController: IDeleteCategoryController;
-    IChangeTitleCategoryController: IChangeTitleCategoryController;
-    IDeleteForceAnswerController: IDeleteForceAnswerController;
+    ICategoryGetAllController: ICategoryGetAllController;
+    ICategoryAddEmptyController : ICategoryAddEmptyController;
+    ICategoryDeleteController : ICategoryDeleteController;
+    ICategoryChangeTitleController : ICategoryChangeTitleController;
+    IAnswerDeleteForceController : IAnswerDeleteForceController;
 }

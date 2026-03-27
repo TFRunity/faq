@@ -10,6 +10,7 @@ const ApplicationContainer : Container = createContainer()
 ApplicationContainer.load(Symbol('FaqModule'), createFaqModule())
 ApplicationContainer.load(Symbol('CategoryModule'),createCategoryModule())
 ApplicationContainer.load(Symbol('AnswerModule'), createAnswerModule())
+//ApplicationContainer.load(Symbol('QuestionModule'), createQuestionModule())
 
 export function getInjection<K extends keyof typeof DI_SYMBOLS>(
     symbol: K,

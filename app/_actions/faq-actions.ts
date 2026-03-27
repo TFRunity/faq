@@ -102,22 +102,22 @@ export type CategoryWithQuestionsWithAnswer = {
 };
 
 export async function getAllWithLatestAnswers() : Promise<CategoryWithQuestionsWithAnswer[]> {
-    const getAllController = getInjection('IGetAllCategoriesController')
+    const getAllController = getInjection('ICategoryGetAllController')
     return await getAllController();
 }
 export async function addEmptyCategory() : Promise<CategoryWithQuestionsWithAnswer> {
-    const addEmptyCategoryController = getInjection('IAddEmptyCategoryController')
+    const addEmptyCategoryController = getInjection('ICategoryAddEmptyController')
     return await addEmptyCategoryController();
 }
 export async function forceDeleteAnswer(id : number) : Promise<boolean> {
-    const forceDeleteAnswerController = getInjection('IDeleteForceAnswerController')
+    const forceDeleteAnswerController = getInjection("IAnswerDeleteForceController")
     return await forceDeleteAnswerController(id)
 }
 export async function deleteCategory(id : number) : Promise<boolean> {
-    const deleteCategoryController = getInjection('IDeleteCategoryController')
+    const deleteCategoryController = getInjection('ICategoryDeleteController')
     return await deleteCategoryController(id)
 }
 export async function changeTitleCategory(category : Category) : Promise<boolean> {
-    const changeTitleCategoryController = getInjection('IChangeTitleCategoryController')
+    const changeTitleCategoryController = getInjection('ICategoryChangeTitleController')
     return await changeTitleCategoryController(category)
 }

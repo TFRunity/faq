@@ -34,6 +34,6 @@ export class CategoryRepository implements ICategoryRepository {
             .from(categories)
             .innerJoin(questions, on => eq(categories.id, questions.category_id))
             .innerJoin(answers, on => eq(answers.id, questions.answer_id))
-        return this.mappingService.convertRawCategoriesWithQuestions(raw);
+        return this.mappingService.convertRawCategoriesWithQuestions(raw)
     }
 }
