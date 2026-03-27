@@ -137,7 +137,7 @@ export class QuestionRepository implements IQuestionRepository {
             .where(eq(questions.id, question_id))
             .returning();
         return true;
-    }; //Изменить category_id
+    }; //Изменить category_id id
 
     async deleteRelWithCategories(question_id : number) : Promise<boolean>{
         if(question_id <= 0){
