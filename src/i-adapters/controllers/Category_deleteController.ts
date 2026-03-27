@@ -1,8 +1,8 @@
 import {ICategoryRepository} from "@/src/application/repositories/ICategoryRepository";
 
-export type IDeleteCategoryController = ReturnType<typeof deleteCategoryController>
+export type ICategoryDeleteController = ReturnType<typeof category_deleteController>
 
-export const deleteCategoryController = (
+export const category_deleteController = (
         categoryService : ICategoryRepository
     ) => async (category_id : number) : Promise<boolean> => {
             return await categoryService.delete(category_id);

@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 import { getInjection } from "@/di/container"
 
-const deleteForceAnswerController = getInjection('IDeleteForceAnswerController')
+const deleteForceAnswerController = getInjection('ICategoryDeleteController')
 
 it ('should delete answer', async () => {
     await expect(deleteForceAnswerController(23))

@@ -1,13 +1,13 @@
 import {createModule, Module} from "@evyweb/ioctopus";
 import {DI_SYMBOLS} from "@/di/types";
-import {deleteForceAnswerController} from "@/src/i-adapters/controllers/deleteForceAnswerController";
+import {answer_deleteForceController} from "@/src/i-adapters/controllers/Answer_deleteForceController";
 
 
 export function createAnswerModule() : Module {
     const answerModule : Module = createModule()
 
-    answerModule.bind(DI_SYMBOLS.IDeleteForceAnswerController)
-        .toHigherOrderFunction(deleteForceAnswerController, [
+    answerModule.bind(DI_SYMBOLS.IAnswerDeleteForceController)
+        .toHigherOrderFunction(answer_deleteForceController, [
             DI_SYMBOLS.IAnswerRepository
         ])
 
