@@ -3,6 +3,7 @@ import { DI_SYMBOLS } from "@/di/types";
 import {MappingFAQService} from "@/src/infrastructure/services/MappingFAQService";
 import {CategoryRepository} from "@/src/infrastructure/repositories/CategoryRepository";
 import {AnswerRepository} from "@/src/infrastructure/repositories/AnswerRepository";
+import {QuestionRepository} from "@/src/infrastructure/repositories/QuestionRepository";
 import {MockAnswerRepository} from "@/src/infrastructure/repositories/MockAnswerRepository";
 import {MockCategoryRepository} from "@/src/infrastructure/repositories/MockCategoryRepository";
 
@@ -34,6 +35,11 @@ export function createFaqModule() : Module {
         faqModule.bind(DI_SYMBOLS.IAnswerRepository)
             .toClass(AnswerRepository)
     }
+
+    faqModule.bind(DI_SYMBOLS.IQuestionRepository)
+        .toClass(QuestionRepository, [
+            DI_SYMBOLS.IMappingFAQService,
+        ])
 
     faqModule.bind(DI_SYMBOLS.IMappingFAQService)
         .toClass(MappingFAQService)
