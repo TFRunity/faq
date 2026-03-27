@@ -1,7 +1,7 @@
 import {QuestionWithLatestAnswer} from "@/src/entities/models/view-models";
 import {IQuestionRepository} from "@/src/application/repositories/IQuestionRepository";
 
-export type IQuestionAddAnswerControllerController = ReturnType<typeof question_addAnswerController>
+export type IQuestionAddAnswerController = ReturnType<typeof question_addAnswerController>
 
 export const question_addAnswerController = (
     questionService : IQuestionRepository

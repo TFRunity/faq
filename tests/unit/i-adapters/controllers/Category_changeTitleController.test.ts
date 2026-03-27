@@ -1,0 +1,13 @@
+import {expect, it} from "vitest";
+import {getInjection} from "@/di/container";
+
+const categoryChangeTitleController = getInjection('ICategoryChangeTitleController')
+
+it('should change title', async () => {
+    await expect(categoryChangeTitleController({id : 2, title : 'AAAA'}))
+        .resolves
+        .toEqual(true)
+    await expect(categoryChangeTitleController({id : -2, title : 'AAAA'}))
+        .resolves
+        .toEqual(false)
+})
