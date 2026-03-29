@@ -12,6 +12,7 @@ export interface IQuestionRepository {
     getWithHistoryOfAnswers(question_id : number) : Promise<QuestionWithAnswers>; //Получение плоских данных 1 запрос : Получить вопрос со всеми связанными answers, (через inner join)
     addAnswer(question_id : number, answer : string) : Promise<QuestionWithLatestAnswer>; //Добавить ответ, сменить answer_id 2 запроса
     changeAnswerToPrevious(question_id : number, previous_answer_id : number) : Promise<QuestionWithLatestAnswer> //Сменить answer_id 1 запрос
+
     //Связанное с категориями
     addRelWithCategories(question_id : number, category_id : number) : Promise<boolean>; //Изменить category_id
     deleteRelWithCategories(question_id : number) : Promise<boolean>; //Занулить category_id
