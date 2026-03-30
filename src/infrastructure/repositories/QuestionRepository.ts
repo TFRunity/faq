@@ -142,13 +142,14 @@ export class QuestionRepository implements IQuestionRepository {
     async deleteRelWithCategories(question_id : number) : Promise<boolean>{
         if(question_id <= 0){
             return false;
+        }else {
+            const [updatedQuestion] = await db!
+                .update(questions)
+                .set({category_id: null})
+                .where(eq(questions.id, question_id))
+                .returning();
+            return !!updatedQuestion;
         }
-        const [updatedQuestion] = await db!
-            .update(questions)
-            .set({category_id: null})
-            .where(eq(questions.id, question_id))
-            .returning();
-        return !!updatedQuestion;
     }; //Занулить category_id
 
 
