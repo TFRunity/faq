@@ -9,6 +9,5 @@ it('should delete question with answer', async () => {
         .toEqual(true)
     await expect (deleteController(-1))
         .resolves
-        .not
         .toEqual(false)
 })

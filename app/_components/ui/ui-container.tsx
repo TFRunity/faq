@@ -1,4 +1,5 @@
 import '@/app/global-styles.css'
+import {createContext} from "react";
 // import {ReactElement, useEffect, useState} from "react";
 // import {AdminPanelProps} from "@/app/_components/ui/admin-panel";
 // import AdminPanel from "@/app/_components/ui/admin-panel"
@@ -57,3 +58,7 @@ import '@/app/global-styles.css'
 //         </div>
 //     )
 // }
+
+export function Container() {
+    const a = createContext()
+}

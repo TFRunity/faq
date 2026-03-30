@@ -6,6 +6,7 @@ import {AnswerRepository} from "@/src/infrastructure/repositories/AnswerReposito
 import {QuestionRepository} from "@/src/infrastructure/repositories/QuestionRepository";
 import {MockAnswerRepository} from "@/src/infrastructure/repositories/MockAnswerRepository";
 import {MockCategoryRepository} from "@/src/infrastructure/repositories/MockCategoryRepository";
+import {MockQuestionRepository} from "@/src/infrastructure/repositories/MockQuestionRepository";
 
 export function createFaqModule() : Module {
     const faqModule : Module = createModule()
@@ -36,10 +37,16 @@ export function createFaqModule() : Module {
             .toClass(AnswerRepository)
     }
 
-    faqModule.bind(DI_SYMBOLS.IQuestionRepository)
-        .toClass(QuestionRepository, [
-            DI_SYMBOLS.IMappingFAQService,
-        ])
+    if (process.env.NODE_ENV === "test") {
+        faqModule.bind(DI_SYMBOLS.IQuestionRepository)
+            .toClass(MockQuestionRepository)
+    }
+    else{
+        faqModule.bind(DI_SYMBOLS.IQuestionRepository)
+            .toClass(QuestionRepository, [
+                DI_SYMBOLS.IMappingFAQService,
+            ])
+    }
 
     faqModule.bind(DI_SYMBOLS.IMappingFAQService)
         .toClass(MappingFAQService)
