@@ -1,8 +1,9 @@
 'use client'
 
-import {Context, createContext, useEffect} from 'react'
+import {createContext, useEffect} from 'react'
 import {useCategories} from "@/app/_hooks/faq-hooks";
 import {CategoryWithQuestionsWithAnswer, getAllWithLatestAnswers} from "@/app/_actions/faq-actions";
+import {Loading} from "@/app/loading";
 
 
 
@@ -22,9 +23,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
     if (categories === null) {
         return (
-            <div>
-                
-            </div>
+            <Loading/>
         )
     }
 
