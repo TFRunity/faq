@@ -1,4 +1,5 @@
 import '@/app/global-styles.css'
+import {AppProvider} from "@/app/providers";
 
 export default function RootLayout({
   children,
@@ -8,7 +9,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className='flex bg-blue-30 justify-center align-center'>
-        {children}
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );
