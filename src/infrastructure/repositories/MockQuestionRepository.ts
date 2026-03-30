@@ -26,7 +26,7 @@ export class MockQuestionRepository implements IQuestionRepository {
     }
     getWithHistoryOfAnswers(question_id: number): Promise<QuestionWithAnswers> {
         return Promise.resolve({
-                question:{id: 1, question: 'question?', category_id: null, answer_id:2 },
+                question:{id: 1, question: 'question?', category_id: null, answer_id:3 },
                 answers:[
                     { id: 3, answer: 'answer', question_id: 1},
                     { id: 2, answer: 'previous answer', question_id: 1}
@@ -42,6 +42,6 @@ export class MockQuestionRepository implements IQuestionRepository {
         return Promise.resolve(!(question_id <= 0 || category_id <= 0))
     }
     deleteRelWithCategories(question_id: number): Promise<boolean> {
-        return Promise.resolve(!(question_id))
+        return Promise.resolve(question_id>0)
     }
 }
