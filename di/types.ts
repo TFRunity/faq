@@ -2,7 +2,7 @@ import {IMappingFAQService} from "@/src/application/services/IMappingFAQService"
 import {IAnswerRepository} from "@/src/application/repositories/IAnswerRepository";
 import {ICategoryRepository} from "@/src/application/repositories/ICategoryRepository";
 import {IQuestionRepository} from "@/src/application/repositories/IQuestionRepository";
-import {ICategoryGetAllController} from "@/src/i-adapters/controllers/Category_getAllController";
+import {ICategoryGetAllController} from "@/src/i-adapters/controllers/Category_Cached_getAllController";
 import {ICategoryAddEmptyController} from "@/src/i-adapters/controllers/Category_addEmptyController";
 import {ICategoryDeleteController} from "@/src/i-adapters/controllers/Category_deleteController";
 import {ICategoryChangeTitleController} from "@/src/i-adapters/controllers/Category_changeTitleController";
@@ -25,12 +25,15 @@ import {IQuestionUpdateQuestionController} from "@/src/i-adapters/controllers/Qu
 import {
     IQuestionGetAllWithoutCategoryController
 } from "@/src/i-adapters/controllers/Question_getAllWithoutCategoryController";
+import {ICacheRepository} from "@/src/application/repositories/ICacheRepository";
 
 export const DI_SYMBOLS = {
     //Repositories
     IAnswerRepository: Symbol.for("IAnswerRepository"),
     ICategoryRepository: Symbol.for("ICategoryRepository"),
     IQuestionRepository: Symbol.for("IQuestionRepository"),
+    ICacheRepository: Symbol.for("ICacheRepository"),
+
 
     //Services
     IMappingFAQService: Symbol.for('IMappingFAQService'),
@@ -61,6 +64,7 @@ export interface DI_RETURN_TYPES {
     IAnswerRepository: IAnswerRepository;
     ICategoryRepository: ICategoryRepository;
     IQuestionRepository: IQuestionRepository;
+    ICacheRepository: ICacheRepository;
 
     //Services
     IMappingFAQService : IMappingFAQService

@@ -61,6 +61,9 @@ import Image from "next/image";
 // }
 
 export function Container() {
+
+
+
     return (
         <>
             <div className=' ml-70 mr-70 mt-9 w-[98%] h-[98%] md:w-[95%] md:h-[80%] bg-white rounded-[1em] md:rounded-[2em] flex flex-col justify-center align-center shadow-[0_2px_5px_1.5px_rgba(0,0,0,0.1)] md:shadow-[0_5px_15px_3px_rgba(0,0,0,0.1)]'>
