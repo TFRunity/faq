@@ -1,10 +1,13 @@
 'use client'
 
-import {ReactElement} from "react";
+import {ReactElement, useState} from "react";
+import {Container} from "@/app/_components/ui/ui-container";
 
 export default function Home()  : ReactElement | null{
 
-    return (
+    const [isLoggedIn, setLogged] = useState<boolean>(false);
 
+    return (
+        <Container/>
     )
 }
