@@ -7,8 +7,8 @@ import Loading from "@/app/loading";
 
 
 
-const CategoriesStateContext = createContext<any>(null)
-const CategoriesDispatchContext = createContext<any>(null)
+export const CategoriesStateContext = createContext<any>(null)
+export const CategoriesDispatchContext = createContext<any>(null)
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
     const {categories, dispatchCategories} = useCategories(null)

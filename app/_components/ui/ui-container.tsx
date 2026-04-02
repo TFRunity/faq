@@ -1,6 +1,8 @@
 import '@/app/global-styles.css'
-import {createContext} from "react";
+import {createContext, useContext, useState} from "react";
 import Image from "next/image";
+import {CategoriesStateContext} from "@/app/providers";
+import {CategoryWithQuestionsWithAnswer} from "@/app/_actions/faq-actions";
 // import {ReactElement, useEffect, useState} from "react";
 // import {AdminPanelProps} from "@/app/_components/ui/admin-panel";
 // import AdminPanel from "@/app/_components/ui/admin-panel"
@@ -60,14 +62,22 @@ import Image from "next/image";
 //     )
 // }
 
+export type ContainerProps = {
+    title: string
+}
+
 export function Container() {
 
-
+    const [permission, setPermission] = useState<boolean>(false);
+    const title = "Часто задаваемые вопросы";
 
     return (
         <>
             <div className=' ml-70 mr-70 mt-9 w-[98%] h-[98%] md:w-[95%] md:h-[80%] bg-white rounded-[1em] md:rounded-[2em] flex flex-col justify-center align-center shadow-[0_2px_5px_1.5px_rgba(0,0,0,0.1)] md:shadow-[0_5px_15px_3px_rgba(0,0,0,0.1)]'>
-                <Image src={'/icons/admin.png'} width={30} height={30} alt={'Не загрузился логотип XD'} loading='eager' />
+                <h1 className='mt-10 text-slate-700 mb-10 flex-auto flex justify-center text-[150%] md:text-[180%]'>{title}</h1>
+                {/*<ListFaq permission={permission} />*/}
+                <Image src={'/icons/admin.png'} width={30} height={30} alt={'Не загрузился логотип XD'} loading='eager'/>
+
             </div>
         </>
     )

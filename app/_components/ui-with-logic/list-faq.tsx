@@ -35,7 +35,7 @@
 //
 // export default function ListFaq( { isLoggedIn } : ListProps) {
 //
-//     const [faqs, setFaqs] = useState<Faq[]>([]);
+// //     const [faqs, setFaqs] = useState<Faq[]>([]);
 //     const [shouldRewrite, setShouldRewrite] = useState(false);
 //
 //     useEffect(() : void => {
