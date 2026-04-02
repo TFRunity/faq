@@ -7,17 +7,24 @@ import {QuestionRepository} from "@/src/infrastructure/repositories/QuestionRepo
 import {MockAnswerRepository} from "@/src/infrastructure/repositories/MockAnswerRepository";
 import {MockCategoryRepository} from "@/src/infrastructure/repositories/MockCategoryRepository";
 import {MockQuestionRepository} from "@/src/infrastructure/repositories/MockQuestionRepository";
+import {CacheRepository} from "@/src/infrastructure/repositories/CacheRepository";
 
 export function createFaqModule() : Module {
     const faqModule : Module = createModule()
 
-    // if ( process.env.NODE_ENV === "test" ) {
-    //     faqModule.bind(DI_SYMBOLS.IFaqRepository)
-    //         .toClass(FaqRepositoryMock)
-    // }else{
-    //     faqModule.bind(DI_SYMBOLS.IFaqRepository)
-    //         .toClass(FaqRepository)
-    // }
+
+    //Переписать
+    if (process.env.NODE_ENV === "test") {
+        faqModule.bind(DI_SYMBOLS.ICacheRepository)
+            .toClass(CacheRepository, [
+                DI_SYMBOLS.ICategoryRepository
+            ])
+    }else{
+        faqModule.bind(DI_SYMBOLS.ICacheRepository)
+            .toClass(CacheRepository, [
+                DI_SYMBOLS.ICategoryRepository
+            ])
+    }
 
     if (process.env.NODE_ENV === "test") {
         faqModule.bind(DI_SYMBOLS.ICategoryRepository)
