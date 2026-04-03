@@ -121,3 +121,7 @@ export async function changeTitleCategory(category : Category) : Promise<boolean
     const changeTitleCategoryController = getInjection('ICategoryChangeTitleController')
     return await changeTitleCategoryController(category)
 }
+export async function getQuestionsWithoutCategory() : Promise<QuestionWithAnswer[]> {
+    const getQuestonsController = getInjection('IQuestionGetAllWithoutCategoryController')
+    return await getQuestonsController()
+}
