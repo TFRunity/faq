@@ -101,6 +101,9 @@ export type CategoryWithQuestionsWithAnswer = {
     questions : QuestionWithAnswer[] | null;
 };
 
+//МЕХАНИЗМ С БЕЗОПАСНОСТЬЮ, МНОГО ДУМАТЬ НАДО
+let isLoggedIn : boolean = false;
+
 export async function getAllWithLatestAnswers() : Promise<CategoryWithQuestionsWithAnswer[]> {
     const getAllController = getInjection('ICategoryGetAllController')
     return await getAllController();
@@ -125,3 +128,12 @@ export async function getQuestionsWithoutCategory() : Promise<QuestionWithAnswer
     const getQuestonsController = getInjection('IQuestionGetAllWithoutCategoryController')
     return await getQuestonsController()
 }
+export async function updateQuestionOfQuestion(id : number, newQuestion : string) : Promise<QuestionWithAnswer> {
+    const updateQuestionOfQuestionController = getInjection('IQuestionUpdateQuestionController')
+    return await updateQuestionOfQuestionController(id, newQuestion)
+}
+export async function updateAnswerOfQuestion(id : number, newAnswer : string) : Promise<QuestionWithAnswer> {
+    const updateAnswerOfQuestionController = getInjection('IQuestionAddAnswerController')
+    return await updateAnswerOfQuestionController(id, newAnswer)
+}
+
