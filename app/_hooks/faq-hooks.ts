@@ -15,8 +15,9 @@ import {QuestionWithAnswer} from "@/app/_actions/faq-actions";
 //     | {type : 'ADD_QUESTION'; questionWithAnswer : QuestionWithAnswer}
 //     | {type : 'DELETE_QUESTION'; question_id : number}
 
-type CategoryWithQuestionsWithAnswerActions =
+export type CategoryWithQuestionsWithAnswerActions =
     | {type : 'CHANGE_CATEGORY_NAME'; category_id : number, title : string}
+    | {type : 'UPDATE_QUESTION_QUESTION'; question : QuestionWithAnswer}
     | {type : 'ADD_QUESTION'; question : QuestionWithAnswer}
     | {type : 'DELETE_QUESTION'; question_id : number, category_id : number}
     | {type : 'DELETE_CATEGORY'; category_id : number}
@@ -24,7 +25,7 @@ type CategoryWithQuestionsWithAnswerActions =
     | {type : 'UPDATE_ANSWER'; question_id : number, answer_id : number, answer : string, category_id : number}
     | {type : 'FILL_WITH_DATA'; data : CategoryWithQuestionsWithAnswer[]}
 
-type QuestionWithAnswerActions =
+export type QuestionWithAnswerActions =
     | {type : 'ADD_QUESTION'; questionWithAnswer: QuestionWithAnswer}
     | {type : 'ADD_QUESTIONS'; questions : QuestionWithAnswer[]} //Когда удалили какую-то категорию и теперь все вопросы оттуда становятся без категории
     | {type : 'REMOVE_QUESTION'; question_id : number}  //После перемещения вопроса в категорию
@@ -115,6 +116,8 @@ export function useCategories(data : CategoryWithQuestionsWithAnswer[] | null) {
                 return [...state!.filter(c => c.category.id !== action.category_id)]
             case "CHANGE_CATEGORY_NAME":
                 return [...state!.map(c => c.category.id === action.category_id ? { ...c, title : action.title } : c)]
+            case "UPDATE_QUESTION_QUESTION":
+                return [...state!.map(c => c.category.id === action.question.question.category_id ? { ...c, questions : [...c.questions!.map(q => q.question.id == action.question.question.id ? action.question : q)] } : c )]
             case "ADD_QUESTION":
                 return [...state!.map(c => c.category.id === action.question.question.category_id ? {...c, questions : [...c.questions!, action.question] } : c)]
             case "DELETE_QUESTION":
