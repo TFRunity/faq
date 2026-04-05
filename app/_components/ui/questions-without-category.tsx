@@ -1,7 +1,7 @@
 import {useContext} from "react";
 import {QuestionsStateContext} from "@/app/providers";
 import {QuestionWithAnswer} from "@/app/_actions/faq-actions";
-import Question from "@/app/_components/ui-with-logic/question-with-answer";
+import Question from "@/app/_components/ui/question-with-answer";
 
 export type QuestionsProps = {
     permission : boolean

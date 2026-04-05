@@ -1,9 +1,11 @@
 import {CategoryWithQuestionsWithAnswer} from "@/app/_actions/faq-actions";
 import React, {useContext, useState} from "react";
 import {CategoriesDispatchContext} from "@/app/providers";
-import Question from "@/app/_components/ui-with-logic/question-with-answer";
+import Question from "@/app/_components/ui/question-with-answer";
 import Image from "next/image";
 import {createPortal} from "react-dom";
+import {ModalUpdateCategoryTitle} from "@/app/_components/ui-with-logic/modal-update-category-title";
+import {ModalDeleteCategory} from "@/app/_components/ui-with-logic/modal-delete-category";
 
 export interface CategoryProps {
     category : CategoryWithQuestionsWithAnswer,
@@ -13,10 +15,21 @@ export interface CategoryProps {
 export default function Category({category, permission} : CategoryProps) {
 
     const dispatch = useContext(CategoriesDispatchContext)
-    const [modal, setModal] = useState<boolean>(false)
+    const [modalChange, setModalChange] = useState<boolean>(false)
+    const [modalDelete, setModalDelete] = useState<boolean>(false)
 
-    function toggleModal() {
-        setModal(!modal)
+    function openModalChange() {
+        setModalChange(true)
+    }
+    function closeModalChange() {
+        setModalChange(false)
+    }
+
+    function openModalDelete() {
+        setModalDelete(true)
+    }
+    function closeModalDelete() {
+        setModalDelete(false)
     }
 
     return (
@@ -24,13 +37,24 @@ export default function Category({category, permission} : CategoryProps) {
             <div>
                 <h3>{category.category.title}</h3>
                 {permission &&
-                    <div onClick={toggleModal} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
-                        <Image src={"/icons/pencil.png"} width='30' height='30' alt={"Изменить"}
-                               loading="lazy"/>
-                    </div>
+                    <>
+                        <div onClick={openModalChange} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
+                            <Image src={"/icons/pencil.png"} width='30' height='30' alt={"Изменить"}
+                                   loading="lazy"/>
+                        </div>
+                        <div onClick={openModalDelete} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
+                            <Image src={"/icons/close.png"} width='30' height='30' alt={"Удалить"}
+                                   loading="lazy"/>
+                        </div>
+                    </>
+
                 }
-                {modal && createPortal(
-                    <ModalUpdateCategoryTitle />,
+                {modalChange && createPortal(
+                    <ModalUpdateCategoryTitle exitAction={closeModalChange} toUpdateCategory={category.category} />,
+                    document.body
+                )}
+                {modalDelete && createPortal(
+                    <ModalDeleteCategory exitAction={closeModalDelete} toDeleteCategory={category.category} />,
                     document.body
                 )}
             </div>
