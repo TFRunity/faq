@@ -18,8 +18,11 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
     function toggleAnswer() {
         setToggle(!toggle);
     }
-    function toggleModal() {
-        setShowModal(!showModal);
+    function openModalChange() {
+        setShowModal(true);
+    }
+    function closeModalChange() {
+        setShowModal(false);
     }
 
     return (
@@ -29,7 +32,7 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
                     <h3 className=' text-slate-900 text-[120%] mt-3 ml-3 mb-2'>{questionWithAnswer.question.question ? questionWithAnswer.question.question : "Пустой вопрос"}</h3>
                     <div className=' text-slate-600 text-[130%] cursor-pointer mt-3 mr-3 mb-2' onClick={toggleAnswer}>
                         {permission &&
-                            <div onClick={toggleModal} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
+                            <div onClick={openModalChange} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
                                 <Image src={"/icons/pencil.png"} width='30' height='30' alt={"Изменить"}
                                        loading="lazy"/>
                             </div>
@@ -38,7 +41,7 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
                     </div>
                 </div>
                 {showModal && createPortal(
-                    <ModalUpdateFaq questionWithAnswer={questionWithAnswer} />,
+                    <ModalUpdateFaq questionWithAnswer={questionWithAnswer} exitAction={closeModalChange} />,
                     document.body
                 )}
             </div>

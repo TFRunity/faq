@@ -25,17 +25,19 @@ import {
     updateAnswerOfQuestion,
     updateQuestionOfQuestion
 } from "@/app/_actions/faq-actions";
-import {CategoriesDispatchContext} from "@/app/providers";
-import {CategoryWithQuestionsWithAnswerActions} from "@/app/_hooks/faq-hooks";
+import {CategoriesDispatchContext, QuestionsDispatchContext} from "@/app/providers";
+import {CategoryWithQuestionsWithAnswerActions, QuestionWithAnswerActions} from "@/app/_hooks/faq-hooks";
 
 export interface UpdateFaqProps {
-    questionWithAnswer : QuestionWithAnswer
+    questionWithAnswer : QuestionWithAnswer,
+    exitAction: () => void,
 }
 
 
-export default function ModalUpdateFaq({ questionWithAnswer } : UpdateFaqProps) {
+export default function ModalUpdateFaq({ questionWithAnswer, exitAction } : UpdateFaqProps) {
     
     const dispatchCategories : ActionDispatch<[action : CategoryWithQuestionsWithAnswerActions]> = useContext(CategoriesDispatchContext)
+    const dispatchQuestions : ActionDispatch<[action : QuestionWithAnswerActions]> = useContext(QuestionsDispatchContext)
 
     const questionWithoutNull : string = questionWithAnswer.question.question ? questionWithAnswer.question.question : "";
     const answerWithoutNull :  string = questionWithAnswer.answer && questionWithAnswer.answer.answer ? questionWithAnswer.answer.answer : "";
@@ -53,38 +55,54 @@ export default function ModalUpdateFaq({ questionWithAnswer } : UpdateFaqProps) 
         if (question !== questionWithAnswer.question.question) {
             try{
                 const updatedFaq : QuestionWithAnswer = await updateQuestionOfQuestion(questionWithAnswer.question.id, question)
-                if (updatedFaq) {
+                if (updatedFaq.question.category_id) {
                     dispatchCategories({
                         type: "UPDATE_QUESTION_QUESTION",
                         question: updatedFaq
                     })
                 }
+                else{
+                    dispatchQuestions({
+                        type : "CHANGE_QUESTION",
+                        question_id : updatedFaq.question.id,
+                        question : updatedFaq.question
+                    })
+                }
+                alert("Обновился вопрос")
             }catch(err){
                 console.log("Произошла ошибка при попытке обновить вопрос для faq. Проверьте соединение с БД")
             }
         }
 
-        if (questionWithAnswer.answer === null || answer !== questionWithAnswer.answer!.answer) {
+        if (answer !== questionWithAnswer.answer!.answer) {
             try{
                 const updatedFaq = await updateAnswerOfQuestion(questionWithAnswer.question.id, answer)
-                if (updatedFaq) {
-                    if (updatedFaq.question.category_id) {
-                        dispatchCategories({
-                            type: "UPDATE_ANSWER",
-                            question_id: updatedFaq.question.id,
-                            answer_id: updatedFaq.answer!.id,
-                            answer: updatedFaq.answer!.answer!,
-                            category_id: updatedFaq.question.category_id
-                        })
-                    }
+                if (updatedFaq.question.category_id) {
+                    dispatchCategories({
+                        type: "UPDATE_ANSWER",
+                        question_id: updatedFaq.question.id,
+                        answer_id: updatedFaq.answer!.id,
+                        answer: updatedFaq.answer!.answer!,
+                        category_id: updatedFaq.question.category_id
+                    })
                 }
+                else{
+                    dispatchQuestions({
+                        type: "CHANGE_ANSWER",
+                        question_id: updatedFaq.question.id,
+                        answer: updatedFaq.answer!
+                    })
+                }
+                alert("Обновился ответ")
             }catch(err){
                 console.log("Произошла ошибка при попытке обновить ответ для faq. Проверьте соединение с БД")
             }
         }
+
     }
 
     const closeDialog = () => {
+        exitAction()
         setDestruct(true)
     }
 
