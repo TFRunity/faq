@@ -61,18 +61,18 @@
 //         throw new Error("Ошибка подключения к БД")
 //     }
 // }
-//
-// export async function checkAdmin(name : string, password : string) : Promise<boolean> {
-//     if (name == process.env.ADMIN_NAME && password == process.env.ADMIN_PASSWORD) {
-//         isLoggedIn = true
-//         return true;
-//     }
-//     return false;
-// }
-//
-// export async function isResponsible() : Promise<boolean> {
-//     return isLoggedIn;
-// }
+
+export async function checkAdmin(name : string, password : string) : Promise<boolean> {
+    if (name == process.env.ADMIN_NAME && password == process.env.ADMIN_PASSWORD) {
+        isLoggedIn = true
+        return true;
+    }
+    return false;
+}
+
+export async function isResponsible() : Promise<boolean> {
+    return isLoggedIn;
+}
 
 import {getInjection} from "@/di/container";
 
@@ -101,13 +101,20 @@ export type CategoryWithQuestionsWithAnswer = {
     questions : QuestionWithAnswer[] | null;
 };
 
+//МЕХАНИЗМ С БЕЗОПАСНОСТЬЮ, МНОГО ДУМАТЬ НАДО
+let isLoggedIn : boolean = false;
+
 export async function getAllWithLatestAnswers() : Promise<CategoryWithQuestionsWithAnswer[]> {
     const getAllController = getInjection('ICategoryGetAllController')
     return await getAllController();
 }
 export async function addEmptyCategory() : Promise<CategoryWithQuestionsWithAnswer> {
-    const addEmptyCategoryController = getInjection('ICategoryAddEmptyController')
-    return await addEmptyCategoryController();
+    if (isLoggedIn) {
+        const addEmptyCategoryController = getInjection('ICategoryAddEmptyController')
+        return await addEmptyCategoryController();
+    } else {
+        return {category : {id : -1, title : "Не пытайся сломать"}, questions : []}
+    }
 }
 export async function forceDeleteAnswer(id : number) : Promise<boolean> {
     const forceDeleteAnswerController = getInjection("IAnswerDeleteForceController")
@@ -121,3 +128,16 @@ export async function changeTitleCategory(category : Category) : Promise<boolean
     const changeTitleCategoryController = getInjection('ICategoryChangeTitleController')
     return await changeTitleCategoryController(category)
 }
+export async function getQuestionsWithoutCategory() : Promise<QuestionWithAnswer[]> {
+    const getQuestionsController = getInjection('IQuestionGetAllWithoutCategoryController')
+    return await getQuestionsController()
+}
+export async function updateQuestionOfQuestion(id : number, newQuestion : string) : Promise<QuestionWithAnswer> {
+    const updateQuestionOfQuestionController = getInjection('IQuestionUpdateQuestionController')
+    return await updateQuestionOfQuestionController(id, newQuestion)
+}
+export async function updateAnswerOfQuestion(id : number, newAnswer : string) : Promise<QuestionWithAnswer> {
+    const updateAnswerOfQuestionController = getInjection('IQuestionAddAnswerController')
+    return await updateAnswerOfQuestionController(id, newAnswer)
+}
+
