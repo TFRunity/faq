@@ -27,7 +27,6 @@ import {CategoriesStateContext, QuestionsStateContext} from "@/app/providers";
 import {CategoryWithQuestionsWithAnswer, QuestionWithAnswer} from "@/app/_actions/faq-actions";
 import Questions from "@/app/_components/ui/questions-without-category";
 import Category from "@/app/_components/ui-with-logic/category-with-questions";
-import Image from "next/image";
 
 
 export interface ListProps {

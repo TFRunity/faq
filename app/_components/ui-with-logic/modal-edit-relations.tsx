@@ -1,3 +1,4 @@
+import "@/app/global-styles.css"
 
 
 type ModalEditRelationsProps = {
@@ -5,6 +6,8 @@ type ModalEditRelationsProps = {
 }
 
 export function ModalEditRelations ({exitAction} : ModalEditRelationsProps) {
+
+
 
     return (
         <div>

@@ -140,4 +140,16 @@ export async function updateAnswerOfQuestion(id : number, newAnswer : string) : 
     const updateAnswerOfQuestionController = getInjection('IQuestionAddAnswerController')
     return await updateAnswerOfQuestionController(id, newAnswer)
 }
+export async function addQuestion(question : string) : Promise<QuestionWithAnswer> {
+    const addQuestionController = getInjection('IQuestionAddController')
+    return await addQuestionController(question)
+}
+export async function addQuestionWithAnswer(question : string, answer : string) : Promise<QuestionWithAnswer> {
+    const addQuestionWithAnswerController = getInjection('IQuestionAddWithAnswerController')
+    return await addQuestionWithAnswerController(question, answer)
+}
+export async function deleteQuestion(id : number) : Promise<boolean> {
+    const deleteQuestionController = getInjection('IQuestionDeleteController')
+    return await deleteQuestionController(id)
+}
 

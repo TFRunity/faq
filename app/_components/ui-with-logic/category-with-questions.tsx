@@ -6,6 +6,8 @@ import Image from "next/image";
 import {createPortal} from "react-dom";
 import {ModalUpdateCategoryTitle} from "@/app/_components/ui-with-logic/modal-update-category-title";
 import {ModalDeleteCategory} from "@/app/_components/ui-with-logic/modal-delete-category";
+import "@/app/global-styles.css"
+
 
 export interface CategoryProps {
     category : CategoryWithQuestionsWithAnswer,
@@ -14,7 +16,6 @@ export interface CategoryProps {
 
 export default function Category({category, permission} : CategoryProps) {
 
-    const dispatch = useContext(CategoriesDispatchContext)
     const [modalChange, setModalChange] = useState<boolean>(false)
     const [modalDelete, setModalDelete] = useState<boolean>(false)
 
@@ -54,7 +55,7 @@ export default function Category({category, permission} : CategoryProps) {
                     document.body
                 )}
                 {modalDelete && createPortal(
-                    <ModalDeleteCategory exitAction={closeModalDelete} toDeleteCategory={category.category} />,
+                    <ModalDeleteCategory exitAction={closeModalDelete} toDeleteCategory={category} />,
                     document.body
                 )}
             </div>
