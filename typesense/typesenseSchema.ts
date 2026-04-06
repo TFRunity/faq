@@ -2,7 +2,7 @@
 //
 // export const client = new Typesense.Client({
 //     nodes: [{
-//         host: 'typesense',
+//         host: 'TYPESENSE',
 //         port: 8108,
 //         protocol: 'http'
 //     }],

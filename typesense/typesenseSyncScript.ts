@@ -4,7 +4,7 @@
 // // 1. Настройка подключения к Postgres
 // const pgClient = new Client({
 //     user: 'postgres',
-//     host: 'localhost',
+//     host: 'POSTGRES',
 //     database: 'faq',
 //     password: 'BSPD3ZRXU985',
 //     port: 5432,
@@ -13,12 +13,11 @@
 // // 2. Настройка клиента Typesense (ваш Docker)
 // const typesense = new Typesense.Client({
 //     nodes: [{
-//         host: 'localhost',
+//         host: 'TYPESENSE',
 //         port: 8108 ,
 //         protocol: 'http'
 //     }],
-//     apiKey: 'xyz123',
-//     connectionTimeoutSeconds: 10
+//     apiKey: 'BSPD3ZRXU985',
 // });
 //
 // export default async function sync() {
