@@ -1,3 +1,5 @@
+'use client'
+
 import Image from "next/image";
 import {deleteQuestion, Question} from "@/app/_actions/faq-actions";
 import {ActionDispatch, useContext} from "react";

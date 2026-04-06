@@ -1,3 +1,5 @@
+'use client'
+
 import {Category, changeTitleCategory} from "@/app/_actions/faq-actions";
 import "@/app/global-styles.css"
 import {ActionDispatch, useContext, useRef, useState} from "react";

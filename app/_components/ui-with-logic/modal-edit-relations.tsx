@@ -1,3 +1,5 @@
+'use client'
+
 import "@/app/global-styles.css"
 import {ActionDispatch, useContext} from "react";
 import {CategoryWithQuestionsWithAnswerActions, QuestionWithAnswerActions} from "@/app/_hooks/faq-hooks";
