@@ -34,7 +34,10 @@ export type QuestionWithAnswer = {
     question : Question;
     answer : Answer | null;
 }
-
+export type QuestionWithAnswers = {
+    question : Question;
+    answers : Answer[] | null;
+}
 export type CategoryWithQuestionsWithAnswer = {
     category : Category;
     questions : QuestionWithAnswer[] | null;
@@ -95,7 +98,7 @@ export async function addRelationQuestionWithCategory(question_id : number, cate
     const addRelationQuestionWithCategoryController = getInjection('IQuestionAddRelWithCategoriesController')
     return await addRelationQuestionWithCategoryController(question_id, category_id)
 }
-export async function deleteRelationQuestionWithCategory(question_id : number) : Promise<boolean> {
-    const deleteRelationQuestionController = getInjection('IQuestionDeleteRelWithCategoriesController')
-    return await deleteRelationQuestionController(question_id)
+export async function getQuestionAllAnswers (question_id : number) : Promise<QuestionWithAnswers> {
+    const getQuestionWithAnswerController = getInjection('IQuestionGetWithHistoryOfAnswersController')
+    return await getQuestionWithAnswerController(question_id)
 }

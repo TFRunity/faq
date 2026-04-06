@@ -6,6 +6,8 @@ import ModalUpdateFaq from "@/app/_components/ui-with-logic/modal-update-faq";
 import "@/app/global-styles.css"
 import {ModalDeleteQuestion} from "@/app/_components/ui-with-logic/modal-delete-question";
 import {ModalEditRelations} from "@/app/_components/ui-with-logic/modal-edit-relations";
+import {create} from "node:domain";
+import {ModalHistoryAnswers} from "@/app/_components/ui-with-logic/modal-history-answers";
 
 
 
@@ -20,6 +22,7 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
     const [showModalRelationship, setShowModalRelationship] = useState<boolean>(false);
+    const [showModalHistory, setShowModalHistory] = useState<boolean>(false);
 
     function toggleAnswer() {
         setToggle(!toggle);
@@ -46,6 +49,13 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
         setShowModalRelationship(false);
     }
 
+    function openModalHistory() {
+        setShowModalHistory(true);
+    }
+    function closeModalHistory() {
+        setShowModalHistory(false);
+    }
+
     return (
         <div className='flex flex-col columns-10'>
             <div className='m-1'>
@@ -54,23 +64,34 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
                     <div className=' text-slate-600 text-[130%] cursor-pointer mt-3 mr-3 mb-2'>
                         {permission &&
                             <>
-                                <div onClick={openModalChange} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
+                                <div onClick={openModalChange}
+                                     className='cursor-pointer content-end ml-auto mr-7 flex-row'>
                                     <Image src={"/icons/pencil.png"} width='30' height='30' alt={"Изменить"}
                                            loading="lazy"/>
                                 </div>
-                                <div onClick={openModalDelete} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
+                                <div onClick={openModalDelete}
+                                     className='cursor-pointer content-end ml-auto mr-7 flex-row'>
                                     <Image src={"/icons/close.png"} width='30' height='30' alt={"X"}
                                            loading="lazy"/>
                                 </div>
-                                <div onClick={openModalRelationship} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
+                                <div onClick={openModalRelationship}
+                                     className='cursor-pointer content-end ml-auto mr-7 flex-row'>
                                     <Image src={"/icons/relation.png"} width='30' height='30' alt={"Связь"}
-                                            loading="lazy"/>
+                                           loading="lazy"/>
+                                </div>
+                                <div onClick={openModalHistory} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
+                                    <Image src={"/icons/column.png"} width='30' height='30' alt={"История"}
+                                           loading="lazy"/>
                                 </div>
                             </>
                         }
                         <h2 onClick={toggleAnswer}>+</h2>
                     </div>
                 </div>
+                {showModalHistory && createPortal(
+                    <ModalHistoryAnswers questionToUpdate={questionWithAnswer.question} exitAction={closeModalHistory} />,
+                    document.body
+                )}
                 {showModal && createPortal(
                     <ModalUpdateFaq questionWithAnswer={questionWithAnswer} exitAction={closeModalChange} />,
                     document.body
