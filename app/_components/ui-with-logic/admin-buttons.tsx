@@ -8,11 +8,8 @@ import {ModalAddFaq} from "@/app/_components/ui-with-logic/modal-add-faq";
 import "@/app/global-styles.css"
 
 
-type AdminButtonsProps = {
 
-}
-
-export function AdminButtons({} : AdminButtonsProps) {
+export function AdminButtons() {
 
     const dispatchCategories : ActionDispatch<[CategoryWithQuestionsWithAnswerActions]> = useContext(CategoriesDispatchContext)
     const [showModalAddQuestion, setShowModalAddQuestion] = useState<boolean>(false);
@@ -55,10 +52,6 @@ export function AdminButtons({} : AdminButtonsProps) {
             </button>
             {showModalAddQuestion && createPortal(
                 <ModalAddFaq exitAction={closeModalAddQuestion} />,
-                document.body
-            )}
-            {showModalEditRelations && createPortal(
-                <ModalEditRelations exitAction={closeModalRelations} />,
                 document.body
             )}
         </div>
