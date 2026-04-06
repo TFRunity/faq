@@ -4,8 +4,8 @@ import Image from "next/image";
 import {createPortal} from "react-dom";
 import ModalUpdateFaq from "@/app/_components/ui-with-logic/modal-update-faq";
 import "@/app/global-styles.css"
-import {create} from "node:domain";
 import {ModalDeleteQuestion} from "@/app/_components/ui-with-logic/modal-delete-question";
+import {ModalEditRelations} from "@/app/_components/ui-with-logic/modal-edit-relations";
 
 
 
@@ -16,9 +16,10 @@ export interface QuestionWithAnswerProps {
 
 export default function Question({questionWithAnswer, permission} : QuestionWithAnswerProps) {
 
-    const [toggle, setToggle] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const [showModalDelete, setShowModalDelete] = useState(false);
+    const [toggle, setToggle] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
+    const [showModalRelationship, setShowModalRelationship] = useState<boolean>(false);
 
     function toggleAnswer() {
         setToggle(!toggle);
@@ -37,6 +38,13 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
     function closeModalDelete() {
         setShowModalDelete(false);
     }
+    
+    function openModalRelationship() {
+        setShowModalRelationship(true);
+    }
+    function closeModalRelationship() {
+        setShowModalRelationship(false);
+    }
 
     return (
         <div className='flex flex-col columns-10'>
@@ -54,6 +62,10 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
                                     <Image src={"/icons/close.png"} width='30' height='30' alt={"X"}
                                            loading="lazy"/>
                                 </div>
+                                <div onClick={openModalRelationship} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
+                                    <Image src={"/icons/relation.png"} width='30' height='30' alt={"Связь"}
+                                            loading="lazy"/>
+                                </div>
                             </>
                         }
                         <h2 onClick={toggleAnswer}>+</h2>
@@ -65,6 +77,10 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
                 )}
                 {showModalDelete && createPortal(
                     <ModalDeleteQuestion question={questionWithAnswer.question} exitAction={closeModalDelete} />,
+                    document.body
+                )}
+                {showModalRelationship && createPortal(
+                    <ModalEditRelations questionWithAnswer={questionWithAnswer} exitAction={closeModalRelationship} />,
                     document.body
                 )}
             </div>
