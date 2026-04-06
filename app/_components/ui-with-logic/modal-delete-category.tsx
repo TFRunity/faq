@@ -1,3 +1,5 @@
+'use client'
+
 import {CategoryWithQuestionsWithAnswer, deleteCategory} from "@/app/_actions/faq-actions";
 import Image from "next/image";
 import "@/app/global-styles.css"

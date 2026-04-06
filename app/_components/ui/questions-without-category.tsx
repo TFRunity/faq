@@ -1,3 +1,5 @@
+'use client'
+
 import {useContext} from "react";
 import {QuestionsStateContext} from "@/app/providers";
 import {QuestionWithAnswer} from "@/app/_actions/faq-actions";

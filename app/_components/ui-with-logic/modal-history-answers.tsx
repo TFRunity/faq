@@ -1,3 +1,5 @@
+'use client'
+
 import {Answer, getQuestionAllAnswers, Question, QuestionWithAnswers} from "@/app/_actions/faq-actions";
 import {useEffect, useState} from "react";
 

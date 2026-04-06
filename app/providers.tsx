@@ -34,7 +34,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         fetchQuestionsWithoutCategory()
     }, [])
 
-    if (categories === null || questions === null) {
+    if (categories === null && questions === null) {
         return (
             <Loading/>
         )
