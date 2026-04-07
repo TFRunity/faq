@@ -1,3 +1,5 @@
+'use client'
+
 import '@/app/global-styles.css'
 import React, {createContext, useContext, useState} from "react";
 import Image from "next/image";

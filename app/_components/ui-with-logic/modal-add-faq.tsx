@@ -1,3 +1,5 @@
+'use client'
+
 import "@/app/global-styles.css"
 import {ActionDispatch, useContext, useRef, useState} from "react";
 import {addQuestion, addQuestionWithAnswer, QuestionWithAnswer} from "@/app/_actions/faq-actions";

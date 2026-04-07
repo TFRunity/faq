@@ -1,3 +1,5 @@
+'use client'
+
 import {addEmptyCategory, CategoryWithQuestionsWithAnswer} from "@/app/_actions/faq-actions";
 import {ActionDispatch, useContext, useState} from "react";
 import {CategoriesDispatchContext} from "@/app/providers";

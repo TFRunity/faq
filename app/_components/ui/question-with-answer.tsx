@@ -1,3 +1,5 @@
+'use client'
+
 import {QuestionWithAnswer} from "@/app/_actions/faq-actions";
 import React, {useState} from "react";
 import Image from "next/image";
