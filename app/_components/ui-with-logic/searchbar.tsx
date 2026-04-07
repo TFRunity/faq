@@ -3,11 +3,30 @@
 import styles from "./searchbar.module.css";
 import {InstantSearch, Hits, SearchBox} from "react-instantsearch";
 import {searchClient} from "@/typesense/typesenseAdapter";
+import {check, setupSchema} from "@/typesense/typesenseSchema";
+import {useEffect} from "react";
+import {checkpg, getQuestionAllAnswers, QuestionWithAnswers} from "@/app/_actions/faq-actions";
+import sync, {sssync} from "@/typesense/typesenseSyncScript";
+
+interface FAQHit {
+    question: string;
+    answer: string;
+}
+
+const HitItem = ({ hit }: { hit: FAQHit }) => (
+    <div className={styles.hitItem}>
+        <h4>{hit.question}</h4>
+        <p>{hit.answer}</p>
+    </div>
+);
+
+
 
 export const SearchBar = () => {
+
     return (
         <div className={styles.searchContainer}>
-            <InstantSearch indexName='faq-search' searchClient={searchClient} >
+            <InstantSearch indexName='faq_search' searchClient={searchClient} >
                 <SearchBox
                     placeholder="Введите ваш вопрос или ключевые слова"
                     classNames={{
@@ -52,7 +71,7 @@ export const SearchBar = () => {
                     )}
                     loadingIconComponent={() => <div className={styles.loadingSpinner}/>}
                 />
-                <Hits></Hits>
+                <Hits hitComponent={HitItem} />
             </InstantSearch>
         </div>
     );

@@ -3,6 +3,7 @@ import {CategoryWithQuestions} from "@/src/entities/models/view-models";
 import redis from "@/redis";
 import {NextResponse} from "next/server";
 import {ICategoryRepository} from "@/src/application/repositories/ICategoryRepository";
+import sync from "@/typesense/typesenseSyncScript";
 
 export class CacheRepository implements ICacheRepository {
 
@@ -16,6 +17,7 @@ export class CacheRepository implements ICacheRepository {
 
         const result : CategoryWithQuestions[] = await this.categoryService.getAll()
         await redis.set("category:all", JSON.stringify(result), {EX : 300})
+        await sync()
         return result
     }
 

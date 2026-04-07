@@ -2,9 +2,9 @@ import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 export const typesenseAdapter = new TypesenseInstantSearchAdapter({
     server:{
-        apiKey: process.env.NEXT_PUBLIC_TYPESENSE_SEARCH_ONLY_API_KEY || "placeholder",
+        apiKey: "BSPD3ZRXU985",
         nodes: [{
-            host: process.env.NEXT_PUBLIC_TYPESENSE_HOST || "localhost",
+            host: "localhost",
             port: 8108,
             protocol: "http"
         }],
