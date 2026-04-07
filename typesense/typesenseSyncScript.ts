@@ -1,52 +1,39 @@
 import { Client } from 'pg';
 import Typesense from 'typesense';
-import {client} from '@/typesense/typesenseSchema'
+import {client, setupSchema} from '@/typesense/typesenseSchema'
+import {db} from "@/drizzle";
+import {answers, questions} from "@/drizzle/schema";
+import {eq} from "drizzle-orm";
 
 // 1. Настройка подключения к Postgres
-const pgClient = new Client({
-    user: 'postgres',
-    host: 'POSTGRES',
-    database: 'faq',
-    password: 'BSPD3ZRXU985',
-    port: 5432,
-});
+const pgClient = db!
 
 export default async function sync() {
-    // если клиент уже подключен
-    await pgClient.connect();
-
     try {
-        console.log('начало чтения из пгскл');
+        await setupSchema()
 
-        const res = await pgClient.query(`
-            SELECT
-                q.id as id,
-                q.question as question,
-                a.answer as answer,
-            FROM questions q
-            INNER JOIN answers a ON a.id = q.answer_id 
-        `);
+        const res = await pgClient
+            .select({
+                id: questions.id,
+                question: questions.question,
+                answer: answers.answer,
+            })
+            .from(questions)
+            .innerJoin(answers, eq(questions.id, answers.question_id))
 
         // Преобразование в формат Typesense
-        const documents = res.rows.map(row => ({
+        const documents = res.map(row => ({
             id: row.id.toString(),
             question: row.question || "",
             answer: row.answer || "",
         }));
 
-        if (documents.length === 0) {
-           return;
-        }
-
-        const importResults = await client
+   const a = await client
             .collections('faq_search')
             .documents()
             .import(documents, { action: 'upsert' });
-
-
     } catch (err) {
        throw err
-    } finally {
-        await pgClient.end();
     }
 }
+
