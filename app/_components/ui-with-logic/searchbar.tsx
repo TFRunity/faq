@@ -5,8 +5,11 @@ import {InstantSearch, Hits, SearchBox} from "react-instantsearch";
 import {searchClient} from "@/typesense/typesenseAdapter";
 import { useInstantSearch } from 'react-instantsearch';
 
+type CustomHitsProps = {
+    hitComponent : any
+}
 
-const CustomHits = ({ hitComponent }) => {
+const CustomHits = ({ hitComponent } : CustomHitsProps  ) => {
     const { results, uiState } = useInstantSearch();
     const query = uiState.faq_search?.query; // 'faq_search' — это ваш indexName
 

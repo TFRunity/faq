@@ -26,6 +26,9 @@ import {
     IQuestionGetAllWithoutCategoryController
 } from "@/src/i-adapters/controllers/Question_getAllWithoutCategoryController";
 import {ICacheRepository} from "@/src/application/repositories/ICacheRepository";
+import {
+    ICategoryGetWithoutQuestionsController
+} from "@/src/i-adapters/controllers/Category_getWithoutQuestionsController";
 
 export const DI_SYMBOLS = {
     //Repositories
@@ -43,6 +46,7 @@ export const DI_SYMBOLS = {
     ICategoryAddEmptyController: Symbol.for("ICategoryAddEmptyController"),
     ICategoryDeleteController: Symbol.for("ICategoryDeleteController"),
     ICategoryChangeTitleController: Symbol.for("ICategoryChangeTitleController"),
+    ICategoryGetWithoutQuestionsController : Symbol.for("ICategoryGetWithoutQuestionsController"),
 
     IAnswerDeleteForceController: Symbol.for("IAnswerDeleteForceController"),
 
@@ -74,6 +78,7 @@ export interface DI_RETURN_TYPES {
     ICategoryAddEmptyController : ICategoryAddEmptyController;
     ICategoryDeleteController : ICategoryDeleteController;
     ICategoryChangeTitleController : ICategoryChangeTitleController;
+    ICategoryGetWithoutQuestionsController : ICategoryGetWithoutQuestionsController;
 
     IAnswerDeleteForceController : IAnswerDeleteForceController;
 

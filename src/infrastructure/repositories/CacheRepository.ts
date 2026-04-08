@@ -15,14 +15,14 @@ export class CacheRepository implements ICacheRepository {
         const categories = await redis.get("category:all");
         if (categories) return JSON.parse(categories)
         const result : CategoryWithQuestions[] = await this.categoryService.getAll()
-        await redis.set("category:all", JSON.stringify(result), {EX : 300})
+        await redis.set("category:all", JSON.stringify(result), {EX : 30})
         await sync()
         return result
     }
 
     async updateCachedData(categoryWithQuestions: CategoryWithQuestions[]): Promise<boolean> {
 
-        const res = await redis.set("category:all", JSON.stringify(categoryWithQuestions), {EX : 300})
+        const res = await redis.set("category:all", JSON.stringify(categoryWithQuestions), {EX : 30})
         return res === "OK"
     }
 }

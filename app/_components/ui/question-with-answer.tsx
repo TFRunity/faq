@@ -63,7 +63,7 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
             <div className='m-1'>
                 <div className='rounded-lg bg-slate-100 flex justify-between'>
                     <h3 className=' text-slate-900 text-[120%] mt-3 ml-3 mb-2'>{questionWithAnswer.question.question ? questionWithAnswer.question.question : "Пустой вопрос"}</h3>
-                    <div className=' text-slate-600 text-[130%] cursor-pointer mt-3 mr-3 mb-2'>
+                    <div className='flex text-slate-600 text-[130%] cursor-pointer mt-3 mr-3 mb-2'>
                         {permission &&
                             <>
                                 <div onClick={openModalChange}
@@ -87,7 +87,7 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
                                 </div>
                             </>
                         }
-                        <h2 onClick={toggleAnswer}>+</h2>
+                        <h2 onClick={toggleAnswer}>{!toggle ? '+' : '-'}</h2>
                     </div>
                 </div>
                 {showModalHistory && createPortal(

@@ -37,10 +37,10 @@ export default function Category({category, permission} : CategoryProps) {
 
     return (
         <div className="mb-7">
-            <div>
+            <div className="flex justify-between w-full">
                 <h3>{category.category.title}</h3>
                 {permission &&
-                    <>
+                    <div className='flex'>
                         <div onClick={openModalChange} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
                             <Image src={"/icons/pencil.png"} width='30' height='30' alt={"Изменить"}
                                    loading="lazy"/>
@@ -49,7 +49,7 @@ export default function Category({category, permission} : CategoryProps) {
                             <Image src={"/icons/close.png"} width='30' height='30' alt={"Удалить"}
                                    loading="lazy"/>
                         </div>
-                    </>
+                    </div>
 
                 }
                 {modalChange && createPortal(
@@ -64,7 +64,9 @@ export default function Category({category, permission} : CategoryProps) {
             <div>
                 {category.questions &&
                     category.questions.map(question => (
-                        <Question questionWithAnswer={question} permission={permission} />
+                        <div key={question.question.id}>
+                            <Question questionWithAnswer={question} permission={permission} />
+                        </div>
                     ))
                 }
             </div>

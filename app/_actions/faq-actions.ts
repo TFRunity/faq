@@ -5,13 +5,7 @@
 
 import {id} from "zod/locales";
 
-export async function checkAdmin(name : string, password : string) : Promise<boolean> {
-    if (name == process.env.ADMIN_NAME && password == process.env.ADMIN_PASSWORD) {
-        isLoggedIn = true
-        return true;
-    }
-    return false;
-}
+
 
 import {getInjection} from "@/di/container";
 
@@ -45,6 +39,15 @@ export type CategoryWithQuestionsWithAnswer = {
 
 //МЕХАНИЗМ С БЕЗОПАСНОСТЬЮ, МНОГО ДУМАТЬ НАДО
 let isLoggedIn : boolean = false;
+
+export async function checkAdmin(name : string, password : string) : Promise<boolean> {
+    if (name !== process.env.ADMIN_NAME && password !== process.env.ADMIN_PASSWORD) {
+        return false
+    }else{
+       isLoggedIn = true;
+    }
+    return true
+}
 
 export async function getAllWithLatestAnswers() : Promise<CategoryWithQuestionsWithAnswer[]> {
     const getAllController = getInjection('ICategoryGetAllController')
@@ -101,4 +104,8 @@ export async function addRelationQuestionWithCategory(question_id : number, cate
 export async function getQuestionAllAnswers (question_id : number) : Promise<QuestionWithAnswers> {
     const getQuestionWithAnswerController = getInjection('IQuestionGetWithHistoryOfAnswersController')
     return await getQuestionWithAnswerController(question_id)
+}
+export async function getCategoriesWithoutQuestions () : Promise<Category[]> {
+    const getCategoriesWithoutQuestions = getInjection('ICategoryGetWithoutQuestionsController')
+    return await getCategoriesWithoutQuestions()
 }
