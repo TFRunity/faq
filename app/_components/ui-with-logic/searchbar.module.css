@@ -1,5 +1,4 @@
 .searchContainer {
-    max-width: 48rem;
     margin: 0 auto 2rem;
 }
 
@@ -19,7 +18,7 @@
 }
 
 .searchInput {
-    width: 100%;
+    width: 55rem;
     padding: 1rem 3rem;
     border-radius: 0.5rem;
     border: 2px solid #e5e7eb;
@@ -84,3 +83,5 @@
     stroke-linejoin: round;
     fill: none;
 }
+
+

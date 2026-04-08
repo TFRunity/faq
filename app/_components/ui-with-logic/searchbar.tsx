@@ -3,30 +3,43 @@
 import styles from "./searchbar.module.css";
 import {InstantSearch, Hits, SearchBox} from "react-instantsearch";
 import {searchClient} from "@/typesense/typesenseAdapter";
-import {check, setupSchema} from "@/typesense/typesenseSchema";
-import {useEffect} from "react";
-import {checkpg, getQuestionAllAnswers, QuestionWithAnswers} from "@/app/_actions/faq-actions";
-import sync, {sssync} from "@/typesense/typesenseSyncScript";
-
-interface FAQHit {
-    question: string;
-    answer: string;
-}
-
-const HitItem = ({ hit }: { hit: FAQHit }) => (
-    <div className={styles.hitItem}>
-        <h4>{hit.question}</h4>
-        <p>{hit.answer}</p>
-    </div>
-);
+import { useInstantSearch } from 'react-instantsearch';
 
 
+const CustomHits = ({ hitComponent }) => {
+    const { results, uiState } = useInstantSearch();
+    const query = uiState.faq_search?.query; // 'faq_search' — это ваш indexName
 
-export const SearchBar = () => {
+    // Не показываем ничего, если запроса нет
+    if (!query) {
+        return null;
+    }
+
+    // Бонус: если запрос есть, но результатов 0 — выводим сообщение
+    if (results.nbHits === 0) {
+        return <div className='ml-12 mt-2'>Ничего не найдено по запросу "{query}"</div>;
+    }
+
+    return <Hits hitComponent={hitComponent} />;
+};
+
+export function SearchBar() {
+
+    interface FAQHit {
+        question: string;
+        answer: string;
+    }
+
+    const HitItem = ({ hit }: { hit: FAQHit }) => (
+        <div className='mt-2 mb-3 ml-12 mr-2'>
+            <h4 className='text-lg text-slate-800'>{hit.question}</h4>
+            <p className='text-sm text-slate-600'>{hit.answer}</p>
+        </div>
+    );
 
     return (
         <div className={styles.searchContainer}>
-            <InstantSearch indexName='faq_search' searchClient={searchClient} >
+            <InstantSearch indexName='faq_search' searchClient={searchClient}>
                 <SearchBox
                     placeholder="Введите ваш вопрос или ключевые слова"
                     classNames={{
@@ -71,8 +84,10 @@ export const SearchBar = () => {
                     )}
                     loadingIconComponent={() => <div className={styles.loadingSpinner}/>}
                 />
-                <Hits hitComponent={HitItem} />
+
+                <CustomHits hitComponent={HitItem}></CustomHits>
+
             </InstantSearch>
         </div>
     );
-};
+}

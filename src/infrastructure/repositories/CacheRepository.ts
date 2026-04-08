@@ -14,7 +14,6 @@ export class CacheRepository implements ICacheRepository {
 
         const categories = await redis.get("category:all");
         if (categories) return JSON.parse(categories)
-
         const result : CategoryWithQuestions[] = await this.categoryService.getAll()
         await redis.set("category:all", JSON.stringify(result), {EX : 300})
         await sync()
@@ -26,5 +25,4 @@ export class CacheRepository implements ICacheRepository {
         const res = await redis.set("category:all", JSON.stringify(categoryWithQuestions), {EX : 300})
         return res === "OK"
     }
-
 }

@@ -52,8 +52,9 @@ export function Container({title} : ContainerProps) {
         <>
             <div
                 className=' ml-70 mr-70 mt-9 w-[98%] h-[98%] md:w-[95%] md:h-[80%] bg-white rounded-[1em] md:rounded-[2em] flex flex-col justify-center align-center shadow-[0_2px_5px_1.5px_rgba(0,0,0,0.1)] md:shadow-[0_5px_15px_3px_rgba(0,0,0,0.1)]'>
-                <h1 className='mt-10 text-slate-700 mb-10 flex-auto flex justify-center text-[150%] md:text-[180%]'>{title}</h1>
-                <Suspense fallback={<div className="animate-pulse">Загрузка поиска...</div>}>
+                <h1 className='mt-10 text-slate-700 mb-15 flex-auto flex justify-center text-[150%] md:text-[180%]'>{title}</h1>
+
+                <Suspense>
                     <SearchBar></SearchBar>
                 </Suspense>
 
