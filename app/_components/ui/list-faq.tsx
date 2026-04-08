@@ -55,13 +55,19 @@ export default function ListFaq( { permission } : ListProps) {
         <div className='ml-7 mr-7 mb-4 mt-7'>
             {permission &&
                 categories.map(category => (
-                    <Category category={category} permission={permission}/>
-                )) &&
+                    <div key={category.category.id} >
+                        <Category category={category} permission={permission}/>
+                    </div>
+                ))
+            }
+            {permission &&
                 <Questions permission={permission}/>
             }
             {!permission &&
                 categories.map(category => (
-                    <Category category={category} permission={permission}/>
+                    <div key={category.category.id}>
+                        <Category category={category} permission={permission}/>
+                    </div>
                 ))
             }
         </div>

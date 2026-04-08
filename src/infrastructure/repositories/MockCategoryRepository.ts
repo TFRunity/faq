@@ -19,4 +19,8 @@ export class MockCategoryRepository implements ICategoryRepository {
         return Promise.resolve(category.id > 0)
     }
 
+    getWithoutQuestions(): Promise<Category[]> {
+        return Promise.resolve([])
+    }
+
 }

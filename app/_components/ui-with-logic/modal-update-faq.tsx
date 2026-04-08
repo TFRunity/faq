@@ -121,11 +121,11 @@ export default function ModalUpdateFaq({ questionWithAnswer, exitAction } : Upda
                         <img src='/icons/close.png'  width='15' height='15' />
                     </div>
                 </div>
-                <div className='w-1 bg-gray-300 cursor-col-resize' ></div>
-                <div className='modal-content flex flex-col gap-3'>
-                    {question && <input defaultValue={question} type='text' ref={questionInputRef} />}
-                    {answer && <input defaultValue={answer} type='text' ref={answerInputRef} />}
-                    {question && answer && <button onClick={submitChanges}>Сохранить</button>}
+                <div className='w-1 bg-gray-300 cursor-col-resize ' ></div>
+                <div className='modal-content flex flex-col gap-3 '>
+                    {question && <input defaultValue={question} className='border border-slate-400 rounded-md p-1' type='text' ref={questionInputRef} />}
+                    {answer && <input defaultValue={answer} className='border border-slate-400 rounded-md p-1' type='text' ref={answerInputRef} />}
+                    {question && answer && <button onClick={submitChanges} className='cursor-pointer mt-3 bg-slate-100 p-2' >Сохранить</button>}
                 </div>
             </div>
         </div>

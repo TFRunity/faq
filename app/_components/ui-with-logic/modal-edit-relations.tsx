@@ -1,14 +1,14 @@
 'use client'
 
 import "@/app/global-styles.css"
-import {ActionDispatch, useContext} from "react";
+import {ActionDispatch, useContext, useEffect, useState} from "react";
 import {CategoryWithQuestionsWithAnswerActions, QuestionWithAnswerActions} from "@/app/_hooks/faq-hooks";
 import {CategoriesDispatchContext, CategoriesStateContext, QuestionsDispatchContext} from "@/app/providers";
 import Image from "next/image";
 import {
     addRelationQuestionWithCategory,
     Category,
-    CategoryWithQuestionsWithAnswer,
+    CategoryWithQuestionsWithAnswer, getCategoriesWithoutQuestions, getQuestionsWithoutCategory,
     QuestionWithAnswer
 } from "@/app/_actions/faq-actions";
 
@@ -21,10 +21,16 @@ export function ModalEditRelations ({exitAction, questionWithAnswer} : ModalEdit
 
     const dispatchQuestions : ActionDispatch<[action : QuestionWithAnswerActions]> = useContext(QuestionsDispatchContext)
     const dispatchCategories : ActionDispatch<[action : CategoryWithQuestionsWithAnswerActions]> = useContext(CategoriesDispatchContext)
-    const categories : CategoryWithQuestionsWithAnswer[] = useContext(CategoriesStateContext)
+    const [categoriesMapped, setCategoriesMapped] = useState<Category[]>([]);
 
-    const categoriesMapped : Category[] = categories.map(c => c.category)
-
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const categories : Category[] = await getCategoriesWithoutQuestions()
+            setCategoriesMapped(categories)
+        }
+        fetchCategories()
+    })
+    
     const categoryInUse : Category | null = categoriesMapped.filter(c => c.id === questionWithAnswer.question.category_id)[0]
 
     const submit = async (category_id : number) => {

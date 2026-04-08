@@ -6,4 +6,5 @@ export interface ICategoryRepository {
     addEmpty() : Promise<CategoryWithQuestions>, //Добавление ПУСТОЙ КАТЕГОРИИ, title = НЕТ НАЗВАНИЯ, (или типо такого)
     delete(category_id: number) : Promise<boolean>, //Удаление категории из БД, автоматически зануляет для questions поле category_id
     changeTitle(category : Category) : Promise<boolean>, //Обновление title
+    getWithoutQuestions() : Promise<Category[]>,
 }

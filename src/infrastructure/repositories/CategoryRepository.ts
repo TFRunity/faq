@@ -5,6 +5,7 @@ import {answers, categories, questions} from "@/drizzle/schema";
 import {db} from "@/drizzle"
 import {IMappingFAQService} from "@/src/application/services/IMappingFAQService";
 import {eq} from "drizzle-orm";
+import {Question} from "@/app/_actions/faq-actions";
 
 export class CategoryRepository implements ICategoryRepository {
 
@@ -35,5 +36,10 @@ export class CategoryRepository implements ICategoryRepository {
             .innerJoin(questions, on => eq(categories.id, questions.category_id))
             .innerJoin(answers, on => eq(answers.id, questions.answer_id))
         return this.mappingService.convertRawCategoriesWithQuestions(raw)
+    }
+
+    async getWithoutQuestions() : Promise<Category[]> {
+        return await db!.select()
+            .from(categories)
     }
 }
