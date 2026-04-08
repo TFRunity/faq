@@ -5,7 +5,6 @@ import {ActionDispatch, useContext, useState} from "react";
 import {CategoriesDispatchContext} from "@/app/providers";
 import {CategoryWithQuestionsWithAnswerActions} from "@/app/_hooks/faq-hooks";
 import {createPortal} from "react-dom";
-import {ModalEditRelations} from "@/app/_components/ui-with-logic/modal-edit-relations";
 import {ModalAddFaq} from "@/app/_components/ui-with-logic/modal-add-faq";
 import "@/app/global-styles.css"
 

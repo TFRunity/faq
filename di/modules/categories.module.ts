@@ -1,12 +1,10 @@
 import {createModule, Module} from "@evyweb/ioctopus";
 import {DI_SYMBOLS} from "@/di/types";
-import {category_Cached_getAllController} from "@/src/i-adapters/controllers/Category_Cached_getAllController";
 import {category_addEmptyController} from "@/src/i-adapters/controllers/Category_addEmptyController";
 import {category_deleteController} from "@/src/i-adapters/controllers/Category_deleteController";
 import {category_changeTitleController} from "@/src/i-adapters/controllers/Category_changeTitleController";
 import {
     category_getWithoutQuestionsController,
-    ICategoryGetWithoutQuestionsController
 } from "@/src/i-adapters/controllers/Category_getWithoutQuestionsController";
 
 export function createCategoryModule() : Module {

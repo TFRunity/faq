@@ -6,13 +6,8 @@ export const client = new Typesense.Client({
         port: 8108,
         protocol: 'http'
     }],
-    apiKey: 'BSPD3ZRXU985', // ключ из настроек Docker
+    apiKey: process.env.TYPESENSE_API_KEY!, // ключ из настроек Docker
 });
-
-export const check = async()=>{
-    return await client.collections('faq_search').retrieve()
-
-}
 
 const schema :any = {
     'name': 'faq_search',
