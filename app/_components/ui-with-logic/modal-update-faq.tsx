@@ -1,25 +1,5 @@
 'use client'
 
-//модальное окно для обновления faq, делать через createportal
-/**
- *
- * @remarks
- * Модальное окно для карандашика
- *
- * @returns
- * Компонент
- *
- * @param faq = Faq для обработки данных
- * Вызывает 2 метода в зависимости от того, что именно было изменено. Если и вопрос и ответ, значит меняются оба, вызывается 2 метода.
- *
- * Примерная структура:
- *
- * <div>
- *     
- * </div>
- *
- */
-// import {Faq, updateAnswerFaq, updateQuestionFaq} from '@/app/_actions/faqActions'
 import {ActionDispatch, useContext, useRef, useState} from "react";
 import '@/app/global-styles.css'
 import {

@@ -1,12 +1,5 @@
 'use server'
 
-//Функции работы с вопросами-ответами
-//НЕ ДОЛЖНО БЫТЬ НИЧЕГО СВЯЗАНО С ONION-ARCH
-
-import {id} from "zod/locales";
-
-
-
 import {getInjection} from "@/di/container";
 
 export type Category = {
@@ -37,7 +30,6 @@ export type CategoryWithQuestionsWithAnswer = {
     questions : QuestionWithAnswer[] | null;
 };
 
-//МЕХАНИЗМ С БЕЗОПАСНОСТЬЮ, МНОГО ДУМАТЬ НАДО
 let isLoggedIn : boolean = false;
 
 export async function checkAdmin(name : string, password : string) : Promise<boolean> {

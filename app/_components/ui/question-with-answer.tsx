@@ -8,7 +8,6 @@ import ModalUpdateFaq from "@/app/_components/ui-with-logic/modal-update-faq";
 import "@/app/global-styles.css"
 import {ModalDeleteQuestion} from "@/app/_components/ui-with-logic/modal-delete-question";
 import {ModalEditRelations} from "@/app/_components/ui-with-logic/modal-edit-relations";
-import {create} from "node:domain";
 import {ModalHistoryAnswers} from "@/app/_components/ui-with-logic/modal-history-answers";
 
 

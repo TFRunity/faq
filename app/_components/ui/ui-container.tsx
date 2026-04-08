@@ -1,7 +1,7 @@
 'use client'
 
 import '@/app/global-styles.css'
-import React, {createContext, Suspense, useContext, useState} from "react";
+import React, { Suspense, useState} from "react";
 import Image from "next/image";
 import {createPortal} from "react-dom";
 import ListFaq from "@/app/_components/ui/list-faq";
@@ -9,28 +9,6 @@ import AdminPanel from "@/app/_components/ui/modal-admin-panel";
 import {AdminButtons} from "@/app/_components/ui-with-logic/admin-buttons";
 import {SearchBar} from "@/app/_components/ui-with-logic/searchbar";
 import Loading from "@/app/loading";
-// import {ReactElement, useEffect, useState} from "react";
-// import {AdminPanelProps} from "@/app/_components/ui/admin-panel";
-// import AdminPanel from "@/app/_components/ui/admin-panel"
-// import ListFaq from "@/app/_components/ui-with-logic/list-faq";
-// import {createPortal} from "react-dom";
-
-/**
- *
- * @remarks
- * Внутри рендерится весь faq
- * Будут компоненты:
- * <AdminPanel/>
- * <List/>
- *
- * @param title Заголовок компонента
- * @param path Адрес картинки, используемой в компоненте НАД заголовком
- *
- * @returns
- * Компонент
- *
- *
- */
 
 
 export type ContainerProps = {

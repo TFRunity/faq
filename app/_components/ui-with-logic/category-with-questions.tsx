@@ -1,8 +1,7 @@
 'use client'
 
 import {CategoryWithQuestionsWithAnswer} from "@/app/_actions/faq-actions";
-import React, {useContext, useState} from "react";
-import {CategoriesDispatchContext} from "@/app/providers";
+import React, { useState} from "react";
 import Question from "@/app/_components/ui/question-with-answer";
 import Image from "next/image";
 import {createPortal} from "react-dom";

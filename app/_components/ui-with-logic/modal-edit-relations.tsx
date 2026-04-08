@@ -3,12 +3,12 @@
 import "@/app/global-styles.css"
 import {ActionDispatch, useContext, useEffect, useState} from "react";
 import {CategoryWithQuestionsWithAnswerActions, QuestionWithAnswerActions} from "@/app/_hooks/faq-hooks";
-import {CategoriesDispatchContext, CategoriesStateContext, QuestionsDispatchContext} from "@/app/providers";
+import {CategoriesDispatchContext, QuestionsDispatchContext} from "@/app/providers";
 import Image from "next/image";
 import {
     addRelationQuestionWithCategory,
     Category,
-    CategoryWithQuestionsWithAnswer, getCategoriesWithoutQuestions, getQuestionsWithoutCategory,
+     getCategoriesWithoutQuestions,
     QuestionWithAnswer
 } from "@/app/_actions/faq-actions";
 

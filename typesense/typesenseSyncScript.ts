@@ -1,5 +1,3 @@
-import { Client } from 'pg';
-import Typesense from 'typesense';
 import {client, setupSchema} from '@/typesense/typesenseSchema'
 import {db} from "@/drizzle";
 import {answers, questions} from "@/drizzle/schema";
