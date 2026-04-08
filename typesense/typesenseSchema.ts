@@ -17,9 +17,9 @@ export const check = async()=>{
 const schema :any = {
     'name': 'faq_search',
     'fields': [
-        { name: 'id', type: 'string' },
-        { name: 'question', type: 'string' },
-        { name: 'answer', type: 'string' },
+        { name: 'id', type: 'string', locale: "ru" },
+        { name: 'question', type: 'string', locale: "ru" },
+        { name: 'answer', type: 'string', locale: "ru" },
     ],
 };
 

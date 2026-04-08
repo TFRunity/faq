@@ -36,7 +36,7 @@ export default function Category({category, permission} : CategoryProps) {
     }
 
     return (
-        <>
+        <div className="mb-7">
             <div>
                 <h3>{category.category.title}</h3>
                 {permission &&
@@ -68,7 +68,7 @@ export default function Category({category, permission} : CategoryProps) {
                     ))
                 }
             </div>
-        </>
+        </div>
     )
 
 }
