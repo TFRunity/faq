@@ -4,6 +4,8 @@ import styles from "./searchbar.module.css";
 import {InstantSearch, Hits, SearchBox} from "react-instantsearch";
 import {searchClient} from "@/typesense/typesenseAdapter";
 import { useInstantSearch } from 'react-instantsearch';
+import Image from "next/image";
+import React from "react";
 
 type CustomHitsProps = {
     hitComponent : any
@@ -52,44 +54,15 @@ export function SearchBar() {
                         reset: styles.resetButton,
                     }}
                     submitIconComponent={() => (
-                        <svg
-                            //иконка лупы
-                            className={styles.searchIcon}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
-                        </svg>
+                        <Image src='/icons/lupa.png' width='24' height='24' alt='search' />
                     )}
                     resetIconComponent={() => (
-                        <svg
-                            //иконка крестика
-                            className={styles.closeIcon}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        </svg>
+                        <Image src='/icons/delete.png' width='24' height='24' alt='clean' />
                     )}
                     loadingIconComponent={() => <div className={styles.loadingSpinner}/>}
                 />
 
                 <CustomHits hitComponent={HitItem}></CustomHits>
-
             </InstantSearch>
         </div>
     );

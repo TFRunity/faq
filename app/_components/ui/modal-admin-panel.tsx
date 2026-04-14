@@ -4,6 +4,8 @@ import '@/app/global-styles.css'
 import {ReactElement, useEffect, useRef, useState} from "react";
 import React from "react";
 import {checkAdmin} from "@/app/_actions/faq-actions";
+import styles from "@/app/_components/ui-with-logic/searchbar.module.css";
+import Image from "next/image";
 
 export type AdminPanelProps = {
     givePermissionsAction: () => void
@@ -35,14 +37,16 @@ export default function AdminPanel({givePermissionsAction, exitAction} : AdminPa
                 <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
                     <h3>Админ-панель</h3>
                     <div className='cursor-pointer mt-1' onClick={exitAction}>
-                        <img src='/icons/close.png' width='15' height='15'></img>
+                        <Image src='/icons/close.png' width='24' height='24' alt='close' />
                     </div>
                 </div>
                 <div className='w-1 bg-gray-300 cursor-col-resize'></div>
                 <div className='modal-content flex flex-col gap-3'>
-                    <input className='border border-slate-400 rounded-md p-1' type='text' defaultValue='' ref={nameInputRef} />
-                    <input className='border border-slate-400 rounded-md p-1' type='text' defaultValue='' ref={passwordInputRef} />
-                    <button className='cursor-pointer mt-3 bg-slate-100 p-2' onClick={logIn} >Войти</button>
+                    <input className='border border-slate-400 rounded-md p-1' type='text' defaultValue=''
+                           ref={nameInputRef}/>
+                    <input className='border border-slate-400 rounded-md p-1' type='text' defaultValue=''
+                           ref={passwordInputRef}/>
+                    <button className='cursor-pointer mt-3 bg-slate-100 p-2' onClick={logIn}>Войти</button>
                 </div>
             </div>
         </div>

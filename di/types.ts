@@ -24,19 +24,22 @@ import {
 import {IQuestionUpdateQuestionController} from "@/src/i-adapters/controllers/Question_updateQuestionController";
 import {
     IQuestionGetAllWithoutCategoryController
-} from "@/src/i-adapters/controllers/Question_getAllWithoutCategoryController";
-import {ICacheRepository} from "@/src/application/repositories/ICacheRepository";
+} from "@/src/i-adapters/controllers/Question_Cached_getAllWithoutCategoryController";
+import {ICategoryCacheRepository} from "@/src/application/repositories/ICategoryCacheRepository";
 import {
     ICategoryGetWithoutQuestionsController
 } from "@/src/i-adapters/controllers/Category_getWithoutQuestionsController";
+import {IQuestionCacheRepository} from "@/src/application/repositories/IQuestionCacheRepository";
+import {ICategoryUpdateCacheController} from "@/src/i-adapters/controllers/Category_UpdateCache_Controller";
+import {IQuestionUpdateCacheController} from "@/src/i-adapters/controllers/Question_UpdateCache_Controller";
 
 export const DI_SYMBOLS = {
     //Repositories
     IAnswerRepository: Symbol.for("IAnswerRepository"),
     ICategoryRepository: Symbol.for("ICategoryRepository"),
     IQuestionRepository: Symbol.for("IQuestionRepository"),
-    ICacheRepository: Symbol.for("ICacheRepository"),
-
+    ICategoryCacheRepository: Symbol.for("ICategoryCacheRepository"),
+    IQuestionCacheRepository: Symbol.for("IQuestionCacheRepository"),
 
     //Services
     IMappingFAQService: Symbol.for('IMappingFAQService'),
@@ -47,6 +50,7 @@ export const DI_SYMBOLS = {
     ICategoryDeleteController: Symbol.for("ICategoryDeleteController"),
     ICategoryChangeTitleController: Symbol.for("ICategoryChangeTitleController"),
     ICategoryGetWithoutQuestionsController : Symbol.for("ICategoryGetWithoutQuestionsController"),
+    ICategoryUpdateCacheController : Symbol.for("ICategoryUpdateCacheController"),
 
     IAnswerDeleteForceController: Symbol.for("IAnswerDeleteForceController"),
 
@@ -60,6 +64,7 @@ export const DI_SYMBOLS = {
     IQuestionGetAllWithoutCategoryController : Symbol.for("IQuestionGetAllWithoutCategoryController"),
     IQuestionGetWithHistoryOfAnswersController : Symbol.for("IQuestionGetWithHistoryOfAnswersController"),
     IQuestionUpdateQuestionController : Symbol.for("IQuestionUpdateQuestionController"),
+    IQuestionUpdateCacheController : Symbol.for("IQuestionUpdateCacheController"),
 }
 
 
@@ -68,7 +73,8 @@ export interface DI_RETURN_TYPES {
     IAnswerRepository: IAnswerRepository;
     ICategoryRepository: ICategoryRepository;
     IQuestionRepository: IQuestionRepository;
-    ICacheRepository: ICacheRepository;
+    ICategoryCacheRepository: ICategoryCacheRepository;
+    IQuestionCacheRepository: IQuestionCacheRepository;
 
     //Services
     IMappingFAQService : IMappingFAQService
@@ -79,6 +85,7 @@ export interface DI_RETURN_TYPES {
     ICategoryDeleteController : ICategoryDeleteController;
     ICategoryChangeTitleController : ICategoryChangeTitleController;
     ICategoryGetWithoutQuestionsController : ICategoryGetWithoutQuestionsController;
+    ICategoryUpdateCacheController : ICategoryUpdateCacheController;
 
     IAnswerDeleteForceController : IAnswerDeleteForceController;
 
@@ -92,4 +99,5 @@ export interface DI_RETURN_TYPES {
     IQuestionGetAllWithoutCategoryController : IQuestionGetAllWithoutCategoryController;
     IQuestionGetWithHistoryOfAnswersController : IQuestionGetWithHistoryOfAnswersController;
     IQuestionUpdateQuestionController : IQuestionUpdateQuestionController;
+    IQuestionUpdateCacheController : IQuestionUpdateCacheController;
 }

@@ -7,24 +7,22 @@ import {QuestionRepository} from "@/src/infrastructure/repositories/QuestionRepo
 import {MockAnswerRepository} from "@/src/infrastructure/repositories/MockAnswerRepository";
 import {MockCategoryRepository} from "@/src/infrastructure/repositories/MockCategoryRepository";
 import {MockQuestionRepository} from "@/src/infrastructure/repositories/MockQuestionRepository";
-import {CacheRepository} from "@/src/infrastructure/repositories/CacheRepository";
+import {CategoryCacheRepository} from "@/src/infrastructure/repositories/CategoryCacheRepository";
+import {QuestionCacheRepository} from "@/src/infrastructure/repositories/QuestionCacheRepository";
 
 export function createFaqModule() : Module {
     const faqModule : Module = createModule()
 
 
-    //Переписать
-    if (process.env.NODE_ENV === "test") {
-        faqModule.bind(DI_SYMBOLS.ICacheRepository)
-            .toClass(CacheRepository, [
-                DI_SYMBOLS.ICategoryRepository
-            ])
-    }else{
-        faqModule.bind(DI_SYMBOLS.ICacheRepository)
-            .toClass(CacheRepository, [
-                DI_SYMBOLS.ICategoryRepository
-            ])
-    }
+    faqModule.bind(DI_SYMBOLS.ICategoryCacheRepository)
+        .toClass(CategoryCacheRepository, [
+            DI_SYMBOLS.ICategoryRepository
+        ])
+
+    faqModule.bind(DI_SYMBOLS.IQuestionCacheRepository)
+        .toClass(QuestionCacheRepository, [
+            DI_SYMBOLS.IQuestionRepository
+        ])
 
     if (process.env.NODE_ENV === "test") {
         faqModule.bind(DI_SYMBOLS.ICategoryRepository)

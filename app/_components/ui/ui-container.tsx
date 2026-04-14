@@ -39,8 +39,8 @@ export function Container({title} : ContainerProps) {
                 }
                 <ListFaq permission={permission}/>
                 {!permission &&
-                    <div className='cursor-pointer content-end mb-5 mt-5 ml-auto mr-7' onClick={openAdminModal}>
-                        <Image src='/icons/admin.png' width='30' height='30' alt={'Админ'} loading='eager'/>
+                    <div className='cursor-pointer content-end mb-8 mt-7 ml-auto mr-8' onClick={openAdminModal}>
+                        <Image src='/icons/admin.png' width='24' height='24' alt='admin' />
                     </div>
                 }
                 {showModal && createPortal(

@@ -7,7 +7,7 @@ import {question_addWithAnswerController} from "@/src/i-adapters/controllers/Que
 import {question_changeAnswerToPreviousController} from "@/src/i-adapters/controllers/Question_changeAnswerToPreviousController";
 import {question_deleteController} from "@/src/i-adapters/controllers/Question_deleteController";
 import {question_deleteRelWithCategoriesController} from "@/src/i-adapters/controllers/Question_deleteRelWithCategoriesController";
-import {question_getAllWithoutCategoryController} from "@/src/i-adapters/controllers/Question_getAllWithoutCategoryController";
+import {question_Cached_getAllWithoutCategoryController} from "@/src/i-adapters/controllers/Question_Cached_getAllWithoutCategoryController";
 import {question_getWithHistoryOfAnswersController} from "@/src/i-adapters/controllers/Question_getWithHistoryOfAnswersController";
 import {question_updateQuestionController} from "@/src/i-adapters/controllers/Question_updateQuestionController";
 
@@ -40,10 +40,6 @@ export function createQuestionModule() : Module {
         ]);
     questionModule.bind(DI_SYMBOLS.IQuestionDeleteRelWithCategoriesController)
         .toHigherOrderFunction(question_deleteRelWithCategoriesController, [
-            DI_SYMBOLS.IQuestionRepository
-        ]);
-    questionModule.bind(DI_SYMBOLS.IQuestionGetAllWithoutCategoryController)
-        .toHigherOrderFunction(question_getAllWithoutCategoryController, [
             DI_SYMBOLS.IQuestionRepository
         ]);
     questionModule.bind(DI_SYMBOLS.IQuestionGetWithHistoryOfAnswersController)
