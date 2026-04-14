@@ -1,7 +1,7 @@
 'use client'
 
 import "@/app/global-styles.css"
-import {ActionDispatch, useContext, useEffect, useState} from "react";
+import React, {ActionDispatch, useContext, useEffect, useState} from "react";
 import {CategoryWithQuestionsWithAnswerActions, QuestionWithAnswerActions} from "@/app/_hooks/faq-hooks";
 import {CategoriesDispatchContext, QuestionsDispatchContext} from "@/app/providers";
 import Image from "next/image";
@@ -11,6 +11,7 @@ import {
      getCategoriesWithoutQuestions,
     QuestionWithAnswer
 } from "@/app/_actions/faq-actions";
+import styles from "@/app/_components/ui-with-logic/searchbar.module.css";
 
 type ModalEditRelationsProps = {
     questionWithAnswer : QuestionWithAnswer,
@@ -71,7 +72,7 @@ export function ModalEditRelations ({exitAction, questionWithAnswer} : ModalEdit
                 <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
                     <h3>Привязка вопроса к категории</h3>
                     <div onClick={exitAction}>
-                        <Image src='/icons/close.png' width='15' height='15' alt='X' loading='lazy'/>
+                        <Image src='/icons/close.png' width='24' height='24' alt='close' />
                     </div>
                 </div>
                 <div className='w-1 bg-gray-300 cursor-col-resize'></div>

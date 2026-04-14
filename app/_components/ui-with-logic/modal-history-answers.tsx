@@ -1,7 +1,8 @@
 'use client'
 
 import {Answer, getQuestionAllAnswers, Question, QuestionWithAnswers} from "@/app/_actions/faq-actions";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
+import Image from "next/image";
 
 
 type ModalHistoryAnswersProps = {
@@ -28,7 +29,7 @@ export function ModalHistoryAnswers ({questionToUpdate, exitAction} : ModalHisto
                 <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
                     <h3>Просмотр прошлых ответов</h3>
                     <div onClick={exitAction}>
-                        <img src='/icons/close.png' width='15' height='15'/>
+                        <Image src='/icons/close.png' width='24' height='24' alt='close' />
                     </div>
                 </div>
                 <div className='w-1 bg-gray-300 cursor-col-resize'></div>

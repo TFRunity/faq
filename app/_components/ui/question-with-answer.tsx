@@ -9,6 +9,7 @@ import "@/app/global-styles.css"
 import {ModalDeleteQuestion} from "@/app/_components/ui-with-logic/modal-delete-question";
 import {ModalEditRelations} from "@/app/_components/ui-with-logic/modal-edit-relations";
 import {ModalHistoryAnswers} from "@/app/_components/ui-with-logic/modal-history-answers";
+import styles from "@/app/_components/ui-with-logic/searchbar.module.css";
 
 
 
@@ -61,32 +62,33 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
         <div className='flex flex-col columns-10'>
             <div className='m-1'>
                 <div className='rounded-lg bg-slate-100 flex justify-between'>
-                    <h3 className=' text-slate-900 text-[120%] mt-3 ml-3 mb-2'>{questionWithAnswer.question.question ? questionWithAnswer.question.question : "Пустой вопрос"}</h3>
+                    <h3 className=' text-slate-900 text-[120%] mt-3 ml-6 mb-3'>{questionWithAnswer.question.question ? questionWithAnswer.question.question : "Пустой вопрос"}</h3>
                     <div className='flex text-slate-600 text-[130%] cursor-pointer mt-3 mr-3 mb-2'>
                         {permission &&
                             <>
                                 <div onClick={openModalChange}
-                                     className='cursor-pointer content-end ml-auto mr-7 flex-row'>
-                                    <Image src={"/icons/pencil.png"} width='30' height='30' alt={"Изменить"}
-                                           loading="lazy"/>
+                                     className='cursor-pointer content-end ml-auto mr-7 flex-row mb-1'>
+                                    <Image src='/icons/edit.png' width='24' height='24' alt='edit' />
                                 </div>
                                 <div onClick={openModalDelete}
-                                     className='cursor-pointer content-end ml-auto mr-7 flex-row'>
-                                    <Image src={"/icons/close.png"} width='30' height='30' alt={"X"}
-                                           loading="lazy"/>
+                                     className='cursor-pointer content-end ml-auto mr-7 flex-row mb-1'>
+                                    <Image src='/icons/delete.png' width='24' height='24' alt='delete' />
                                 </div>
                                 <div onClick={openModalRelationship}
-                                     className='cursor-pointer content-end ml-auto mr-7 flex-row'>
-                                    <Image src={"/icons/relation.png"} width='30' height='30' alt={"Связь"}
-                                           loading="lazy"/>
+                                     className='cursor-pointer content-end ml-auto mr-7 mb-1 flex-row '>
+                                    <Image src='/icons/rel.png' width='24' height='24' alt='relation' />
                                 </div>
-                                <div onClick={openModalHistory} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
-                                    <Image src={"/icons/column.png"} width='30' height='30' alt={"История"}
-                                           loading="lazy"/>
+                                <div onClick={openModalHistory}
+                                     className='cursor-pointer content-end ml-auto mr-7 mb-1 flex-row'>
+                                    <Image src='/icons/history.png' width='24' height='24' alt='history' />
                                 </div>
                             </>
                         }
-                        <h2 onClick={toggleAnswer}>{!toggle ? '+' : '-'}</h2>
+                        <div onClick={toggleAnswer} className='cursor-pointer content-end ml-auto mr-2 mb-1 flex-row'>{!toggle ?
+                            <Image src='/icons/arrow-up.png' width='24' height='24' alt='+' />
+                            :
+                            <Image src='/icons/arrow-down.png' width='24' height='24' alt='-' />
+                        }</div>
                     </div>
                 </div>
                 {showModalHistory && createPortal(
@@ -106,7 +108,7 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
                     document.body
                 )}
             </div>
-            <div className='text-slate-600 mt-3 ml-3 mb-2' style={{ display : toggle ? 'flex' : 'none' }}>
+            <div className='text-slate-600 mt-3 ml-3 mb-3 ml-7' style={{ display : toggle ? 'flex' : 'none' }}>
                 <h3 className='text-slate-700 text-[120%] '>{questionWithAnswer.answer && questionWithAnswer.answer.answer ? questionWithAnswer.answer.answer : "Нет ответа"}</h3>
             </div>
         </div>

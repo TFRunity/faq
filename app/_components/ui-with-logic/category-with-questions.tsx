@@ -8,6 +8,7 @@ import {createPortal} from "react-dom";
 import {ModalUpdateCategoryTitle} from "@/app/_components/ui-with-logic/modal-update-category-title";
 import {ModalDeleteCategory} from "@/app/_components/ui-with-logic/modal-delete-category";
 import "@/app/global-styles.css"
+import styles from "@/app/_components/ui-with-logic/searchbar.module.css";
 
 
 export interface CategoryProps {
@@ -35,28 +36,28 @@ export default function Category({category, permission} : CategoryProps) {
     }
 
     return (
-        <div className="mb-7">
-            <div className="flex justify-between w-full">
-                <h3>{category.category.title}</h3>
+        <div className="mb-7 ">
+            <div className="flex justify-between">
+                <h3 className='text-slate-600 mb-1 ml-1'>{category.category.title}</h3>
                 {permission &&
-                    <div className='flex'>
+                    <div className='flex ml-7 mb-1'>
                         <div onClick={openModalChange} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
-                            <Image src={"/icons/pencil.png"} width='30' height='30' alt={"Изменить"}
-                                   loading="lazy"/>
+                            {/*иконка карандаша - редактировать*/}
+                            <Image src='/icons/edit.png' alt='edit' width='24' height='24'/>
+
                         </div>
                         <div onClick={openModalDelete} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
-                            <Image src={"/icons/close.png"} width='30' height='30' alt={"Удалить"}
-                                   loading="lazy"/>
+                            <Image src='/icons/delete.png' alt='delete' width='24' height='24'/>
                         </div>
                     </div>
 
                 }
                 {modalChange && createPortal(
-                    <ModalUpdateCategoryTitle exitAction={closeModalChange} toUpdateCategory={category.category} />,
+                    <ModalUpdateCategoryTitle exitAction={closeModalChange} toUpdateCategory={category.category}/>,
                     document.body
                 )}
                 {modalDelete && createPortal(
-                    <ModalDeleteCategory exitAction={closeModalDelete} toDeleteCategory={category} />,
+                    <ModalDeleteCategory exitAction={closeModalDelete} toDeleteCategory={category}/>,
                     document.body
                 )}
             </div>
@@ -64,7 +65,7 @@ export default function Category({category, permission} : CategoryProps) {
                 {category.questions &&
                     category.questions.map(question => (
                         <div key={question.question.id}>
-                            <Question questionWithAnswer={question} permission={permission} />
+                            <Question questionWithAnswer={question} permission={permission}/>
                         </div>
                     ))
                 }

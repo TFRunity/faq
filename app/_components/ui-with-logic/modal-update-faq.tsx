@@ -1,6 +1,6 @@
 'use client'
 
-import {ActionDispatch, useContext, useRef, useState} from "react";
+import React, {ActionDispatch, useContext, useRef, useState} from "react";
 import '@/app/global-styles.css'
 import {
     QuestionWithAnswer,
@@ -9,6 +9,8 @@ import {
 } from "@/app/_actions/faq-actions";
 import {CategoriesDispatchContext, QuestionsDispatchContext} from "@/app/providers";
 import {CategoryWithQuestionsWithAnswerActions, QuestionWithAnswerActions} from "@/app/_hooks/faq-hooks";
+import styles from "@/app/_components/ui-with-logic/searchbar.module.css";
+import Image from "next/image";
 
 export interface UpdateFaqProps {
     questionWithAnswer : QuestionWithAnswer,
@@ -98,14 +100,19 @@ export default function ModalUpdateFaq({ questionWithAnswer, exitAction } : Upda
                 <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
                     <h3>Обновление Faq</h3>
                     <div onClick={closeDialog}>
-                        <img src='/icons/close.png'  width='15' height='15' />
+                        <Image src='/icons/close.png' width='24' height='24' alt='close' />
                     </div>
                 </div>
-                <div className='w-1 bg-gray-300 cursor-col-resize ' ></div>
+                <div className='w-1 bg-gray-300 cursor-col-resize '></div>
                 <div className='modal-content flex flex-col gap-3 '>
-                    {question && <input defaultValue={question} className='border border-slate-400 rounded-md p-1' type='text' ref={questionInputRef} />}
-                    {answer && <input defaultValue={answer} className='border border-slate-400 rounded-md p-1' type='text' ref={answerInputRef} />}
-                    {question && answer && <button onClick={submitChanges} className='cursor-pointer mt-3 bg-slate-100 p-2' >Сохранить</button>}
+                    {question &&
+                        <input defaultValue={question} className='border border-slate-400 rounded-md p-1' type='text'
+                               ref={questionInputRef}/>}
+                    {answer &&
+                        <input defaultValue={answer} className='border border-slate-400 rounded-md p-1' type='text'
+                               ref={answerInputRef}/>}
+                    {question && answer && <button onClick={submitChanges}
+                                                   className='cursor-pointer mt-3 bg-slate-100 p-2'>Сохранить</button>}
                 </div>
             </div>
         </div>

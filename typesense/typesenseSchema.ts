@@ -6,7 +6,7 @@ export const client = new Typesense.Client({
         port: 8108,
         protocol: 'http'
     }],
-    apiKey: process.env.TYPESENSE_API_KEY!, // ключ из настроек Docker
+    apiKey: process.env.NEXT_PUBLIC_TYPESENSE_SEARCH_ONLY_API_KEY!, // ключ из настроек Docker
 });
 
 const schema :any = {
@@ -23,7 +23,7 @@ export async function setupSchema() {
     try {
         await client.collections('faq_search').delete();
     } catch (e) {
-        throw e;
+
     }
     await client.collections().create(schema);
 }
