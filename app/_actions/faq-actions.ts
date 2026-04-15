@@ -1,6 +1,9 @@
 'use server'
 
 import {getInjection} from "@/di/container";
+import {cookies} from "next/headers";
+import {jwtVerify, SignJWT} from "jose";
+import {ReadonlyRequestCookies} from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
 export type Category = {
     id : number;
@@ -30,15 +33,28 @@ export type CategoryWithQuestionsWithAnswer = {
     questions : QuestionWithAnswer[] | null;
 };
 
-let isLoggedIn : boolean = false;
-
 export async function checkAdmin(name : string, password : string) : Promise<boolean> {
     if (name !== process.env.ADMIN_NAME && password !== process.env.ADMIN_PASSWORD) {
         return false
     }else{
-       isLoggedIn = true;
+        const cookieStore : ReadonlyRequestCookies = await cookies();
+        const secret  = new TextEncoder().encode(process.env.ADMIN_SECRET);
+        const token = await new SignJWT({sub: name, password: password})
+            .setProtectedHeader({alg: 'HS256'})
+            .setIssuedAt()
+            .setExpirationTime('3h')
+            .sign(secret)
+        cookieStore.set('jwt',token)
+        return true;
     }
-    return true
+}
+export async function isAuthorized() : Promise<boolean> {
+    const cookieStore : ReadonlyRequestCookies = await cookies();
+    const jwt : string | undefined = cookieStore.get('jwt')?.value
+    if (jwt === undefined) return false;
+    const secret  = new TextEncoder().encode(process.env.ADMIN_SECRET);
+    const a = await jwtVerify(jwt, secret)
+    return a.payload.sub === process.env.ADMIN_NAME!;
 }
 
 export async function getAllWithLatestAnswers() : Promise<CategoryWithQuestionsWithAnswer[]> {
@@ -46,7 +62,7 @@ export async function getAllWithLatestAnswers() : Promise<CategoryWithQuestionsW
     return await getAllController();
 }
 export async function addEmptyCategory() : Promise<CategoryWithQuestionsWithAnswer> {
-    if (isLoggedIn) {
+    if (await isAuthorized()) {
         const addEmptyCategoryController : () => Promise<CategoryWithQuestionsWithAnswer> = getInjection('ICategoryAddEmptyController')
         const c : CategoryWithQuestionsWithAnswer = await addEmptyCategoryController();
         const updateCacheController : () => Promise<boolean> = getInjection('ICategoryUpdateCacheController')
@@ -61,7 +77,7 @@ export async function addEmptyCategory() : Promise<CategoryWithQuestionsWithAnsw
     return {category : {id : -1, title : "Не пытайся сломать"}, questions : []}
 }
 export async function forceDeleteAnswer(id : number) : Promise<boolean> {
-    if (isLoggedIn) {
+    if (await isAuthorized()) {
         const forceDeleteAnswerController : (answer_id : number) => Promise<boolean> = getInjection("IAnswerDeleteForceController")
         const res : boolean =  await forceDeleteAnswerController(id)
         if (res) {
@@ -72,7 +88,7 @@ export async function forceDeleteAnswer(id : number) : Promise<boolean> {
     return false;
 }
 export async function deleteCategory(id : number) : Promise<boolean> {
-    if (isLoggedIn) {
+    if (await isAuthorized()) {
         const deleteCategoryController : (category_id : number) => Promise<boolean> = getInjection('ICategoryDeleteController')
         const res : boolean = await deleteCategoryController(id)
         if (res) {
@@ -87,7 +103,7 @@ export async function deleteCategory(id : number) : Promise<boolean> {
     return false
 }
 export async function changeTitleCategory(category : Category) : Promise<boolean> {
-    if (isLoggedIn) {
+    if (await isAuthorized()) {
         const changeTitleCategoryController : (category : Category) => Promise<boolean> = getInjection('ICategoryChangeTitleController')
         const res : boolean = await changeTitleCategoryController(category)
         if (res) {
@@ -107,7 +123,7 @@ export async function getQuestionsWithoutCategory() : Promise<QuestionWithAnswer
     return await getQuestionsController()
 }
 export async function updateQuestionOfQuestion(id : number, newQuestion : string) : Promise<QuestionWithAnswer> {
-    if (isLoggedIn) {
+    if (await isAuthorized()) {
         const updateQuestionOfQuestionController : (question_id : number, question : string) => Promise<QuestionWithAnswer> = getInjection('IQuestionUpdateQuestionController')
         const question : QuestionWithAnswer = await updateQuestionOfQuestionController(id, newQuestion)
         const updateQuestionCacheController : () => Promise<boolean> = getInjection('IQuestionUpdateCacheController')
@@ -119,7 +135,7 @@ export async function updateQuestionOfQuestion(id : number, newQuestion : string
     return {question : {question : 'Не трогай', id : -1, answer_id : null, category_id : null}, answer : null}
 }
 export async function updateAnswerOfQuestion(id : number, newAnswer : string) : Promise<QuestionWithAnswer> {
-    if (isLoggedIn) {
+    if (await isAuthorized()) {
         const updateAnswerOfQuestionController : (question_id : number, answer : string)  => Promise<QuestionWithAnswer> = getInjection('IQuestionAddAnswerController')
         const question : QuestionWithAnswer = await updateAnswerOfQuestionController(id, newAnswer)
         const updateQuestionCacheController : () => Promise<boolean> = getInjection('IQuestionUpdateCacheController')
@@ -131,27 +147,27 @@ export async function updateAnswerOfQuestion(id : number, newAnswer : string) : 
     return {question : {question : 'Не трогай', id : -1, answer_id : null, category_id : null}, answer : null}
 }
 export async function addQuestion(question : string) : Promise<QuestionWithAnswer> {
-    if (isLoggedIn) {
+    if (await isAuthorized()) {
         const addQuestionController : (question : string) => Promise<QuestionWithAnswer> = getInjection('IQuestionAddController')
         const _question : QuestionWithAnswer = await addQuestionController(question)
         const updateCacheController : () => Promise<boolean> = getInjection('IQuestionUpdateCacheController')
-        const res : boolean = await updateCacheController();
+        await updateCacheController();
         return _question
     }
     return {question : {question : 'Не трогай', id : -1, answer_id : null, category_id : null}, answer : null}
 }
 export async function addQuestionWithAnswer(question : string, answer : string) : Promise<QuestionWithAnswer> {
-    if (isLoggedIn) {
+    if (await isAuthorized()) {
         const addQuestionWithAnswerController = getInjection('IQuestionAddWithAnswerController')
         const _question : QuestionWithAnswer = await addQuestionWithAnswerController(question, answer)
         const updateCacheController : () => Promise<boolean> = getInjection('IQuestionUpdateCacheController')
-        const res : boolean = await updateCacheController();
+        await updateCacheController();
         return _question
     }
     return {question : {question : 'Не трогай', id : -1, answer_id : null, category_id : null}, answer : null}
 }
 export async function deleteQuestion(id : number) : Promise<boolean> {
-    if (isLoggedIn) {
+    if (await isAuthorized()) {
         const deleteQuestionController : (question_id : number) => Promise<boolean> = getInjection('IQuestionDeleteController')
         const result : boolean = await deleteQuestionController(id)
         const updateQuestionCacheController : () => Promise<boolean> = getInjection('IQuestionUpdateCacheController')
@@ -163,7 +179,7 @@ export async function deleteQuestion(id : number) : Promise<boolean> {
     return false;
 }
 export async function addRelationQuestionWithCategory(question_id : number, category_id : number) : Promise<boolean> {
-    if (isLoggedIn) {
+    if (await isAuthorized()) {
         const addRelationQuestionWithCategoryController = getInjection('IQuestionAddRelWithCategoriesController')
         const result : boolean = await addRelationQuestionWithCategoryController(question_id, category_id)
         if (result) {
