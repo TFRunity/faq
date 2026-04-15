@@ -18,32 +18,32 @@ export function ModalAddFaq({exitAction} : ModalAddFaqProps) {
 
     const answerInputRef = useRef<HTMLInputElement>(null)
     const questionInputRef = useRef<HTMLInputElement>(null)
-    const [answer, setAnswer] = useState<string>("")
-    const [question, setQuestion] = useState<string>("")
 
-    const submitChanges = async () => {
-        setQuestion(questionInputRef.current!.value)
-        setAnswer(answerInputRef.current!.value)
+    const submitChanges : () => Promise<void> = async () => {
+        const question : string = questionInputRef.current!.value
+        const answer : string = answerInputRef.current!.value
         if (question === "" && answer === "") {
             alert("Пожалуйста, введите вопрос")
+
         }
         if (question !== "" && answer !== "") {
-            const newQuestionWithAnswer : QuestionWithAnswer = await addQuestionWithAnswer(questionInputRef.current!.value!, answerInputRef.current!.value!)
+            const newQuestionWithAnswer : QuestionWithAnswer = await addQuestionWithAnswer(question, answer)
             dispatchQuestion({
                 type : "ADD_QUESTION",
                 questionWithAnswer : newQuestionWithAnswer
             })
             alert("Успешно добавился вопрос, (с ответом), на модерацию")
+            exitAction()
         }
-        if (question !== "") {
-            const newQuestion : QuestionWithAnswer = await addQuestion(questionInputRef.current!.value!)
+        else if (question !== "" && answer === "") {
+            const newQuestion : QuestionWithAnswer = await addQuestion(question)
             dispatchQuestion({
                 type : "ADD_QUESTION",
                 questionWithAnswer : newQuestion
             })
             alert("Успешно добавился вопрос на модерацию")
+            exitAction()
         }
-        exitAction()
     }
 
     return (
@@ -57,8 +57,8 @@ export function ModalAddFaq({exitAction} : ModalAddFaqProps) {
                 </div>
                 <div className='w-1 bg-gray-300 cursor-col-resize'></div>
                 <div className='modal-content flex flex-col gap-3'>
-                    <input defaultValue={question} type='text' ref={questionInputRef}/>
-                    <input defaultValue={answer} type='text' ref={answerInputRef}/>
+                    <input defaultValue='' type='text' ref={questionInputRef}/>
+                    <input defaultValue='' type='text' ref={answerInputRef}/>
                     <button onClick={submitChanges}>Сохранить</button>
                 </div>
             </div>

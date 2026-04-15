@@ -1,7 +1,7 @@
 'use client'
 
 import '@/app/global-styles.css'
-import React, { Suspense, useState} from "react";
+import React, {Suspense, useEffect, useState} from "react";
 import Image from "next/image";
 import {createPortal} from "react-dom";
 import ListFaq from "@/app/_components/ui/list-faq";
@@ -9,6 +9,7 @@ import AdminPanel from "@/app/_components/ui/modal-admin-panel";
 import {AdminButtons} from "@/app/_components/ui-with-logic/admin-buttons";
 import {SearchBar} from "@/app/_components/ui-with-logic/searchbar";
 import Loading from "@/app/loading";
+import {isAuthorized} from "@/app/_actions/faq-actions";
 
 
 export type ContainerProps = {
@@ -26,6 +27,13 @@ export function Container({title} : ContainerProps) {
     const givePermission = () => {
         setPermission(true);
     }
+    useEffect(() => {
+        const a = async () => {
+            const g = await isAuthorized()
+            if (g) givePermission()
+        }
+        a()
+    }, [])
 
     return (
         <>
@@ -49,6 +57,9 @@ export function Container({title} : ContainerProps) {
                 )}
                 {permission &&
                     <AdminButtons/>
+                }
+                {
+
                 }
             </div>
         </>

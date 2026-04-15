@@ -19,12 +19,8 @@ export default function ListFaq( { permission } : ListProps) {
     if (categories === null) {
         return (
             <>
-                <h2>Нет категорий</h2>
                 {permission &&
-                    <>
-                        <h2>Вопросы на модерации</h2>
-                        <Questions permission={permission}/>
-                    </>
+                    <Questions permission={permission}/>
                 }
             </>
         )
