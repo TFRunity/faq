@@ -3,7 +3,7 @@
 import "@/app/global-styles.css"
 import React, {ActionDispatch, useContext, useEffect, useState} from "react";
 import {CategoryWithQuestionsWithAnswerActions, QuestionWithAnswerActions} from "@/app/_hooks/faq-hooks";
-import {CategoriesDispatchContext, QuestionsDispatchContext} from "@/app/providers";
+import {CategoriesDispatchContext, CategoriesStateContext, QuestionsDispatchContext} from "@/app/providers";
 import Image from "next/image";
 import {
     addRelationQuestionWithCategory,
@@ -30,7 +30,7 @@ export function ModalEditRelations ({exitAction, questionWithAnswer} : ModalEdit
             setCategoriesMapped(categories)
         }
         fetchCategories()
-    })
+    }, [])
     
     const categoryInUse : Category | null = categoriesMapped.filter(c => c.id === questionWithAnswer.question.category_id)[0]
 
@@ -41,14 +41,13 @@ export function ModalEditRelations ({exitAction, questionWithAnswer} : ModalEdit
                 dispatchCategories({
                     type : "DELETE_QUESTION",
                     question_id : questionWithAnswer.question.id,
-                    category_id : category_id
+                    category_id : categoryInUse.id
                 })
                 questionWithAnswer.question.category_id = category_id
                 dispatchCategories({
                     type : "ADD_QUESTION",
                     question : questionWithAnswer
                 })
-                alert("Успешно")
             } else {
                 dispatchQuestions({
                     type : "REMOVE_QUESTION",
@@ -59,10 +58,8 @@ export function ModalEditRelations ({exitAction, questionWithAnswer} : ModalEdit
                     type : "ADD_QUESTION",
                     question : questionWithAnswer
                 })
-                alert("Успешно")
             }
-        } else {
-            alert("Не получилось")
+            exitAction()
         }
     }
 
@@ -71,7 +68,7 @@ export function ModalEditRelations ({exitAction, questionWithAnswer} : ModalEdit
             <div className='modal-body'>
                 <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
                     <h3>Привязка вопроса к категории</h3>
-                    <div onClick={exitAction}>
+                    <div onClick={exitAction} className='cursor-pointer'>
                         <Image src='/icons/close.png' width='24' height='24' alt='close' />
                     </div>
                 </div>
@@ -79,7 +76,7 @@ export function ModalEditRelations ({exitAction, questionWithAnswer} : ModalEdit
                 <div className='modal-content flex flex-col gap-3'>
                     <div>
                         <h4>Вопрос: {questionWithAnswer.question.question}</h4>
-                        {categoryInUse && <h4>Сейчас находится в категории {categoryInUse.title}</h4>}
+                        {categoryInUse && <h4>Сейчас находится в категории: {categoryInUse.title}</h4>}
                     </div>
                     <div className='w-1 bg-gray-300 cursor-col-resize'></div>
                     <div>
@@ -88,7 +85,7 @@ export function ModalEditRelations ({exitAction, questionWithAnswer} : ModalEdit
                             categoriesMapped.map(c => (
                                 <div key={c.id} >
                                     <h4>{c.title ? c.title : ""}</h4>
-                                    <h2 onClick={() => submit(c.id)}>+</h2>
+                                    <button onClick={() => submit(c.id)}>+</button>
                                 </div>
                             ))
                         }

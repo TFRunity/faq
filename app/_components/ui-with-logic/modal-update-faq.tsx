@@ -26,15 +26,12 @@ export default function ModalUpdateFaq({ questionWithAnswer, exitAction } : Upda
     const questionWithoutNull : string = questionWithAnswer.question.question ? questionWithAnswer.question.question : "";
     const answerWithoutNull :  string = questionWithAnswer.answer && questionWithAnswer.answer.answer ? questionWithAnswer.answer.answer : "";
     
-    const questionInputRef = useRef<HTMLInputElement>(null);
-    const answerInputRef = useRef<HTMLInputElement>(null);
-    const [question, setQuestion] = useState<string>(questionWithoutNull);
-    const [answer, setAnswer] = useState<string>(answerWithoutNull);
-    const [destruct, setDestruct] = useState<boolean>(false);
+    const questionInputRef = useRef<HTMLTextAreaElement>(null);
+    const answerInputRef = useRef<HTMLTextAreaElement>(null);
 
     const submitChanges = async () : Promise<void> => {
-        setQuestion(questionInputRef.current!.value)
-        setAnswer(answerInputRef.current!.value)
+        const question = questionInputRef.current!.value;
+        const answer = answerInputRef.current!.value
 
         if (question !== questionWithAnswer.question.question) {
             try{
@@ -52,7 +49,6 @@ export default function ModalUpdateFaq({ questionWithAnswer, exitAction } : Upda
                         question : updatedFaq.question
                     })
                 }
-                alert("Обновился вопрос")
             }catch(err){
                 console.log("Произошла ошибка при попытке обновить вопрос для faq. Проверьте соединение с БД")
             }
@@ -77,42 +73,27 @@ export default function ModalUpdateFaq({ questionWithAnswer, exitAction } : Upda
                         answer: updatedFaq.answer!
                     })
                 }
-                alert("Обновился ответ")
             }catch(err){
                 console.log("Произошла ошибка при попытке обновить ответ для faq. Проверьте соединение с БД")
             }
         }
-
     }
 
-    const closeDialog = () => {
-        exitAction()
-        setDestruct(true)
-    }
-
-    if (destruct) {
-        return null
-    }
 
     return (
         <div className='modal-bg'>
-            <div className='modal-body'>
-                <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
-                    <h3>Обновление Faq</h3>
-                    <div onClick={closeDialog}>
+            <div className='modal-body flex flex-col gap-1'>
+                <div className="text-lg text-slate-800 modal-header flex justify-between">
+                    <h3 className='p-2'>Обновление FAQ</h3>
+                    <div onClick={exitAction} className='cursor-pointer hover:bg-slate-200 md:p-2 rounded-md transition duration-200'>
                         <Image src='/icons/close.png' width='24' height='24' alt='close' />
                     </div>
                 </div>
-                <div className='w-1 bg-gray-300 cursor-col-resize '></div>
-                <div className='modal-content flex flex-col gap-3 '>
-                    {question &&
-                        <input defaultValue={question} className='border border-slate-400 rounded-md p-1' type='text'
-                               ref={questionInputRef}/>}
-                    {answer &&
-                        <input defaultValue={answer} className='border border-slate-400 rounded-md p-1' type='text'
-                               ref={answerInputRef}/>}
-                    {question && answer && <button onClick={submitChanges}
-                                                   className='cursor-pointer mt-3 bg-slate-100 p-2'>Сохранить</button>}
+                <div className="border-t-4 rounded-2xl w-auto border-gray-400 md:m-2"></div>
+                <div className='modal-content flex flex-col gap-3 p-4'>
+                    <textarea placeholder='Вопрос' defaultValue={questionWithoutNull} className='border border-slate-400 md:h-40 md:w-100 rounded-md p-1 resize ' ref={questionInputRef}/>
+                    <textarea placeholder='Ответ' defaultValue={answerWithoutNull} className='border border-slate-400 md:h-40 md:w-100 rounded-md p-1 resize ' ref={answerInputRef}/>
+                    <button onClick={submitChanges} className='cursor-pointer mt-3 rounded-md bg-gray-50 p-2 hover:bg-slate-200 transition duration-200'>Сохранить</button>
                 </div>
             </div>
         </div>

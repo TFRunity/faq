@@ -42,7 +42,7 @@ export function ModalUpdateCategoryTitle({toUpdateCategory, exitAction}: ModalUp
             <div className='modal-body'>
                 <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
                     <h3>Изменение названия категории</h3>
-                    <div onClick={exitAction}>
+                    <div onClick={exitAction} className='cursor-pointer'>
                         <Image src='/icons/close.png' width='24' height='24' alt='close' />
                     </div>
                 </div>

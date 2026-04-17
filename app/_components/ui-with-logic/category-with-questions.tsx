@@ -41,12 +41,10 @@ export default function Category({category, permission} : CategoryProps) {
                 <h3 className='text-slate-600 mb-1 ml-1'>{category.category.title}</h3>
                 {permission &&
                     <div className='flex ml-7 mb-1'>
-                        <div onClick={openModalChange} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
-                            {/*иконка карандаша - редактировать*/}
+                        <div onClick={openModalChange} className='cursor-pointer content-end ml-auto mr-7 flex-row rounded-md hover:bg-slate-100 transition duration-300 p-1.5'>
                             <Image src='/icons/edit.png' alt='edit' width='24' height='24'/>
-
                         </div>
-                        <div onClick={openModalDelete} className='cursor-pointer content-end ml-auto mr-7 flex-row'>
+                        <div onClick={openModalDelete} className='cursor-pointer content-end ml-auto mr-7 flex-row rounded-md hover:bg-slate-100 transition duration-300 p-1.5'>
                             <Image src='/icons/delete.png' alt='delete' width='24' height='24'/>
                         </div>
                     </div>
