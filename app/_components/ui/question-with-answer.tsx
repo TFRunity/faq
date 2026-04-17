@@ -67,24 +67,24 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
                         {permission &&
                             <>
                                 <div onClick={openModalChange}
-                                     className='cursor-pointer content-end ml-auto mr-7 flex-row mb-1'>
+                                     className='cursor-pointer content-end ml-auto mr-7 flex-row mb-1 rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>
                                     <Image src='/icons/edit.png' width='24' height='24' alt='edit' />
                                 </div>
                                 <div onClick={openModalDelete}
-                                     className='cursor-pointer content-end ml-auto mr-7 flex-row mb-1'>
+                                     className='cursor-pointer content-end ml-auto mr-7 flex-row mb-1 rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>
                                     <Image src='/icons/delete.png' width='24' height='24' alt='delete' />
                                 </div>
                                 <div onClick={openModalRelationship}
-                                     className='cursor-pointer content-end ml-auto mr-7 mb-1 flex-row '>
+                                     className='cursor-pointer content-end ml-auto mr-7 mb-1 flex-row rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>
                                     <Image src='/icons/rel.png' width='24' height='24' alt='relation' />
                                 </div>
                                 <div onClick={openModalHistory}
-                                     className='cursor-pointer content-end ml-auto mr-7 mb-1 flex-row'>
+                                     className='cursor-pointer content-end ml-auto mr-7 mb-1 flex-row rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>
                                     <Image src='/icons/history.png' width='24' height='24' alt='history' />
                                 </div>
                             </>
                         }
-                        <div onClick={toggleAnswer} className='cursor-pointer content-end ml-auto mr-2 mb-1 flex-row'>{!toggle ?
+                        <div onClick={toggleAnswer} className='cursor-pointer content-end ml-auto mr-2 mb-1 rounded-md hover:bg-slate-200 transition duration-300 p-0.5 flex-row'>{!toggle ?
                             <Image src='/icons/arrow-up.png' width='24' height='24' alt='+' />
                             :
                             <Image src='/icons/arrow-down.png' width='24' height='24' alt='-' />
