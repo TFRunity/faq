@@ -31,7 +31,7 @@ export function useCategories(data : CategoryWithQuestionsWithAnswer[] | null) {
             case "DELETE_CATEGORY":
                 return [...state!.filter(c => c.category.id !== action.category_id)]
             case "CHANGE_CATEGORY_NAME":
-                return [...state!.map(c => c.category.id === action.category_id ? { ...c, title : action.title } : c)]
+                return [...state!.map(c => c.category.id === action.category_id ? { ...c, category : { ...c.category, title : action.title } } : c)]
             case "UPDATE_QUESTION_QUESTION":
                 return [...state!.map(c => c.category.id === action.question.question.category_id ? { ...c, questions : [...c.questions!.map(q => q.question.id == action.question.question.id ? action.question : q)] } : c )]
             case "ADD_QUESTION":

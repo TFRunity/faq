@@ -73,7 +73,7 @@ export class QuestionRepository implements IQuestionRepository {
         const raw : rawQuestionWithAnswer[]  = await db!
             .select()
             .from(questions)
-            .innerJoin(answers, eq(questions.id, answers.question_id))
+            .innerJoin(answers, eq(questions.answer_id, answers.id))
             .where(isNull(questions.category_id))
         return this.mappingService.convertRawQuestionWithLatestAnswer(raw);
     }//Получение плоских данных вопросов, которые не относятся ни к какой категории, (ТЕ ЧТО НА МОДЕРАЦИИ)

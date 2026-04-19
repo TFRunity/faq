@@ -1,10 +1,15 @@
 'use client'
 
 import '@/app/global-styles.css'
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {CategoriesStateContext, QuestionsStateContext} from "@/app/providers";
-import {CategoryWithQuestionsWithAnswer, QuestionWithAnswer} from "@/app/_actions/faq-actions";
+import {
+    CategoryWithQuestionsWithAnswer,
+    getCategoriesWithoutQuestions,
+    QuestionWithAnswer
+} from "@/app/_actions/faq-actions";
 import Questions from "@/app/_components/ui/questions-without-category";
+import {Category as CategoryModel} from "@/app/_actions/faq-actions";
 import Category from "@/app/_components/ui-with-logic/category-with-questions";
 
 
@@ -15,10 +20,27 @@ export interface ListProps {
 export default function ListFaq( { permission } : ListProps) {
 
     const categories : CategoryWithQuestionsWithAnswer[] = useContext(CategoriesStateContext)
+    const [emptyCategoriesMapped, setCategoriesMapped] = useState<CategoryModel[]>([]);
 
-    if (categories === null) {
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const categories : CategoryModel[] = await getCategoriesWithoutQuestions()
+
+            setCategoriesMapped(categories)
+        }
+        fetchCategories()
+    }, [])
+
+
+
+    if (categories.length == 0) {
         return (
             <>
+                {
+                    <div className='ml-7 mr-7 mb-4 mt-7'>
+                        <h2>Пока что нет ни вопросов, ни категорий</h2>
+                    </div>
+                }
                 {permission &&
                     <Questions permission={permission}/>
                 }
@@ -34,6 +56,18 @@ export default function ListFaq( { permission } : ListProps) {
                         <Category category={category} permission={permission}/>
                     </div>
                 ))
+            }
+            {permission && emptyCategoriesMapped.length > 0 &&
+                <div className='m-4'>
+                    <h2>Все категории</h2>
+                    {
+                        emptyCategoriesMapped.map(c => (
+                            <div key={c.id}>
+                                <h3 className='text-slate-600 mb-1 ml-1'>{c.title}</h3>
+                            </div>
+                        ))
+                    }
+                </div>
             }
             {permission &&
                 <Questions permission={permission}/>

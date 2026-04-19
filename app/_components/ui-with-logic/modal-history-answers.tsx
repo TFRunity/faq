@@ -76,7 +76,6 @@ export function ModalHistoryAnswers ({questionToUpdate, exitAction} : ModalHisto
                             {
                                 answers.map((answer, index) => (
                                     <div className='flex flex-col columns-2 justify-between' key={index}>
-                                        <div className='w-1 h-auto bg-gray-300'></div>
                                         <div className='flex p-3 rounded-2xl justify-between cursor-pointer hover:bg-gray-200 transition duration-400 ' >
                                             <h4>{answer.answer}</h4>
                                             <Image src='/icons/rel.png' alt='rel' width='24' height='24' onClick={() => submit(answer)} ></Image>

@@ -62,33 +62,38 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
         <div className='flex flex-col columns-10'>
             <div className='m-1'>
                 <div className='rounded-lg bg-slate-100 flex justify-between'>
-                    <h3 className=' text-slate-900 text-[120%] mt-3 ml-6 mb-3'>{questionWithAnswer.question.question ? questionWithAnswer.question.question : "Пустой вопрос"}</h3>
-                    <div className='flex text-slate-600 text-[130%] cursor-pointer mt-3 mr-3 mb-2'>
-                        {permission &&
-                            <>
-                                <div onClick={openModalChange}
-                                     className='cursor-pointer content-end ml-auto mr-7 flex-row mb-1 rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>
-                                    <Image src='/icons/edit.png' width='24' height='24' alt='edit' />
-                                </div>
-                                <div onClick={openModalDelete}
-                                     className='cursor-pointer content-end ml-auto mr-7 flex-row mb-1 rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>
-                                    <Image src='/icons/delete.png' width='24' height='24' alt='delete' />
-                                </div>
-                                <div onClick={openModalRelationship}
-                                     className='cursor-pointer content-end ml-auto mr-7 mb-1 flex-row rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>
-                                    <Image src='/icons/rel.png' width='24' height='24' alt='relation' />
-                                </div>
-                                <div onClick={openModalHistory}
-                                     className='cursor-pointer content-end ml-auto mr-7 mb-1 flex-row rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>
-                                    <Image src='/icons/history.png' width='24' height='24' alt='history' />
-                                </div>
-                            </>
-                        }
-                        <div onClick={toggleAnswer} className='cursor-pointer content-end ml-auto mr-2 mb-1 rounded-md hover:bg-slate-200 transition duration-300 p-0.5 flex-row'>{!toggle ?
-                            <Image src='/icons/arrow-up.png' width='24' height='24' alt='+' />
-                            :
-                            <Image src='/icons/arrow-down.png' width='24' height='24' alt='-' />
-                        }</div>
+                    <div className='w-[80%] md:w-[60%] flex justify-between'>
+                        <h3 className=' text-slate-900 text-[80%] md:text-[120%] mt-3 ml-6 mb-3 columns-1'>{questionWithAnswer.question.question ? questionWithAnswer.question.question : "Пустой вопрос"}</h3>
+                    </div>
+                    <div className='w-[20%] md:w-[40%] flex justify-end'>
+                        <div className=' flex text-slate-600 text-[130%] cursor-pointer mt-3 mr-3 mb-2'>
+                            {permission &&
+                                <>
+                                    <div onClick={openModalChange}
+                                         className='cursor-pointer content-end ml-auto mr-7 mb-1 rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>
+                                        <Image src='/icons/edit.png' width='24' height='24' alt='edit'/>
+                                    </div>
+                                    <div onClick={openModalDelete}
+                                         className='cursor-pointer content-end ml-auto mr-7 mb-1 rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>
+                                        <Image src='/icons/delete.png' width='24' height='24' alt='delete'/>
+                                    </div>
+                                    <div onClick={openModalRelationship}
+                                         className='cursor-pointer content-end ml-auto mr-7 mb-1 rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>
+                                        <Image src='/icons/rel.png' width='24' height='24' alt='relation'/>
+                                    </div>
+                                    <div onClick={openModalHistory}
+                                         className='cursor-pointer content-end ml-auto mr-7 mb-1 rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>
+                                        <Image src='/icons/history.png' width='24' height='24' alt='history'/>
+                                    </div>
+                                </>
+                            }
+                            <div onClick={toggleAnswer}
+                                 className=' cursor-pointer content-end ml-auto mr-2 mb-1 rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>{!toggle ?
+                                <Image src='/icons/arrow-down.png' width='24' height='24' alt='+'/>
+                                :
+                                <Image src='/icons/arrow-up.png' width='24' height='24' alt='-'/>
+                            }</div>
+                        </div>
                     </div>
                 </div>
                 {showModalHistory && createPortal(

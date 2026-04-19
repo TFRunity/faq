@@ -29,6 +29,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         fetchCategories()
         const fetchQuestionsWithoutCategory = async () : Promise<void> => {
             const returned : QuestionWithAnswer[] = await getQuestionsWithoutCategory()
+            console.log(returned)
             dispatchQuestions({type : "FILL_WITH_DATA", data : returned})
         }
         fetchQuestionsWithoutCategory()

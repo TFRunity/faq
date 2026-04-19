@@ -15,10 +15,11 @@
 
 .searchForm {
     position: relative;
+    margin-left: 12px;
 }
 
 .searchInput {
-    width: 55rem;
+    width: 80%;
     padding: 1rem 3rem;
     border-radius: 0.5rem;
     border: 2px solid #e5e7eb;

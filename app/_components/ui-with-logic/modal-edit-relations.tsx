@@ -65,27 +65,28 @@ export function ModalEditRelations ({exitAction, questionWithAnswer} : ModalEdit
 
     return (
         <div className='modal-bg'>
-            <div className='modal-body'>
+            <div className='modal-body flex flex-col gap-1'>
                 <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
                     <h3>Привязка вопроса к категории</h3>
-                    <div onClick={exitAction} className='cursor-pointer'>
+                    <div onClick={exitAction} className='cursor-pointer hover:bg-slate-200 md:p-2 rounded-md transition duration-200'>
                         <Image src='/icons/close.png' width='24' height='24' alt='close' />
                     </div>
                 </div>
-                <div className='w-1 bg-gray-300 cursor-col-resize'></div>
-                <div className='modal-content flex flex-col gap-3'>
-                    <div>
+                <div className="border-t-4 rounded-2xl w-auto border-gray-400 md:m-2"></div>
+                <div className='modal-content flex flex-col gap-3 p-4'>
+                <div>
                         <h4>Вопрос: {questionWithAnswer.question.question}</h4>
                         {categoryInUse && <h4>Сейчас находится в категории: {categoryInUse.title}</h4>}
                     </div>
-                    <div className='w-1 bg-gray-300 cursor-col-resize'></div>
                     <div>
                         <h3>Категории</h3>
                         {
                             categoriesMapped.map(c => (
-                                <div key={c.id} >
-                                    <h4>{c.title ? c.title : ""}</h4>
-                                    <button onClick={() => submit(c.id)}>+</button>
+                                <div key={c.id} className='flex flex-col columns-2 justify-between mt-1'>
+                                    <div onClick={() => submit(c.id)} className='flex p-3 rounded-2xl justify-between cursor-pointer hover:bg-gray-200 transition duration-400'>
+                                        <h4>{c.title ? c.title : ""}</h4>
+                                        <Image  src='/icons/rel.png' alt='rel' width='24' height='24'/>
+                                    </div>
                                 </div>
                             ))
                         }

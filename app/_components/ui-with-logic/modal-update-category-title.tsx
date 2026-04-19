@@ -19,37 +19,35 @@ export function ModalUpdateCategoryTitle({toUpdateCategory, exitAction}: ModalUp
     const dispatch : ActionDispatch<[action : CategoryWithQuestionsWithAnswerActions]> = useContext(CategoriesDispatchContext)
 
     const updateInputRef = useRef<HTMLInputElement>(null)
-    const [title, setTitle] = useState<string>(toUpdateCategory.title!)
 
     const update = async () => {
-        setTitle(updateInputRef.current!.value!)
-        const result : boolean = await changeTitleCategory(toUpdateCategory)
+        const title : string = updateInputRef.current!.value
+        const result : boolean = await changeTitleCategory({...toUpdateCategory, title : title})
         if (result) {
             dispatch({
                 type : "CHANGE_CATEGORY_NAME",
                 category_id : toUpdateCategory.id,
                 title : title
             })
-            alert("Успешно")
             exitAction()
-        } else {
-            alert("Не получилось")
         }
     }
 
     return (
         <div className='modal-bg'>
-            <div className='modal-body'>
+            <div className='modal-body flex flex-col gap-1'>
                 <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
-                    <h3>Изменение названия категории</h3>
-                    <div onClick={exitAction} className='cursor-pointer'>
+                    <h3 className='p-2'>Изменение категории</h3>
+                    <div onClick={exitAction} className='cursor-pointer hover:bg-slate-200 md:p-2 rounded-md transition duration-200'>
                         <Image src='/icons/close.png' width='24' height='24' alt='close' />
                     </div>
                 </div>
-                <div className='w-1 bg-gray-300 cursor-col-resize'></div>
+                <div className="border-t-4 rounded-2xl w-auto border-gray-400 md:m-2"></div>
                 <div className='modal-content flex flex-col gap-3'>
-                    <input defaultValue={title} type='text' ref={updateInputRef}/>
-                    <button onClick={update}>Сохранить</button>
+                    <input defaultValue={toUpdateCategory.title!} className='p-2 m-2 border-2 rounded-md' type='text' ref={updateInputRef}/>
+                    <div className='rounded-md flex justify-center cursor-pointer bg-slate-200 p-3 hover:bg-slate-300 transition duration-200'>
+                        <button onClick={update} className='cursor-pointer'>Обновить</button>
+                    </div>
                 </div>
             </div>
         </div>

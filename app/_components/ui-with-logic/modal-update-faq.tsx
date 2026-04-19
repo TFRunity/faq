@@ -91,9 +91,16 @@ export default function ModalUpdateFaq({ questionWithAnswer, exitAction } : Upda
                 </div>
                 <div className="border-t-4 rounded-2xl w-auto border-gray-400 md:m-2"></div>
                 <div className='modal-content flex flex-col gap-3 p-4'>
-                    <textarea placeholder='Вопрос' defaultValue={questionWithoutNull} className='border border-slate-400 md:h-40 md:w-100 rounded-md p-1 resize ' ref={questionInputRef}/>
-                    <textarea placeholder='Ответ' defaultValue={answerWithoutNull} className='border border-slate-400 md:h-40 md:w-100 rounded-md p-1 resize ' ref={answerInputRef}/>
-                    <button onClick={submitChanges} className='cursor-pointer mt-3 rounded-md bg-gray-50 p-2 hover:bg-slate-200 transition duration-200'>Сохранить</button>
+                    <textarea placeholder='Вопрос' defaultValue={questionWithoutNull}
+                              className='border border-slate-400 md:h-40 md:w-100 rounded-md p-1 resize '
+                              ref={questionInputRef}/>
+                    <textarea placeholder='Ответ' defaultValue={answerWithoutNull}
+                              className='border border-slate-400 md:h-40 md:w-100 rounded-md p-1 resize '
+                              ref={answerInputRef}/>
+                    <div
+                        className='rounded-md flex justify-center cursor-pointer bg-slate-200 p-3 hover:bg-slate-300 transition duration-200'>
+                        <button onClick={submitChanges} className='cursor-pointer'>Сохранить</button>
+                    </div>
                 </div>
             </div>
         </div>
