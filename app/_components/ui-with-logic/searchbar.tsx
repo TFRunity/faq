@@ -57,7 +57,7 @@ export function SearchBar() {
                         <Image src='/icons/lupa.png' width='24' height='24' alt='search' />
                     )}
                     resetIconComponent={() => (
-                        <Image src='/icons/delete.png' width='24' height='24' alt='clean' />
+                        <Image src='/icons/close.png' width='24' height='24' alt='clean' />
                     )}
                     loadingIconComponent={() => <div className={styles.loadingSpinner}/>}
                 />

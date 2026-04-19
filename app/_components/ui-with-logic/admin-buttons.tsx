@@ -22,8 +22,6 @@ export function AdminButtons() {
             type : "ADD_CATEGORY",
             category : newCategory.category
         })
-        //Это переделать
-        alert("Добавилась пустая категория")
     }
 
     const openModalAddQuestion = () => {
@@ -35,10 +33,10 @@ export function AdminButtons() {
 
     return (
         <div className='flex flex-row columns-10 ml-3 mr-3 mb-3 justify-around'>
-            <button onClick={AddEmptyCategory} className='bg-blue-400 text-white text rounded-lg p-3 hover:bg-sky-400 transition'>
+            <button onClick={AddEmptyCategory} className=' cursor-pointer bg-slate-200 p-2 text rounded-lg p-3 hover:bg-sky-400 transition'>
                 + Категория
             </button>
-            <button onClick={openModalAddQuestion} className='bg-blue-400 text-white text rounded-lg p-3 hover:bg-sky-400 transition'>
+            <button onClick={openModalAddQuestion} className=' cursor-pointer bg-slate-200 p-2 text rounded-lg p-3 hover:bg-sky-400 transition'>
                 + Вопрос
             </button>
             {showModalAddQuestion && createPortal(

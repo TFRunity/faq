@@ -43,17 +43,21 @@ export function ModalDeleteQuestion ({question, exitAction} : ModalDeleteQuestio
 
     return (
         <div className='modal-bg'>
-            <div className='modal-body'>
+            <div className='modal-body flex flex-col gap-1'>
                 <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
-                    <h3>Удаление вопроса</h3>
-                    <div onClick={exitAction}>
+                    <h3 className='p-2'>Удаление вопроса</h3>
+                    <div onClick={exitAction} className='cursor-pointer hover:bg-slate-200 md:p-2 rounded-md transition duration-200'>
                         <Image src='/icons/close.png' width='24' height='24' alt='close' />
                     </div>
                 </div>
-                <div className='w-1 bg-gray-300 cursor-col-resize'></div>
+                <div className="border-t-4 rounded-2xl w-auto border-gray-400 md:m-2"></div>
                 <div className='modal-content flex flex-col gap-3'>
+                    <h4>Вопрос: {question.question}</h4>
                     <h4>Вы уверены, что хотите удалить этот вопрос? Это действие НЕОБРАТИМО</h4>
-                    <button onClick={submit}>Да</button>
+                    <div
+                        className='rounded-md flex justify-center cursor-pointer bg-red-200 p-3 hover:bg-red-300 transition duration-200'>
+                        <button onClick={submit} className='cursor-pointer'>Подтверждаю</button>
+                    </div>
                 </div>
             </div>
         </div>

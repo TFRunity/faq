@@ -16,7 +16,7 @@ export default function Questions({permission} : QuestionsProps) {
     const state : QuestionWithAnswer[]  = useContext(QuestionsStateContext)
 
     return (
-        <>
+        <div className='m-4'>
             {state.length > 0 && <h2>Вопросы на модерации</h2>}
             {state.length == 0 && <h2>Вопросов на модерации нет</h2>}
             {
@@ -26,6 +26,6 @@ export default function Questions({permission} : QuestionsProps) {
                     </div>
                 ))
             }
-        </>
+        </div>
     )
 }
