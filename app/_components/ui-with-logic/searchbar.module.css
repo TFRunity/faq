@@ -1,5 +1,7 @@
+
 .searchContainer {
-    margin: 0 auto 2rem;
+    margin-left: 2em;
+    margin-right: 2em;
 }
 
 .searchTitle {
@@ -15,15 +17,14 @@
 
 .searchForm {
     position: relative;
-    margin-left: 12px;
 }
 
 .searchInput {
-    width: 80%;
+    width: 100%;
     padding: 1rem 3rem;
     border-radius: 0.5rem;
     border: 2px solid #e5e7eb;
-    font-size: 1rem;
+    font-size: 0.9em;
 }
 
 .searchInput:focus {
