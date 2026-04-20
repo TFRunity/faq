@@ -67,7 +67,7 @@ export function ModalEditRelations ({exitAction, questionWithAnswer} : ModalEdit
         <div className='modal-bg'>
             <div className='modal-body flex flex-col gap-1'>
                 <div className="text-lg text-slate-800 mb-7 modal-header flex justify-between">
-                    <h3>Привязка вопроса к категории</h3>
+                    <h3 className='p-2'>Привязка вопроса к категории</h3>
                     <div onClick={exitAction} className='cursor-pointer hover:bg-slate-200 md:p-2 rounded-md transition duration-200'>
                         <Image src='/icons/close.png' width='24' height='24' alt='close' />
                     </div>
