@@ -1,5 +1,4 @@
 import {Group} from "@/src/entities/models/group";
-import {Category} from "@/app/_actions/faq-actions";
 import {GroupWithCategories} from "@/src/entities/models/view-models";
 
 
