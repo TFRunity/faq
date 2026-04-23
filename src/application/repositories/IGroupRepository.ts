@@ -1,4 +1,6 @@
 import {Group} from "@/src/entities/models/group";
+import {Category} from "@/app/_actions/faq-actions";
+import {GroupWithCategories} from "@/src/entities/models/view-models";
 
 
 export interface IGroupRepository {
@@ -6,4 +8,5 @@ export interface IGroupRepository {
     changeTitle(group : Group): Promise<boolean>
     addGroup(title: string) : Promise<boolean>
     deleteGroup(group_id: number): Promise<boolean>
+    getGroupWithCategories(group_id: number) : Promise<GroupWithCategories>
 }

@@ -3,7 +3,8 @@ import {InferInsertModel, InferSelectModel, relations} from "drizzle-orm";
 
 export const categories = pgTable('categories',{
     id: serial().primaryKey(),
-    title : varchar({length:300})
+    title : varchar({length:300}),
+    group_id : bigint({mode: 'number'})
 })
 
 //Ссылаемся на много questions

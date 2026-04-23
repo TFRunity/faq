@@ -1,6 +1,6 @@
 import {IMappingFAQService} from "@/src/application/services/IMappingFAQService";
 import {
-    CategoryWithQuestions,
+    CategoryWithQuestions, GroupWithCategories,
     QuestionWithAnswers,
     QuestionWithLatestAnswer,
     rawCategoryWithQuestionWithAnswer,
@@ -34,7 +34,7 @@ export class MappingFAQService implements IMappingFAQService {
     convertRawCategoriesWithQuestions(raw: rawCategoryWithQuestionWithAnswer[]): CategoryWithQuestions[] {
         const categoriesWithRepeats : CategoryWithQuestions[] = raw.map(c => ({
             category : { ...c.categories },
-            questions : []
+            questions : [],
         }))
         const uniqueCategories : CategoryWithQuestions[] = [...new Map(categoriesWithRepeats.map(c => [c.category.id, c])).values()]
         for (const c of uniqueCategories) {
@@ -49,4 +49,5 @@ export class MappingFAQService implements IMappingFAQService {
         }
         return uniqueCategories;
     }
+
 }

@@ -3,9 +3,14 @@ import {db} from "@/drizzle"
 import {groups} from "@/drizzle/schema";
 import {Group} from "@/src/entities/models/group";
 import {eq} from "drizzle-orm";
+import {CategoryWithQuestions, GroupWithCategories} from "@/src/entities/models/view-models";
+import {ICategoryRepository} from "@/src/application/repositories/ICategoryRepository";
 
 
 export class GroupRepository implements IGroupRepository {
+
+    constructor(private readonly categoryService : ICategoryRepository) {
+    }
 
     async addGroup(title: string): Promise<boolean> {
         const created_group : Group[] = await db!.insert(groups)
@@ -32,5 +37,12 @@ export class GroupRepository implements IGroupRepository {
     async getAll(): Promise<Group[]> {
         return db!.select().from(groups);
     }
+
+    async getGroupWithCategories(group_id: number): Promise<GroupWithCategories> {
+        const _groups : Group[] = await db!.select().from(groups).where(eq(groups.id, group_id))
+        const categories : CategoryWithQuestions[] = await this.categoryService.getAllOfGroup(group_id)
+        return {group : _groups[0], categories : categories}
+    }
+
 
 }
