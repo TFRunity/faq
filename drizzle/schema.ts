@@ -41,11 +41,16 @@ export const answers = pgTable('answers',{
 //     }),
 // }))
 
+export const groups = pgTable('groups',{
+    id: serial().primaryKey(),
+    image_src: text(),
+    title: text()
+})
+
 export type SelectCategory = InferSelectModel<typeof categories>
-export type InsertCategory = InferInsertModel<typeof categories>
 
 export type SelectQuestion = InferSelectModel<typeof questions>
-export type InsertQuestion = InferInsertModel<typeof questions>
 
 export type SelectAnswer = InferSelectModel<typeof answers>
-export type InsertAnswer = InferInsertModel<typeof answers>
+
+export type SelectGroup = InferSelectModel<typeof groups>
