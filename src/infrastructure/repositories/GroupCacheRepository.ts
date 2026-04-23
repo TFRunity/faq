@@ -19,6 +19,10 @@ export class GroupCacheRepository implements IGroupCacheRepository {
         return result;
     }
 
+    async getCachedData(group_id: number): Promise<> {
+
+    }
+
     async updateCachedData(): Promise<boolean> {
         const groups = await this.groupService.getAll();
         const result = await redis.set("groups:all", JSON.stringify(groups), {EX : 300});
