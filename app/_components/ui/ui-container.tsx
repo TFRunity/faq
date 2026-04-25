@@ -1,7 +1,7 @@
 'use client'
 
 import '@/app/global-styles.css'
-import React, {Suspense, useEffect, useState} from "react";
+import React, {ActionDispatch, Suspense, useContext, useEffect, useState} from "react";
 import Image from "next/image";
 import {createPortal} from "react-dom";
 import ListFaq from "@/app/_components/ui/list-faq";
@@ -9,7 +9,16 @@ import AdminPanel from "@/app/_components/ui/modal-admin-panel";
 import {AdminButtons} from "@/app/_components/ui-with-logic/admin-buttons";
 import {SearchBar} from "@/app/_components/ui-with-logic/searchbar";
 import Loading from "@/app/loading";
-import {isAuthorized} from "@/app/_actions/faq-actions";
+import {
+    CategoryWithQuestionsWithAnswer,
+    getAllGroups,
+    getCategoryWithQuestionsWithLatestAnswers,
+    Group,
+    isAuthorized
+} from "@/app/_actions/faq-actions";
+import {Groups} from "@/app/_components/ui/groups";
+import {CategoryWithQuestionsWithAnswerActions, useCategories} from "@/app/_hooks/faq-hooks";
+import {CategoriesDispatchContext} from "@/app/providers";
 
 
 export type ContainerProps = {
@@ -18,8 +27,12 @@ export type ContainerProps = {
 
 export function Container({title} : ContainerProps) {
 
+    const dispatchCategories : ActionDispatch<[action : CategoryWithQuestionsWithAnswerActions]> = useContext(CategoriesDispatchContext)
+
     const [permission, setPermission] = useState<boolean>(false);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [groupId, setGroupId] = useState<number>(1);
+    const [groupName, setGroupName] = useState<string>('');
 
     const openAdminModal = () => {
         setShowModal(!showModal);
@@ -27,6 +40,32 @@ export function Container({title} : ContainerProps) {
     const givePermission = () => {
         setPermission(true);
     }
+
+    useEffect(() => {
+        const c = async () => {
+            const res : Group[] = await getAllGroups()
+            if (res) {
+                const g : Group = res.filter(g => g.id === groupId)[0]
+                setGroupName(g.title ? g.title : 'У факультета ещё нет названия')
+            }
+        }
+        c()
+        const b = async () => {
+            const newCategories : CategoryWithQuestionsWithAnswer[] = await getCategoryWithQuestionsWithLatestAnswers(groupId)
+            dispatchCategories({
+                type : "FILL_WITH_DATA",
+                data : newCategories
+            })
+        }
+        b()
+    }, [groupId]);
+
+    const changeGroupAction = async (group_id : number) => {
+        if (group_id > 0) {
+            setGroupId(group_id)
+        }
+    }
+
     useEffect(() => {
         const a = async () => {
             const g = await isAuthorized()
@@ -38,10 +77,13 @@ export function Container({title} : ContainerProps) {
     return (
         <>
             <div
-                className=' md:ml-30 md:mr-30 lg:ml-70 lg:mr-70 mt-9 w-[98%] h-[98%] md:w-[95%] md:h-[80%] bg-white rounded-[1em] md:rounded-[2em] flex flex-col justify-center align-center shadow-[0_2px_5px_1.5px_rgba(0,0,0,0.1)] md:shadow-[0_5px_15px_3px_rgba(0,0,0,0.1)]'>
-                <h1 className='mt-10 text-slate-700 mb-15 flex-auto flex justify-center text-[100%] md:text-[180%]'>{title}</h1>
+                className='mt-9 w-[98%] h-[98%] p-7 md:w-[1280px] md:h-[80%] bg-white rounded-[1em] md:rounded-[2em] flex flex-col justify-center align-center shadow-[0_2px_5px_1.5px_rgba(0,0,0,0.1)] md:shadow-[0_5px_15px_3px_rgba(0,0,0,0.1)]'>
+                <h1 className='mt-[5%] text-slate-700 flex-auto flex justify-center text-[100%] md:text-[180%]'>{title}</h1>
+                <Groups setActiveGroupAction={changeGroupAction}/>
+                {groupId != 1 && <h3 className='mt-[5%] text-slate-700 mb-15 flex-auto flex justify-center text-[100%] md:text-[180%]'>{groupName}</h3>}
+                {groupId == 1 && <h3 className='mt-[5%] text-slate-700 mb-15 flex-auto flex justify-center text-[100%] md:text-[180%]'>Общие вопросы</h3>}
                 <Suspense fallback={<Loading/>}>
-                    <SearchBar></SearchBar>
+                    <SearchBar groupId={groupId.toString()}></SearchBar>
                 </Suspense>
                 <ListFaq permission={permission}/>
                 {!permission &&

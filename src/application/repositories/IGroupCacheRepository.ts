@@ -6,4 +6,5 @@ export interface IGroupCacheRepository {
     getCachedData() : Promise<Group[]>,
     getCachedWithCategoriesData(group_id : number) : Promise<GroupWithCategories>,
     updateCachedData() : Promise<boolean>,
+    updateCacheWithCategoriesData(group_id: number) : Promise<boolean>
 }

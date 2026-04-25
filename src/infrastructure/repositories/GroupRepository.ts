@@ -28,6 +28,7 @@ export class GroupRepository implements IGroupRepository {
     }
 
     async deleteGroup(group_id: number): Promise<boolean> {
+        if (group_id < 2) return false;
         const deleted_group : Group[] = await db!.delete(groups)
             .where(eq(groups.id, group_id))
             .returning()

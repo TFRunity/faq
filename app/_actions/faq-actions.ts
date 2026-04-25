@@ -5,9 +5,15 @@ import {cookies} from "next/headers";
 import {jwtVerify, SignJWT} from "jose";
 import {ReadonlyRequestCookies} from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
+export type Group = {
+    id : number;
+    title : string | null;
+    image_src : string | null;
+}
 export type Category = {
     id : number;
     title : string | null;
+    group_id : number | null;
 }
 export type Question = {
     id : number;
@@ -32,6 +38,10 @@ export type CategoryWithQuestionsWithAnswer = {
     category : Category;
     questions : QuestionWithAnswer[] | null;
 };
+export type GroupWithCategories = {
+    group : Group;
+    categories : CategoryWithQuestionsWithAnswer[] | null;
+}
 
 export async function checkAdmin(name : string, password : string) : Promise<boolean> {
     if (name !== process.env.ADMIN_NAME && password !== process.env.ADMIN_PASSWORD) {
@@ -57,10 +67,23 @@ export async function isAuthorized() : Promise<boolean> {
     return a.payload.sub === process.env.ADMIN_NAME!;
 }
 
-export async function getAllWithLatestAnswers() : Promise<CategoryWithQuestionsWithAnswer[]> {
-    const getAllController = getInjection('ICategoryGetAllController')
-    return await getAllController();
+export async function getAllGroups (): Promise<Group[]> {
+    const getAllGroupsController : () => Promise<Group[]> = getInjection('IGroupCachedGetAllController')
+    return await getAllGroupsController();
 }
+
+export async function getDefaultCategoryWithQuestionsWithLatestAnswers() : Promise<CategoryWithQuestionsWithAnswer[]> {
+    const getDefaultGroupController : (group_id : number) => Promise<GroupWithCategories> = getInjection('IGroupCachedGetWithCategoriesController')
+    const groupWithCategories : GroupWithCategories = await getDefaultGroupController(1)
+    return groupWithCategories.categories ? groupWithCategories.categories : [];
+}
+
+export async function getCategoryWithQuestionsWithLatestAnswers(group_id : number) : Promise<CategoryWithQuestionsWithAnswer[]> {
+    const getGroupWithCategoriesController : (group_id : number) => Promise<GroupWithCategories> = getInjection('IGroupCachedGetWithCategoriesController')
+    const groupWithCategories : GroupWithCategories = await getGroupWithCategoriesController(group_id)
+    return groupWithCategories.categories ? groupWithCategories.categories : [];
+}
+
 export async function addEmptyCategory() : Promise<CategoryWithQuestionsWithAnswer> {
     if (await isAuthorized()) {
         const addEmptyCategoryController : () => Promise<CategoryWithQuestionsWithAnswer> = getInjection('ICategoryAddEmptyController')
@@ -74,7 +97,7 @@ export async function addEmptyCategory() : Promise<CategoryWithQuestionsWithAnsw
             throw new Error("Не получилось сохранить в кэш, обновление появится позже")
         }
     }
-    return {category : {id : -1, title : "Не пытайся сломать"}, questions : []}
+    return {category : {id : -1, title : "Не пытайся сломать", group_id : null}, questions : []}
 }
 export async function forceDeleteAnswer(id : number) : Promise<boolean> {
     if (await isAuthorized()) {

@@ -13,7 +13,7 @@ export class MockGroupRepository implements IGroupRepository {
     }
 
     deleteGroup(group_id: number): Promise<boolean> {
-        return Promise.resolve(group_id > 0);
+        return Promise.resolve(group_id > 1);
     }
 
     getAll(): Promise<Group[]> {

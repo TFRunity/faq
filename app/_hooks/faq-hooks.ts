@@ -1,4 +1,4 @@
-import {Answer, Category, CategoryWithQuestionsWithAnswer, Question} from "@/app/_actions/faq-actions"
+import {Answer, Category, CategoryWithQuestionsWithAnswer, Group, Question} from "@/app/_actions/faq-actions"
 import {useReducer, useState} from "react";
 import {QuestionWithAnswer} from "@/app/_actions/faq-actions";
 
@@ -21,7 +21,14 @@ export type QuestionWithAnswerActions =
     | {type : 'CHANGE_ANSWER'; question_id : number, answer : Answer}
     | {type : 'FILL_WITH_DATA'; data : QuestionWithAnswer[]}
 
-//Хук для всех категорий
+export type GroupsActions =
+    | {type : 'ADD_GROUP'; group : Group}
+    | {type : 'REMOVE_GROUP'; group_id : number}
+    | {type : 'CHANGE_TITLE_GROUP'; group : Group}
+    | {type : 'CHANGE_IMAGE_SRC_GROUP'; group : Group}
+    | {type : 'FILL_WITH_DATA'; data : Group[]}
+
+
 export function useCategories(data : CategoryWithQuestionsWithAnswer[] | null) {
 
     function categoriesReducer(state : CategoryWithQuestionsWithAnswer[] | null, action : CategoryWithQuestionsWithAnswerActions) {
@@ -82,4 +89,31 @@ export function useQuestionsWithAnswer(data : QuestionWithAnswer[] | null) {
         dispatchQuestions
     }
 
+}
+
+export function useGroups(data : Group[] | null) {
+
+    function groupsReducer(state : Group[] | null, action : GroupsActions) {
+        switch (action.type) {
+            case "ADD_GROUP":
+                return [...state!, action.group]
+            case "REMOVE_GROUP":
+                return [...state!.filter(g => g.id !== action.group_id)]
+            case "CHANGE_TITLE_GROUP":
+                return [...state!.map(g => g.id !== action.group.id ? g : { ...g, title : action.group.title} )]
+            case "CHANGE_IMAGE_SRC_GROUP":
+                return [...state!.map(g => g.id !== action.group.id ? g : { ...g, image_src : action.group.image_src} )]
+            case "FILL_WITH_DATA":
+                return [...action.data]
+            default:
+                return state;
+        }
+    }
+
+    const [groups, dispatchGroups] = useReducer(groupsReducer,data)
+
+    return {
+        groups,
+        dispatchGroups
+    }
 }

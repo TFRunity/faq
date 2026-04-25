@@ -8,7 +8,7 @@ import {
 } from "@/src/i-adapters/controllers/Category_getWithoutQuestionsController";
 
 export function createCategoryModule() : Module {
-    const categoryModule = createModule();
+    const categoryModule : Module = createModule();
 
     categoryModule.bind(DI_SYMBOLS.ICategoryAddEmptyController)
         .toHigherOrderFunction(category_addEmptyController, [

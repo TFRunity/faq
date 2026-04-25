@@ -88,7 +88,7 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
                                 </>
                             }
                             <div onClick={toggleAnswer}
-                                 className=' cursor-pointer content-end ml-auto mr-2 mb-1 rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>{!toggle ?
+                                 className=' cursor-pointer content-end ml-auto mr-2 mb-1 align- rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>{!toggle ?
                                 <Image src='/icons/arrow-down.png' width='24' height='24' alt='+'/>
                                 :
                                 <Image src='/icons/arrow-up.png' width='24' height='24' alt='-'/>

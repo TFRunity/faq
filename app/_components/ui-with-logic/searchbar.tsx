@@ -5,22 +5,25 @@ import {InstantSearch, Hits, SearchBox} from "react-instantsearch";
 import {searchClient} from "@/typesense/typesenseAdapter";
 import { useInstantSearch } from 'react-instantsearch';
 import Image from "next/image";
-import React from "react";
+import React, {useEffect, useState} from "react";
+import Collection from "typesense/lib/Typesense/Collection";
 
 type CustomHitsProps = {
     hitComponent : any
 }
 
+export type SearchBarProps = {
+    groupId : string;
+}
+
 const CustomHits = ({ hitComponent } : CustomHitsProps  ) => {
     const { results, uiState } = useInstantSearch();
-    const query = uiState.faq_search?.query; // 'faq_search' — это ваш indexName
+    const query = uiState.faq_search?.query;
 
-    // Не показываем ничего, если запроса нет
     if (!query) {
         return null;
     }
 
-    // Бонус: если запрос есть, но результатов 0 — выводим сообщение
     if (results.nbHits === 0) {
         return <div className='ml-12 mt-2'>Ничего не найдено по запросу "{query}"</div>;
     }
@@ -28,7 +31,13 @@ const CustomHits = ({ hitComponent } : CustomHitsProps  ) => {
     return <Hits hitComponent={hitComponent} />;
 };
 
-export function SearchBar() {
+export function SearchBar({groupId} : SearchBarProps) {
+
+    const [collection, setCollection] = useState('faq_search1');
+
+    useEffect(() => {
+        setCollection('faq_search'+groupId);
+    }, [groupId]);
 
     interface FAQHit {
         question: string;
@@ -44,7 +53,7 @@ export function SearchBar() {
 
     return (
         <div className={styles.searchContainer}>
-            <InstantSearch indexName='faq_search' searchClient={searchClient}>
+            <InstantSearch indexName={collection} searchClient={searchClient}>
                 <SearchBox
                     placeholder="Введите ваш вопрос или ключевые слова"
                     classNames={{

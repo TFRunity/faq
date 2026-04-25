@@ -14,7 +14,6 @@ export function AdminButtons() {
 
     const dispatchCategories : ActionDispatch<[CategoryWithQuestionsWithAnswerActions]> = useContext(CategoriesDispatchContext)
     const [showModalAddQuestion, setShowModalAddQuestion] = useState<boolean>(false);
-    const [showModalEditRelations, setShowModalEditRelations] = useState<boolean>(false);
 
     const AddEmptyCategory = async () => {
         const newCategory : CategoryWithQuestionsWithAnswer = await addEmptyCategory()
@@ -33,14 +32,20 @@ export function AdminButtons() {
 
     return (
         <div className='flex flex-row columns-10 ml-3 mr-3 mb-3 justify-around'>
-            <button onClick={AddEmptyCategory} className=' cursor-pointer bg-slate-200 p-2 text rounded-lg p-3 hover:bg-sky-400 transition'>
+            <button onClick={AddEmptyCategory}
+                    className='w-[10%] cursor-pointer bg-slate-200 p-2 text rounded-lg p-3 hover:bg-sky-400 transition'>
                 + Категория
             </button>
-            <button onClick={openModalAddQuestion} className=' cursor-pointer bg-slate-200 p-2 text rounded-lg p-3 hover:bg-sky-400 transition'>
+            <button onClick={openModalAddQuestion}
+                    className='w-[10%] cursor-pointer bg-slate-200 p-2 text rounded-lg p-3 hover:bg-sky-400 transition'>
                 + Вопрос
             </button>
+            <button onClick={openModalAddQuestion}
+                    className='w-[10%] cursor-pointer bg-slate-200 p-2 text rounded-lg p-3 hover:bg-sky-400 transition'>
+                + Отдел
+            </button>
             {showModalAddQuestion && createPortal(
-                <ModalAddFaq exitAction={closeModalAddQuestion} />,
+                <ModalAddFaq exitAction={closeModalAddQuestion}/>,
                 document.body
             )}
         </div>
