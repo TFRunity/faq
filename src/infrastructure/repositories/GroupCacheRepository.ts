@@ -12,25 +12,25 @@ export class GroupCacheRepository implements IGroupCacheRepository {
     }
 
     async getCachedData(): Promise<Group[]> {
-        const groups = await redis.get("groups:all");
+        const groups = await redis.get("groups:a");
         if (groups) return JSON.parse(groups);
         const result : Group[] = await this.groupService.getAll()
-        await redis.set("groups:all", JSON.stringify(groups), {EX : 300});
+        await redis.set("groups:a", JSON.stringify(result), {EX : 300});
         return result;
     }
 
     async getCachedWithCategoriesData(group_id : number) : Promise<GroupWithCategories>  {
-        const group = await redis.get("groups:" + group_id);
+        const group = await redis.get("groups:" + group_id.toString());
         if (group) return JSON.parse(group);
         const result : GroupWithCategories = await this.groupService.getGroupWithCategories(group_id);
-        await redis.set("groups:" + group_id, JSON.stringify(result), {EX : 300});
+        await redis.set("groups:" + group_id.toString(), JSON.stringify(result), {EX : 300});
         await this.searchService.syncByGroup(group_id);
         return result;
     }
 
     async updateCachedData(): Promise<boolean> {
-        const groups = await this.groupService.getAll();
-        const result = await redis.set("groups:all", JSON.stringify(groups), {EX : 300});
+        const groups : Group[] = await this.groupService.getAll();
+        const result = await redis.set("groups:a", JSON.stringify(groups), {EX : 300});
         return result === "OK";
     }
 

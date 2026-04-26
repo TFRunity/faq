@@ -24,8 +24,7 @@ export type QuestionWithAnswerActions =
 export type GroupsActions =
     | {type : 'ADD_GROUP'; group : Group}
     | {type : 'REMOVE_GROUP'; group_id : number}
-    | {type : 'CHANGE_TITLE_GROUP'; group : Group}
-    | {type : 'CHANGE_IMAGE_SRC_GROUP'; group : Group}
+    | {type : 'UPDATE_GROUP'; group : Group}
     | {type : 'FILL_WITH_DATA'; data : Group[]}
 
 
@@ -99,10 +98,8 @@ export function useGroups(data : Group[] | null) {
                 return [...state!, action.group]
             case "REMOVE_GROUP":
                 return [...state!.filter(g => g.id !== action.group_id)]
-            case "CHANGE_TITLE_GROUP":
-                return [...state!.map(g => g.id !== action.group.id ? g : { ...g, title : action.group.title} )]
-            case "CHANGE_IMAGE_SRC_GROUP":
-                return [...state!.map(g => g.id !== action.group.id ? g : { ...g, image_src : action.group.image_src} )]
+            case "UPDATE_GROUP":
+                return [...state!.map(g => g.id !== action.group.id ? g : { ...g, title : action.group.title, image_src : action.group.image_src } )]
             case "FILL_WITH_DATA":
                 return [...action.data]
             default:

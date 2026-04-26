@@ -4,8 +4,8 @@ import {GroupWithCategories} from "@/src/entities/models/view-models";
 
 export interface IGroupRepository {
     getAll() : Promise<Group[]>
-    changeTitle(group : Group): Promise<boolean>
-    addGroup(title: string) : Promise<boolean>
+    updateGroup(group : Group): Promise<boolean>
+    addGroup(title: string) : Promise<Group>
     deleteGroup(group_id: number): Promise<boolean>
     getGroupWithCategories(group_id: number) : Promise<GroupWithCategories>
 }

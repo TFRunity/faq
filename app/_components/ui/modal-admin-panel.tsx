@@ -23,8 +23,6 @@ export default function AdminPanel({givePermissionsAction, exitAction} : AdminPa
 
     const exitF = async () => {
         const res : boolean = await checkAdmin(nameInputRef.current!.value,passwordInputRef.current!.value)
-        console.log(name)
-        // const res = true
         if (res) {
             givePermissionsAction()
             exitAction()

@@ -84,12 +84,46 @@ export async function getCategoryWithQuestionsWithLatestAnswers(group_id : numbe
     return groupWithCategories.categories ? groupWithCategories.categories : [];
 }
 
-export async function addEmptyCategory() : Promise<CategoryWithQuestionsWithAnswer> {
+export async function addEmptyGroup() : Promise<Group> {
+    const addEmptyGroupController = getInjection('IGroupAddController')
+    const result : Group = await addEmptyGroupController("Факультет")
+    const updateCacheController = getInjection('IGroupUpdateCacheController')
+    const res : boolean = await updateCacheController();
+    if (res && result){
+        return result
+    }
+    else{
+        return { id : -1, title : 'Не пытайся сломать', image_src : null}
+    }
+}
+
+export async function deleteGroup(group_id: number) : Promise<boolean> {
+    const deleteGroupController = getInjection('IGroupDeleteController')
+    const result : boolean = await deleteGroupController(group_id)
+    const updateCacheWithCategoriesController = getInjection('IGroupUpdateCacheWithCategoriesController')
+    await updateCacheWithCategoriesController(group_id)
+    //Подумать куда деваются все привязанные категории и вопросы, поставить foreign_key
+    const updateCacheController = getInjection('IGroupUpdateCacheController')
+    await updateCacheController()
+    return result
+}
+
+export async function updateGroup(group : Group) : Promise<boolean> {
+    const updateGroupController : (group : Group) => Promise<boolean> = getInjection('IGroupUpdateController')
+    const result : boolean = await updateGroupController(group)
+    const updateCacheWithCategoriesController = getInjection('IGroupUpdateCacheWithCategoriesController')
+    await updateCacheWithCategoriesController(group.id)
+    const updateCacheController = getInjection('IGroupUpdateCacheController')
+    await updateCacheController()
+    return result
+}
+
+export async function addEmptyCategory(group_id : number) : Promise<CategoryWithQuestionsWithAnswer> {
     if (await isAuthorized()) {
-        const addEmptyCategoryController : () => Promise<CategoryWithQuestionsWithAnswer> = getInjection('ICategoryAddEmptyController')
-        const c : CategoryWithQuestionsWithAnswer = await addEmptyCategoryController();
-        const updateCacheController : () => Promise<boolean> = getInjection('ICategoryUpdateCacheController')
-        const res : boolean = await updateCacheController();
+        const addEmptyCategoryController : (group_id : number) => Promise<CategoryWithQuestionsWithAnswer> = getInjection('ICategoryAddEmptyController')
+        const c : CategoryWithQuestionsWithAnswer = await addEmptyCategoryController(group_id);
+        const updateCacheController : (group_id : number) => Promise<boolean> = getInjection('IGroupUpdateCacheWithCategoriesController')
+        const res : boolean = await updateCacheController(group_id);
         if (res) {
             return c
         }
@@ -110,14 +144,14 @@ export async function forceDeleteAnswer(id : number) : Promise<boolean> {
     }
     return false;
 }
-export async function deleteCategory(id : number) : Promise<boolean> {
+export async function deleteCategory(id : number, group_id : number) : Promise<boolean> {
     if (await isAuthorized()) {
         const deleteCategoryController : (category_id : number) => Promise<boolean> = getInjection('ICategoryDeleteController')
         const res : boolean = await deleteCategoryController(id)
         if (res) {
             const updateQuestionCacheController : () => Promise<boolean> = getInjection('IQuestionUpdateCacheController')
-            const updateCategoryCacheController : () => Promise<boolean> = getInjection('ICategoryUpdateCacheController')
-            await updateCategoryCacheController();
+            const updateGroupCacheController : (group_id : number) => Promise<boolean> = getInjection('IGroupUpdateCacheWithCategoriesController')
+            await updateGroupCacheController(group_id);
             await updateQuestionCacheController();
             return true
         }
@@ -130,8 +164,8 @@ export async function changeTitleCategory(category : Category) : Promise<boolean
         const changeTitleCategoryController : (category : Category) => Promise<boolean> = getInjection('ICategoryChangeTitleController')
         const res : boolean = await changeTitleCategoryController(category)
         if (res) {
-            const updateCacheController : () => Promise<boolean> = getInjection('ICategoryUpdateCacheController')
-            const res : boolean = await updateCacheController();
+            const updateCacheController : (group_id : number) => Promise<boolean> = getInjection('IGroupUpdateCacheWithCategoriesController')
+            const res : boolean = await updateCacheController(category.group_id!);
             if (res) {
                 return true
             }
@@ -145,25 +179,29 @@ export async function getQuestionsWithoutCategory() : Promise<QuestionWithAnswer
     const getQuestionsController : () => Promise<QuestionWithAnswer[]> = getInjection('IQuestionGetAllWithoutCategoryController')
     return await getQuestionsController()
 }
-export async function updateQuestionOfQuestion(id : number, newQuestion : string) : Promise<QuestionWithAnswer> {
+export async function updateQuestionOfQuestion(id : number, newQuestion : string, group_id : number | null) : Promise<QuestionWithAnswer> {
     if (await isAuthorized()) {
         const updateQuestionOfQuestionController : (question_id : number, question : string) => Promise<QuestionWithAnswer> = getInjection('IQuestionUpdateQuestionController')
         const question : QuestionWithAnswer = await updateQuestionOfQuestionController(id, newQuestion)
         const updateQuestionCacheController : () => Promise<boolean> = getInjection('IQuestionUpdateCacheController')
-        const updateCategoryCacheController : () => Promise<boolean> = getInjection('ICategoryUpdateCacheController')
-        await updateCategoryCacheController();
+        if (group_id) {
+            const updateGroupCacheController : (group_id : number) => Promise<boolean> = getInjection('IGroupUpdateCacheWithCategoriesController')
+            await updateGroupCacheController(group_id);
+        }
         await updateQuestionCacheController();
         return question
     }
     return {question : {question : 'Не трогай', id : -1, answer_id : null, category_id : null}, answer : null}
 }
-export async function updateAnswerOfQuestion(id : number, newAnswer : string) : Promise<QuestionWithAnswer> {
+export async function updateAnswerOfQuestion(id : number, newAnswer : string, group_id : number | null) : Promise<QuestionWithAnswer> {
     if (await isAuthorized()) {
         const updateAnswerOfQuestionController : (question_id : number, answer : string)  => Promise<QuestionWithAnswer> = getInjection('IQuestionAddAnswerController')
         const question : QuestionWithAnswer = await updateAnswerOfQuestionController(id, newAnswer)
         const updateQuestionCacheController : () => Promise<boolean> = getInjection('IQuestionUpdateCacheController')
-        const updateCategoryCacheController : () => Promise<boolean> = getInjection('ICategoryUpdateCacheController')
-        await updateCategoryCacheController();
+        if (group_id) {
+            const updateGroupCacheController : (group_id : number) => Promise<boolean> = getInjection('IGroupUpdateCacheWithCategoriesController')
+            await updateGroupCacheController(group_id);
+        }
         await updateQuestionCacheController();
         return question
     }
@@ -189,26 +227,28 @@ export async function addQuestionWithAnswer(question : string, answer : string) 
     }
     return {question : {question : 'Не трогай', id : -1, answer_id : null, category_id : null}, answer : null}
 }
-export async function deleteQuestion(id : number) : Promise<boolean> {
+export async function deleteQuestion(id : number, group_id : number | null) : Promise<boolean> {
     if (await isAuthorized()) {
         const deleteQuestionController : (question_id : number) => Promise<boolean> = getInjection('IQuestionDeleteController')
         const result : boolean = await deleteQuestionController(id)
         const updateQuestionCacheController : () => Promise<boolean> = getInjection('IQuestionUpdateCacheController')
-        const updateCategoryCacheController : () => Promise<boolean> = getInjection('ICategoryUpdateCacheController')
-        await updateCategoryCacheController();
+        if (group_id) {
+            const updateGroupCacheController : (group_id : number) => Promise<boolean> = getInjection('IGroupUpdateCacheWithCategoriesController')
+            await updateGroupCacheController(group_id);
+        }
         await updateQuestionCacheController();
         return result
     }
     return false;
 }
-export async function addRelationQuestionWithCategory(question_id : number, category_id : number) : Promise<boolean> {
+export async function addRelationQuestionWithCategory(question_id : number, category_id : number, group_id : number) : Promise<boolean> {
     if (await isAuthorized()) {
         const addRelationQuestionWithCategoryController = getInjection('IQuestionAddRelWithCategoriesController')
         const result : boolean = await addRelationQuestionWithCategoryController(question_id, category_id)
         if (result) {
             const updateQuestionCacheController : () => Promise<boolean> = getInjection('IQuestionUpdateCacheController')
-            const updateCategoryCacheController : () => Promise<boolean> = getInjection('ICategoryUpdateCacheController')
-            await updateCategoryCacheController();
+            const updateGroupCacheController : (group_id : number) => Promise<boolean> = getInjection('IGroupUpdateCacheWithCategoriesController')
+            await updateGroupCacheController(group_id);
             await updateQuestionCacheController();
             return result;
         }
@@ -220,7 +260,7 @@ export async function getQuestionAllAnswers (question_id : number) : Promise<Que
     const getQuestionWithAnswerController : (question_id : number) => Promise<QuestionWithAnswers> = getInjection('IQuestionGetWithHistoryOfAnswersController')
     return await getQuestionWithAnswerController(question_id)
 }
-export async function getCategoriesWithoutQuestions () : Promise<Category[]> {
-    const getCategoriesWithoutQuestions : () => Promise<Category[]> = getInjection('ICategoryGetWithoutQuestionsController')
-    return await getCategoriesWithoutQuestions()
+export async function getCategoriesWithoutQuestions (group_id : number) : Promise<Category[]> {
+    const getCategoriesWithoutQuestions : (group_id : number) => Promise<Category[]> = getInjection('ICategoryGetWithoutQuestionsController')
+    return await getCategoriesWithoutQuestions(group_id)
 }

@@ -7,15 +7,17 @@ import {Group} from "@/app/_components/ui/group";
 
 export type GroupsProps = {
     setActiveGroupAction : (group_id : number) => void;
+    permission : boolean
 }
 
-export function Groups({} : GroupsProps) : ReactElement {
+export function Groups({setActiveGroupAction, permission} : GroupsProps) : ReactElement {
 
     const groups : GroupType[] = useContext(GroupsStateContext)
 
     const [activeId, setActiveId] = useState<number>(-1)
     const setActive = async (group_id : number) => {
         setActiveId(group_id)
+        setActiveGroupAction(group_id)
     }
 
     if (!groups) {
@@ -25,10 +27,12 @@ export function Groups({} : GroupsProps) : ReactElement {
     }
 
     return (
-        <div className='h-[20%] md:h-[15%] w-90% md:w-95 flex flex-col columns-8'>
+        <div className='grid-cols-4 grid gap-1 mt-4'>
             {
                 groups.map(g => (
-                    <Group group={g} isActive={activeId == g.id} setActiveAction={setActive} />
+                    <div key={g.id}>
+                        <Group group={g} isActive={activeId == g.id} permission={permission} setActiveAction={setActive} />
+                    </div>
                 ))
             }
         </div>

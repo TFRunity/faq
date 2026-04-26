@@ -15,8 +15,8 @@ export class CategoryRepository implements ICategoryRepository {
         private readonly mappingService : IMappingFAQService
     ) {}
 
-    async addEmpty() : Promise<CategoryWithQuestions> {
-        const category : Category[] = await db!.insert(categories).values({title : "Новая категория"}).returning();
+    async addEmpty(group_id : number) : Promise<CategoryWithQuestions> {
+        const category : Category[] = await db!.insert(categories).values({title : "Новая категория", group_id : group_id}).returning();
         return {category : category![0], questions : []}
     }
 
@@ -40,9 +40,10 @@ export class CategoryRepository implements ICategoryRepository {
         return this.mappingService.convertRawCategoriesWithQuestions(raw)
     }
 
-    async getWithoutQuestions() : Promise<Category[]> {
+    async getWithoutQuestions(group_id : number) : Promise<Category[]> {
         return await db!.select()
             .from(categories)
+            .where(eq(categories.group_id, group_id))
     }
 
     async getAllOfGroup(group_id: number): Promise<CategoryWithQuestions[]> {

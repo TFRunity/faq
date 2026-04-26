@@ -46,7 +46,7 @@ export function Container({title} : ContainerProps) {
             const res : Group[] = await getAllGroups()
             if (res) {
                 const g : Group = res.filter(g => g.id === groupId)[0]
-                setGroupName(g.title ? g.title : 'У факультета ещё нет названия')
+                setGroupName(g.title ? g.title : '')
             }
         }
         c()
@@ -77,15 +77,15 @@ export function Container({title} : ContainerProps) {
     return (
         <>
             <div
-                className='mt-9 w-[98%] h-[98%] p-7 md:w-[1280px] md:h-[80%] bg-white rounded-[1em] md:rounded-[2em] flex flex-col justify-center align-center shadow-[0_2px_5px_1.5px_rgba(0,0,0,0.1)] md:shadow-[0_5px_15px_3px_rgba(0,0,0,0.1)]'>
+                className='mt-9 w-[98%] h-[98%] p-7 md:w-[1280px] bg-white rounded-[1em] md:rounded-[2em] flex flex-col justify-center align-center shadow-[0_2px_5px_1.5px_rgba(0,0,0,0.1)] md:shadow-[0_5px_15px_3px_rgba(0,0,0,0.1)]'>
                 <h1 className='mt-[5%] text-slate-700 flex-auto flex justify-center text-[100%] md:text-[180%]'>{title}</h1>
-                <Groups setActiveGroupAction={changeGroupAction}/>
-                {groupId != 1 && <h3 className='mt-[5%] text-slate-700 mb-15 flex-auto flex justify-center text-[100%] md:text-[180%]'>{groupName}</h3>}
-                {groupId == 1 && <h3 className='mt-[5%] text-slate-700 mb-15 flex-auto flex justify-center text-[100%] md:text-[180%]'>Общие вопросы</h3>}
+                <Groups permission={permission} setActiveGroupAction={changeGroupAction}/>
+                {groupId != 1 && <h3 className='mt-5 text-slate-700 mb-5 flex-auto flex justify-center text-[100%] md:text-[180%]'>{groupName}</h3>}
+                {groupId == 1 && <h3 className='mt-5 text-slate-700 mb-5 flex-auto flex justify-center text-[100%] md:text-[180%]'>Общие вопросы</h3>}
                 <Suspense fallback={<Loading/>}>
                     <SearchBar groupId={groupId.toString()}></SearchBar>
                 </Suspense>
-                <ListFaq permission={permission}/>
+                <ListFaq groupId={groupId} permission={permission}/>
                 {!permission &&
                     <div className='cursor-pointer content-end mb-8 mt-7 ml-auto mr-8' onClick={openAdminModal}>
                         <Image src='/icons/admin.png' width='24' height='24' alt='admin' />
@@ -96,7 +96,7 @@ export function Container({title} : ContainerProps) {
                     document.body
                 )}
                 {permission &&
-                    <AdminButtons/>
+                    <AdminButtons groupId={groupId}/>
                 }
             </div>
         </>

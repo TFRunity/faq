@@ -15,17 +15,17 @@ import Category from "@/app/_components/ui-with-logic/category-with-questions";
 
 export interface ListProps {
     permission: boolean;
+    groupId: number;
 }
 
-export default function ListFaq( { permission } : ListProps) {
+export default function ListFaq( { permission, groupId } : ListProps) {
 
     const categories : CategoryWithQuestionsWithAnswer[] = useContext(CategoriesStateContext)
     const [emptyCategoriesMapped, setCategoriesMapped] = useState<CategoryModel[]>([]);
 
     useEffect(() => {
         const fetchCategories = async () => {
-            const categories : CategoryModel[] = await getCategoriesWithoutQuestions()
-
+            const categories : CategoryModel[] = await getCategoriesWithoutQuestions(groupId)
             setCategoriesMapped(categories)
         }
         fetchCategories()
@@ -53,7 +53,7 @@ export default function ListFaq( { permission } : ListProps) {
             {permission &&
                 categories.map(category => (
                     <div key={category.category.id} >
-                        <Category category={category} permission={permission}/>
+                        <Category groupId={groupId} category={category} permission={permission}/>
                     </div>
                 ))
             }
@@ -75,7 +75,7 @@ export default function ListFaq( { permission } : ListProps) {
             {!permission &&
                 categories.map(category => (
                     <div key={category.category.id}>
-                        <Category category={category} permission={permission}/>
+                        <Category groupId={groupId} category={category} permission={permission}/>
                     </div>
                 ))
             }

@@ -12,16 +12,16 @@ export class GroupRepository implements IGroupRepository {
     constructor(private readonly categoryService : ICategoryRepository) {
     }
 
-    async addGroup(title: string): Promise<boolean> {
+    async addGroup(title: string): Promise<Group> {
         const created_group : Group[] = await db!.insert(groups)
             .values({title : title})
             .returning()
-        return created_group.length > 0;
+        return created_group[0]
     }
 
-    async changeTitle(group : Group): Promise<boolean> {
+    async updateGroup(group : Group): Promise<boolean> {
         const updated_group : Group[] = await db!.update(groups)
-            .set({title : group.title})
+            .set({title : group.title, image_src : group.image_src})
             .where(eq(groups.id, group.id))
             .returning()
         return updated_group.length > 0;

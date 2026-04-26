@@ -14,6 +14,7 @@ import styles from "@/app/_components/ui-with-logic/searchbar.module.css";
 export interface CategoryProps {
     category : CategoryWithQuestionsWithAnswer,
     permission : boolean,
+    groupId : number
 }
 
 export default function Category({category, permission} : CategoryProps) {

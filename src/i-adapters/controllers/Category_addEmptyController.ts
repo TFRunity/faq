@@ -5,8 +5,8 @@ export type ICategoryAddEmptyController = ReturnType<typeof category_addEmptyCon
 
 export const category_addEmptyController = (
         categoryService : ICategoryRepository
-    ) => async () : Promise<CategoryWithQuestions> => {
-            return await categoryService.addEmpty()
+    ) => async (group_id : number) : Promise<CategoryWithQuestions> => {
+            return await categoryService.addEmpty(group_id)
         }
 
 

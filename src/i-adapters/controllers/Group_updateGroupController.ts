@@ -1,10 +1,10 @@
 import {IGroupRepository} from "@/src/application/repositories/IGroupRepository";
 import {Group} from "@/src/entities/models/group";
 
-export type IGroupChangeTitleController = ReturnType<typeof group_changeTitleController>
+export type IGroupUpdateController = ReturnType<typeof group_updateGroupController>
 
-export const group_changeTitleController = (
+export const group_updateGroupController = (
         groupService : IGroupRepository
     ) => async (group : Group) : Promise<boolean> => {
-        return await groupService.changeTitle(group)
+        return await groupService.updateGroup(group)
     }

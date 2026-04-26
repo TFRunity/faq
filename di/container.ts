@@ -6,10 +6,12 @@ import {createCategoryModule} from "@/di/modules/categories.module";
 import {createAnswerModule} from "@/di/modules/answers.module";
 import {createQuestionModule} from "@/di/modules/questions.module";
 import {createCacheModule} from "@/di/modules/cache.module";
+import {createGroupModule} from "@/di/modules/groups.module";
 
 const ApplicationContainer : Container = createContainer()
 
 ApplicationContainer.load(Symbol('FaqModule'), createFaqModule())
+ApplicationContainer.load(Symbol('GroupModule'), createGroupModule())
 ApplicationContainer.load(Symbol('CategoryModule'),createCategoryModule())
 ApplicationContainer.load(Symbol('AnswerModule'), createAnswerModule())
 ApplicationContainer.load(Symbol('QuestionModule'), createQuestionModule())

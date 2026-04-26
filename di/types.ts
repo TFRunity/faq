@@ -38,7 +38,9 @@ import {ISmartSearchRepository} from "@/src/application/repositories/ISmartSearc
 import {IGroupAddController} from "@/src/i-adapters/controllers/Group_addController";
 import {IGroupCachedGetAllController} from "@/src/i-adapters/controllers/Group_Cached_getAllController";
 import {IGroupGetWithCategoriesController} from "@/src/i-adapters/controllers/Group_Cached_getWithCategoriesController";
-import {IGroupChangeTitleController} from "@/src/i-adapters/controllers/Group_changeTitleController";
+import {
+    IGroupUpdateController
+} from "@/src/i-adapters/controllers/Group_updateGroupController";
 import {IGroupDeleteController} from "@/src/i-adapters/controllers/Group_deleteController";
 import {IGroupUpdateCacheController} from "@/src/i-adapters/controllers/Group_UpdateCache_Controller";
 import {
@@ -84,7 +86,7 @@ export const DI_SYMBOLS = {
     IGroupAddController : Symbol.for("IGroupAddController"),
     IGroupCachedGetAllController : Symbol.for("IGroupCachedGetAllController"),
     IGroupCachedGetWithCategoriesController : Symbol.for("IGroupCachedGetWithCategoriesController"),
-    IGroupChangeTitleController : Symbol.for("IGroupChangeTitleController"),
+    IGroupUpdateController : Symbol.for("IGroupUpdateController"),
     IGroupDeleteController : Symbol.for("IGroupDeleteController"),
     IGroupUpdateCacheController : Symbol.for("IGroupUpdateCacheController"),
     IGroupUpdateCacheWithCategoriesController : Symbol.for("IGroupUpdateCacheWithCategoriesController"),
@@ -130,7 +132,7 @@ export interface DI_RETURN_TYPES {
     IGroupAddController : IGroupAddController;
     IGroupCachedGetAllController : IGroupCachedGetAllController;
     IGroupCachedGetWithCategoriesController : IGroupGetWithCategoriesController;
-    IGroupChangeTitleController : IGroupChangeTitleController;
+    IGroupUpdateController : IGroupUpdateController;
     IGroupDeleteController : IGroupDeleteController;
     IGroupUpdateCacheController : IGroupUpdateCacheController;
     IGroupUpdateCacheWithCategoriesController : IGroupUpdateCacheWithCategoriesController;
