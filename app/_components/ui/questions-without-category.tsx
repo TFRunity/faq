@@ -8,10 +8,11 @@ import "@/app/global-styles.css"
 
 
 export type QuestionsProps = {
-    permission : boolean
+    permission : boolean,
+    groupId : number
 }
 
-export default function Questions({permission} : QuestionsProps) {
+export default function Questions({permission, groupId} : QuestionsProps) {
 
     const state : QuestionWithAnswer[]  = useContext(QuestionsStateContext)
 
@@ -22,7 +23,7 @@ export default function Questions({permission} : QuestionsProps) {
             {
                 state.map(q => (
                     <div key={q.question.id}>
-                        <Question questionWithAnswer={q} permission={permission}/>
+                        <Question groupId={groupId} questionWithAnswer={q} permission={permission}/>
                     </div>
                 ))
             }

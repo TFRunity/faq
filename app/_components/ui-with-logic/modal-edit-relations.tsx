@@ -15,10 +15,11 @@ import styles from "@/app/_components/ui-with-logic/searchbar.module.css";
 
 type ModalEditRelationsProps = {
     questionWithAnswer : QuestionWithAnswer,
-    exitAction: () => void
+    exitAction: () => void,
+    groupId : number | null
 }
 
-export function ModalEditRelations ({exitAction, questionWithAnswer} : ModalEditRelationsProps) {
+export function ModalEditRelations ({exitAction, questionWithAnswer, groupId} : ModalEditRelationsProps) {
 
     const dispatchQuestions : ActionDispatch<[action : QuestionWithAnswerActions]> = useContext(QuestionsDispatchContext)
     const dispatchCategories : ActionDispatch<[action : CategoryWithQuestionsWithAnswerActions]> = useContext(CategoriesDispatchContext)
@@ -26,7 +27,8 @@ export function ModalEditRelations ({exitAction, questionWithAnswer} : ModalEdit
 
     useEffect(() => {
         const fetchCategories = async () => {
-            const categories : Category[] = await getCategoriesWithoutQuestions()
+            console.log(groupId)
+            const categories : Category[] = await getCategoriesWithoutQuestions(groupId!)
             setCategoriesMapped(categories)
         }
         fetchCategories()
@@ -35,7 +37,7 @@ export function ModalEditRelations ({exitAction, questionWithAnswer} : ModalEdit
     const categoryInUse : Category | null = categoriesMapped.filter(c => c.id === questionWithAnswer.question.category_id)[0]
 
     const submit = async (category_id : number) => {
-        const result : boolean = await addRelationQuestionWithCategory(questionWithAnswer.question.id, category_id)
+        const result : boolean = await addRelationQuestionWithCategory(questionWithAnswer.question.id, category_id, groupId!)
         if(result) {
             if(categoryInUse) {
                 dispatchCategories({

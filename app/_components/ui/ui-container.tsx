@@ -29,10 +29,11 @@ export function Container({title} : ContainerProps) {
 
     const dispatchCategories : ActionDispatch<[action : CategoryWithQuestionsWithAnswerActions]> = useContext(CategoriesDispatchContext)
 
+    const [groups, setGroups] = useState<Group[]>([])
     const [permission, setPermission] = useState<boolean>(false);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [groupId, setGroupId] = useState<number>(1);
-    const [groupName, setGroupName] = useState<string>('');
+    const [groupName, setGroupName] = useState<string>('Общее');
 
     const openAdminModal = () => {
         setShowModal(!showModal);
@@ -43,14 +44,15 @@ export function Container({title} : ContainerProps) {
 
     useEffect(() => {
         const c = async () => {
-            const res : Group[] = await getAllGroups()
-            if (res) {
-                const g : Group = res.filter(g => g.id === groupId)[0]
-                setGroupName(g.title ? g.title : '')
-            }
+            const g : Group | undefined = groups.filter(g => g.id === groupId)[0]
+            setGroupName(g !== undefined ? g.title! : 'Общее')
         }
         c()
         const b = async () => {
+            dispatchCategories({
+                type : "FILL_WITH_DATA",
+                data : []
+            })
             const newCategories : CategoryWithQuestionsWithAnswer[] = await getCategoryWithQuestionsWithLatestAnswers(groupId)
             dispatchCategories({
                 type : "FILL_WITH_DATA",
@@ -72,6 +74,11 @@ export function Container({title} : ContainerProps) {
             if (g) givePermission()
         }
         a()
+        const b = async () => {
+            const res : Group[] = await getAllGroups()
+            setGroups(res)
+        }
+        b()
     }, [])
 
     return (
@@ -80,8 +87,7 @@ export function Container({title} : ContainerProps) {
                 className='mt-9 w-[98%] h-[98%] p-7 md:w-[1280px] bg-white rounded-[1em] md:rounded-[2em] flex flex-col justify-center align-center shadow-[0_2px_5px_1.5px_rgba(0,0,0,0.1)] md:shadow-[0_5px_15px_3px_rgba(0,0,0,0.1)]'>
                 <h1 className='mt-[5%] text-slate-700 flex-auto flex justify-center text-[100%] md:text-[180%]'>{title}</h1>
                 <Groups permission={permission} setActiveGroupAction={changeGroupAction}/>
-                {groupId != 1 && <h3 className='mt-5 text-slate-700 mb-5 flex-auto flex justify-center text-[100%] md:text-[180%]'>{groupName}</h3>}
-                {groupId == 1 && <h3 className='mt-5 text-slate-700 mb-5 flex-auto flex justify-center text-[100%] md:text-[180%]'>Общие вопросы</h3>}
+                <h3 className='mt-5 text-slate-700 mb-5 flex-auto flex justify-center text-[100%] md:text-[180%]'>{groupName}</h3>
                 <Suspense fallback={<Loading/>}>
                     <SearchBar groupId={groupId.toString()}></SearchBar>
                 </Suspense>

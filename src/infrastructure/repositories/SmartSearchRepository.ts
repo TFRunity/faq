@@ -1,7 +1,7 @@
 import {ISmartSearchRepository} from "@/src/application/repositories/ISmartSearchRepository";
 import {db as pgClient} from "@/drizzle"
 import {client as typeSenseClient, client} from "@/typesense/typesenseAdapter";
-import {answers, questions} from "@/drizzle/schema";
+import {answers, categories, groups, questions} from "@/drizzle/schema";
 import {eq} from "drizzle-orm";
 
 const setupSchema = async (group_id : number, schema : any) => {
@@ -34,7 +34,9 @@ export class SmartSearchRepository implements ISmartSearchRepository {
                     answer: answers.answer,
                 })
                 .from(questions)
-                .innerJoin(answers, on => eq(questions.answer_id, answers.id));
+                .innerJoin(answers, on => eq(questions.answer_id, answers.id))
+                .innerJoin(categories, on => eq(categories.id, questions.category_id))
+                .where(eq(categories.group_id, group_id))
 
             const documents = res.map(row => ({
                 id: row.id.toString(),

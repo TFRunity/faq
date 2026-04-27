@@ -19,7 +19,7 @@ export function ModalDeleteCategory({exitAction, toDeleteCategory} : ModalDelete
     const dispatchQuestions : ActionDispatch<[action : QuestionWithAnswerActions]> = useContext(QuestionsDispatchContext)
 
     const submit = async () => {
-        const result : boolean = await deleteCategory(toDeleteCategory.category.id);
+        const result : boolean = await deleteCategory(toDeleteCategory.category.id, toDeleteCategory.category.group_id!);
         if (result) {
             dispatchCategories({
                 type : "DELETE_CATEGORY",

@@ -1,7 +1,7 @@
 'use client'
 
 import '@/app/global-styles.css'
-import React, {useContext, useEffect, useState} from "react";
+import React, {Suspense, useContext, useEffect, useState} from "react";
 import {CategoriesStateContext, QuestionsStateContext} from "@/app/providers";
 import {
     CategoryWithQuestionsWithAnswer,
@@ -11,6 +11,7 @@ import {
 import Questions from "@/app/_components/ui/questions-without-category";
 import {Category as CategoryModel} from "@/app/_actions/faq-actions";
 import Category from "@/app/_components/ui-with-logic/category-with-questions";
+import Loading from "@/app/loading";
 
 
 export interface ListProps {
@@ -37,12 +38,12 @@ export default function ListFaq( { permission, groupId } : ListProps) {
         return (
             <>
                 {
-                    <div className='ml-7 mr-7 mb-4 mt-7'>
-                        <h2>Пока что нет ни вопросов, ни категорий</h2>
+                    <div className='text-center text-slate-400'>
+                        <h1 className='text-[150%]'>Загрузка вопросов</h1>
                     </div>
                 }
                 {permission &&
-                    <Questions permission={permission}/>
+                    <Questions groupId={groupId} permission={permission}/>
                 }
             </>
         )
@@ -70,7 +71,7 @@ export default function ListFaq( { permission, groupId } : ListProps) {
                 </div>
             }
             {permission &&
-                <Questions permission={permission}/>
+                <Questions groupId={groupId} permission={permission}/>
             }
             {!permission &&
                 categories.map(category => (

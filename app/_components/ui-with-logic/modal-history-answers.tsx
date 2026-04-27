@@ -15,10 +15,11 @@ import {CategoriesDispatchContext, QuestionsDispatchContext} from "@/app/provide
 
 type ModalHistoryAnswersProps = {
     questionToUpdate : Question,
-    exitAction: () => void
+    exitAction: () => void,
+    groupId : number | null
 }
 
-export function ModalHistoryAnswers ({questionToUpdate, exitAction} : ModalHistoryAnswersProps) {
+export function ModalHistoryAnswers ({questionToUpdate, exitAction, groupId} : ModalHistoryAnswersProps) {
 
     const dispatchQuestions : ActionDispatch<[action : QuestionWithAnswerActions]> = useContext(QuestionsDispatchContext)
     const dispatchCategories : ActionDispatch<[action : CategoryWithQuestionsWithAnswerActions]> = useContext(CategoriesDispatchContext)
@@ -34,7 +35,7 @@ export function ModalHistoryAnswers ({questionToUpdate, exitAction} : ModalHisto
     }, [])
 
     const submit = async (answer : Answer) => {
-        const resQuestion : QuestionWithAnswer = await updateAnswerOfQuestion(question.id, answer.answer!)
+        const resQuestion : QuestionWithAnswer = await updateAnswerOfQuestion(question.id, answer.answer!, groupId)
         if (questionToUpdate.category_id !== null) {
             dispatchCategories({
                 type: "UPDATE_ANSWER",

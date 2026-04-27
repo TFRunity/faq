@@ -16,9 +16,10 @@ import styles from "@/app/_components/ui-with-logic/searchbar.module.css";
 export interface QuestionWithAnswerProps {
     questionWithAnswer: QuestionWithAnswer;
     permission : boolean;
+    groupId : number | null;
 }
 
-export default function Question({questionWithAnswer, permission} : QuestionWithAnswerProps) {
+export default function Question({questionWithAnswer, permission, groupId} : QuestionWithAnswerProps) {
 
     const [toggle, setToggle] = useState<boolean>(false);
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -97,19 +98,19 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
                     </div>
                 </div>
                 {showModalHistory && createPortal(
-                    <ModalHistoryAnswers questionToUpdate={questionWithAnswer.question} exitAction={closeModalHistory} />,
+                    <ModalHistoryAnswers groupId={groupId} questionToUpdate={questionWithAnswer.question} exitAction={closeModalHistory} />,
                     document.body
                 )}
                 {showModal && createPortal(
-                    <ModalUpdateFaq questionWithAnswer={questionWithAnswer} exitAction={closeModalChange} />,
+                    <ModalUpdateFaq groupId={groupId} questionWithAnswer={questionWithAnswer} exitAction={closeModalChange} />,
                     document.body
                 )}
                 {showModalDelete && createPortal(
-                    <ModalDeleteQuestion question={questionWithAnswer.question} exitAction={closeModalDelete} />,
+                    <ModalDeleteQuestion groupId={groupId} question={questionWithAnswer.question} exitAction={closeModalDelete} />,
                     document.body
                 )}
                 {showModalRelationship && createPortal(
-                    <ModalEditRelations questionWithAnswer={questionWithAnswer} exitAction={closeModalRelationship} />,
+                    <ModalEditRelations groupId={groupId} questionWithAnswer={questionWithAnswer} exitAction={closeModalRelationship} />,
                     document.body
                 )}
             </div>

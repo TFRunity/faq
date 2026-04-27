@@ -9,16 +9,17 @@ import styles from "@/app/_components/ui-with-logic/searchbar.module.css";
 
 type ModalDeleteQuestionProps = {
     question : Question,
-    exitAction : () => void
+    exitAction : () => void,
+    groupId : number | null
 }
 
-export function ModalDeleteQuestion ({question, exitAction} : ModalDeleteQuestionProps) {
+export function ModalDeleteQuestion ({question, exitAction, groupId} : ModalDeleteQuestionProps) {
 
     const dispatchQuestions : ActionDispatch<[action : QuestionWithAnswerActions]> = useContext(QuestionsDispatchContext)
     const dispatchCategories : ActionDispatch<[action : CategoryWithQuestionsWithAnswerActions]> = useContext(CategoriesDispatchContext)
 
     const submit = async () => {
-        const result = await deleteQuestion(question.id)
+        const result = await deleteQuestion(question.id, groupId)
         if (result) {
             if (question.category_id) {
                 dispatchCategories({

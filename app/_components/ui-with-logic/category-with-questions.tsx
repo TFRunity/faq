@@ -17,7 +17,7 @@ export interface CategoryProps {
     groupId : number
 }
 
-export default function Category({category, permission} : CategoryProps) {
+export default function Category({category, permission, groupId} : CategoryProps) {
 
     const [modalChange, setModalChange] = useState<boolean>(false)
     const [modalDelete, setModalDelete] = useState<boolean>(false)
@@ -64,7 +64,7 @@ export default function Category({category, permission} : CategoryProps) {
                 {category.questions &&
                     category.questions.map(question => (
                         <div key={question.question.id}>
-                            <Question questionWithAnswer={question} permission={permission}/>
+                            <Question groupId={groupId} questionWithAnswer={question} permission={permission}/>
                         </div>
                     ))
                 }
