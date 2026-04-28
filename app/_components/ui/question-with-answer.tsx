@@ -64,7 +64,7 @@ export default function Question({questionWithAnswer, permission, groupId} : Que
             <div className='m-1'>
                 <div className='rounded-lg bg-slate-100 flex justify-between'>
                     <div className='w-[80%] md:w-[60%] flex justify-between'>
-                        <h3 className=' text-slate-900 text-[80%] md:text-[120%] mt-3 ml-6 mb-3 columns-1'>{questionWithAnswer.question.question ? questionWithAnswer.question.question : "Пустой вопрос"}</h3>
+                        <h3 className=' text-slate-900 text-[90%] md:text-[120%] mt-3 ml-6 mb-3 columns-1'>{questionWithAnswer.question.question ? questionWithAnswer.question.question : "Пустой вопрос"}</h3>
                     </div>
                     <div className='w-[20%] md:w-[40%] flex justify-end'>
                         <div className=' flex text-slate-600 text-[130%] cursor-pointer mt-3 mr-3 mb-2'>
@@ -89,7 +89,7 @@ export default function Question({questionWithAnswer, permission, groupId} : Que
                                 </>
                             }
                             <div onClick={toggleAnswer}
-                                 className=' cursor-pointer content-end ml-auto mr-2 mb-1 align- rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>{!toggle ?
+                                 className=' cursor-pointer content-end ml-auto mr-2 mb-1 rounded-md hover:bg-slate-200 transition duration-300 p-0.5'>{!toggle ?
                                 <Image src='/icons/arrow-down.png' width='24' height='24' alt='+'/>
                                 :
                                 <Image src='/icons/arrow-up.png' width='24' height='24' alt='-'/>
@@ -115,7 +115,7 @@ export default function Question({questionWithAnswer, permission, groupId} : Que
                 )}
             </div>
             <div className='text-slate-600 mt-3 ml-3 mb-3 ml-7' style={{ display : toggle ? 'flex' : 'none' }}>
-                <h3 className='text-slate-700 text-[120%] '>{questionWithAnswer.answer && questionWithAnswer.answer.answer ? questionWithAnswer.answer.answer : "Нет ответа"}</h3>
+                <h3 className='text-slate-700 text-[85%] md:text-[120%] '>{questionWithAnswer.answer && questionWithAnswer.answer.answer ? questionWithAnswer.answer.answer : "Нет ответа"}</h3>
             </div>
         </div>
     )

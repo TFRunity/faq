@@ -44,15 +44,16 @@ export function SearchBar({groupId} : SearchBarProps) {
     }
 
     const HitItem = ({ hit }: { hit: FAQHit }) => (
-        <div className='m-1'>
+        <div className='mt-2 mb-1'>
             <h4 className='text-lg text-slate-800'>{hit.question}</h4>
             <p className='text-sm text-slate-600'>{hit.answer}</p>
+            <div className="border-t-4 rounded-2xl w-auto border-gray-400 md:m-2"></div>
         </div>
     );
 
     return (
-        <div className={styles.searchContainer}>
-            {reRender && <InstantSearch indexName={collection} searchClient={searchClient}>
+        <div className='ml-2 mr-2 w-[300px] md:w-auto' >
+            {reRender && <InstantSearch  indexName={collection} searchClient={searchClient}>
                 <SearchBox
                     placeholder="Введите ваш вопрос или ключевые слова"
                     classNames={{

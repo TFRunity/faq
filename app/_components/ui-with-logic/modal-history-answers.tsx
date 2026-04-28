@@ -55,12 +55,6 @@ export function ModalHistoryAnswers ({questionToUpdate, exitAction, groupId} : M
         exitAction()
     }
 
-    // const deleteAnswer = async (answer_id : number) => {
-    //     const res : boolean = await forceDeleteAnswer(answer_id)
-    //     if (res && question.category_id !== null) {
-    //
-    //     }
-    // }
 
     return (
         <div className='modal-bg'>
@@ -79,7 +73,9 @@ export function ModalHistoryAnswers ({questionToUpdate, exitAction, groupId} : M
                                     <div className='flex flex-col columns-2 justify-between' key={index}>
                                         <div className='flex p-3 rounded-2xl justify-between cursor-pointer hover:bg-gray-200 transition duration-400 ' >
                                             <h4>{answer.answer}</h4>
-                                            <Image src='/icons/rel.png' alt='rel' width='24' height='24' onClick={() => submit(answer)} ></Image>
+                                            <div className='w-50'>
+                                                <Image src='/icons/rel.png' alt='rel' width='24' height='24' onClick={() => submit(answer)} ></Image>
+                                            </div>
                                         </div>
                                     </div>
                                 ))

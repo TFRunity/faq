@@ -22,16 +22,6 @@ export interface ListProps {
 export default function ListFaq( { permission, groupId } : ListProps) {
 
     const categories : CategoryWithQuestionsWithAnswer[] = useContext(CategoriesStateContext)
-    const [emptyCategoriesMapped, setCategoriesMapped] = useState<CategoryModel[]>([]);
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            const categories : CategoryModel[] = await getCategoriesWithoutQuestions(groupId)
-            setCategoriesMapped(categories)
-        }
-        fetchCategories()
-    }, [])
-
 
 
     if (categories.length == 0) {
@@ -57,18 +47,6 @@ export default function ListFaq( { permission, groupId } : ListProps) {
                         <Category groupId={groupId} category={category} permission={permission}/>
                     </div>
                 ))
-            }
-            {permission && emptyCategoriesMapped.length > 0 &&
-                <div className='m-4'>
-                    <h2>Все категории</h2>
-                    {
-                        emptyCategoriesMapped.map(c => (
-                            <div key={c.id}>
-                                <h3 className='text-slate-600 mb-1 ml-1'>{c.title}</h3>
-                            </div>
-                        ))
-                    }
-                </div>
             }
             {permission &&
                 <Questions groupId={groupId} permission={permission}/>

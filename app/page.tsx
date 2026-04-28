@@ -7,7 +7,7 @@ export default function Home()  : ReactElement{
 
     return (
         <div className='justify-center'>
-            <Container title={"Часто задаваемые вопросы ЧГУ"}/>
+            <Container title={"Часто задаваемые вопросы"}/>
         </div>
     )
 }

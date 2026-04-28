@@ -37,7 +37,7 @@ export function GroupButtons({ group } : GroupButtonsProps) {
 
 
     return (
-        <div className='flex flex-row w-[100px] gap-1'>
+        <div className='grid grid-cols-2 w-[100px] gap-0.5'>
             <div onClick={openModal}
                  className='flex items-center cursor-pointer hover:bg-slate-200 md:p-2 rounded-md transition duration-200'>
                 <Image src='/icons/edit.png' width='24' height='24' alt='close'/>

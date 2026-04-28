@@ -49,7 +49,7 @@ export class SmartSearchRepository implements ISmartSearchRepository {
                 .documents()
                 .import(documents, {action: 'upsert'})
         } catch (e) {
-            throw e
+
         }
     }
 

@@ -15,11 +15,11 @@ export type GroupProps = {
 export function Group({ group, isActive, setActiveAction, permission }: GroupProps) : ReactElement {
 
     return (
-        <div onClick={() => setActiveAction(group.id)} className={`h-22 cursor-pointer hover:bg-slate-50 duration-100 p-2 border-2 m-0.5 rounded-lg justify-between flex  ${isActive ? 'border-sky-300 transition duration-100' : ''}`}>
-            <div className='place-content-center'>
+        <div onClick={() => setActiveAction(group.id)} className={`md:h-22 cursor-pointer hover:bg-slate-50 border-slate-300 duration-100 p-2 border-1 m-0.5 rounded-lg flex flex-row  ${isActive ? ' border-5 border-slate-400 ' : ''}`}>
+            <div className='place-content-center w-[50px] h-[50px]'>
                 <Image src={`${group.image_src ? "/icons/groups/" + group.image_src + ".png" : "/icons/close.png"}`} width='36' height='36' alt="group" />
             </div>
-            <h3 className='place-content-center p-2'>{group.title ? group.title : ''}</h3>
+            <h3 className='w-[250px] text-left text-[75%] md:text-[90%] p-2'>{group.title ? group.title : ''}</h3>
             {permission && <GroupButtons group={group}/>}
         </div>
     )

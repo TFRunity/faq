@@ -84,16 +84,16 @@ export function Container({title} : ContainerProps) {
     return (
         <>
             <div
-                className='mt-9 w-[98%] h-[98%] p-7 md:w-[1280px] bg-white rounded-[1em] md:rounded-[2em] flex flex-col justify-center align-center shadow-[0_2px_5px_1.5px_rgba(0,0,0,0.1)] md:shadow-[0_5px_15px_3px_rgba(0,0,0,0.1)]'>
-                <h1 className='mt-[5%] text-slate-700 flex-auto flex justify-center text-[100%] md:text-[180%]'>{title}</h1>
+                className='mt-9 w-[98%] h-[98%] p-7 md:w-[1280px]  bg-white rounded-[1em] md:rounded-[2em] flex flex-col justify-center align-center shadow-[0_2px_5px_1.5px_rgba(0,0,0,0.1)] md:shadow-[0_5px_15px_3px_rgba(0,0,0,0.1)]'>
+                <h1 className='mt-[20%] md:mt-[6%] text-slate-700 flex-auto flex justify-center text-[140%] md:text-[250%]'>{title}</h1>
                 <Groups permission={permission} setActiveGroupAction={changeGroupAction}/>
-                <h3 className='mt-5 text-slate-700 mb-5 flex-auto flex justify-center text-[100%] md:text-[180%]'>{groupName}</h3>
+                <h3 className='mt-[9%] text-slate-700 mb-5 flex-auto flex justify-center text-[100%] md:text-[180%]'>{groupName}</h3>
                 <Suspense fallback={<Loading/>}>
                     <SearchBar groupId={groupId.toString()}></SearchBar>
                 </Suspense>
                 <ListFaq groupId={groupId} permission={permission}/>
                 {!permission &&
-                    <div className='cursor-pointer content-end mb-8 mt-7 ml-auto mr-8' onClick={openAdminModal}>
+                    <div className='cursor-pointer hidden md:block md:w-[40px] md:h-[40px] content-end mb-8 mt-7 ml-auto mr-8' onClick={openAdminModal}>
                         <Image src='/icons/admin.png' width='24' height='24' alt='admin' />
                     </div>
                 }

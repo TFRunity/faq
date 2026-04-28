@@ -24,6 +24,7 @@ html, body{
     border-radius: 8px;
     position: relative;
     min-width: 400px;
+    max-width: 800px;
 }
 
 /* Скрывает стандартный крестик в Chrome, Safari, Edge */

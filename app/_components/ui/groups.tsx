@@ -27,7 +27,7 @@ export function Groups({setActiveGroupAction, permission} : GroupsProps) : React
     }
 
     return (
-        <div className='grid-cols-4 grid gap-1 mt-4'>
+        <div className='grid-cols-1 md:grid-cols-4 grid gap-1 mt-[14%] md:mt-[4%]'>
             {
                 groups.map(g => (
                     <div key={g.id}>
