@@ -6,7 +6,6 @@ import "@/app/global-styles.css"
 import React, {ActionDispatch, useContext} from "react";
 import {CategoriesDispatchContext, QuestionsDispatchContext} from "@/app/providers";
 import {CategoryWithQuestionsWithAnswerActions, QuestionWithAnswerActions} from "@/app/_hooks/faq-hooks";
-import styles from "@/app/_components/ui-with-logic/searchbar.module.css";
 
 
 type ModalDeleteCategoryProps = {
@@ -20,7 +19,7 @@ export function ModalDeleteCategory({exitAction, toDeleteCategory} : ModalDelete
     const dispatchQuestions : ActionDispatch<[action : QuestionWithAnswerActions]> = useContext(QuestionsDispatchContext)
 
     const submit = async () => {
-        const result : boolean = await deleteCategory(toDeleteCategory.category.id);
+        const result : boolean = await deleteCategory(toDeleteCategory.category.id, toDeleteCategory.category.group_id!);
         if (result) {
             dispatchCategories({
                 type : "DELETE_CATEGORY",

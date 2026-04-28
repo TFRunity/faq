@@ -32,14 +32,31 @@ import {
 import {IQuestionCacheRepository} from "@/src/application/repositories/IQuestionCacheRepository";
 import {ICategoryUpdateCacheController} from "@/src/i-adapters/controllers/Category_UpdateCache_Controller";
 import {IQuestionUpdateCacheController} from "@/src/i-adapters/controllers/Question_UpdateCache_Controller";
+import {IGroupRepository} from "@/src/application/repositories/IGroupRepository";
+import {IGroupCacheRepository} from "@/src/application/repositories/IGroupCacheRepository";
+import {ISmartSearchRepository} from "@/src/application/repositories/ISmartSearchRepository";
+import {IGroupAddController} from "@/src/i-adapters/controllers/Group_addController";
+import {IGroupCachedGetAllController} from "@/src/i-adapters/controllers/Group_Cached_getAllController";
+import {IGroupGetWithCategoriesController} from "@/src/i-adapters/controllers/Group_Cached_getWithCategoriesController";
+import {
+    IGroupUpdateController
+} from "@/src/i-adapters/controllers/Group_updateGroupController";
+import {IGroupDeleteController} from "@/src/i-adapters/controllers/Group_deleteController";
+import {IGroupUpdateCacheController} from "@/src/i-adapters/controllers/Group_UpdateCache_Controller";
+import {
+    IGroupUpdateCacheWithCategoriesController
+} from "@/src/i-adapters/controllers/Group_UpdateCache_WithCategoriesController";
 
 export const DI_SYMBOLS = {
     //Repositories
     IAnswerRepository: Symbol.for("IAnswerRepository"),
     ICategoryRepository: Symbol.for("ICategoryRepository"),
     IQuestionRepository: Symbol.for("IQuestionRepository"),
+    IGroupRepository: Symbol.for("IGroupRepository"),
     ICategoryCacheRepository: Symbol.for("ICategoryCacheRepository"),
     IQuestionCacheRepository: Symbol.for("IQuestionCacheRepository"),
+    IGroupCacheRepository: Symbol.for("IGroupCacheRepository"),
+    ISmartSearchRepository: Symbol.for("ISmartSearchRepository"),
 
     //Services
     IMappingFAQService: Symbol.for('IMappingFAQService'),
@@ -65,6 +82,14 @@ export const DI_SYMBOLS = {
     IQuestionGetWithHistoryOfAnswersController : Symbol.for("IQuestionGetWithHistoryOfAnswersController"),
     IQuestionUpdateQuestionController : Symbol.for("IQuestionUpdateQuestionController"),
     IQuestionUpdateCacheController : Symbol.for("IQuestionUpdateCacheController"),
+
+    IGroupAddController : Symbol.for("IGroupAddController"),
+    IGroupCachedGetAllController : Symbol.for("IGroupCachedGetAllController"),
+    IGroupCachedGetWithCategoriesController : Symbol.for("IGroupCachedGetWithCategoriesController"),
+    IGroupUpdateController : Symbol.for("IGroupUpdateController"),
+    IGroupDeleteController : Symbol.for("IGroupDeleteController"),
+    IGroupUpdateCacheController : Symbol.for("IGroupUpdateCacheController"),
+    IGroupUpdateCacheWithCategoriesController : Symbol.for("IGroupUpdateCacheWithCategoriesController"),
 }
 
 
@@ -73,8 +98,11 @@ export interface DI_RETURN_TYPES {
     IAnswerRepository: IAnswerRepository;
     ICategoryRepository: ICategoryRepository;
     IQuestionRepository: IQuestionRepository;
+    IGroupRepository: IGroupRepository;
     ICategoryCacheRepository: ICategoryCacheRepository;
     IQuestionCacheRepository: IQuestionCacheRepository;
+    IGroupCacheRepository: IGroupCacheRepository;
+    ISmartSearchRepository: ISmartSearchRepository;
 
     //Services
     IMappingFAQService : IMappingFAQService
@@ -100,4 +128,12 @@ export interface DI_RETURN_TYPES {
     IQuestionGetWithHistoryOfAnswersController : IQuestionGetWithHistoryOfAnswersController;
     IQuestionUpdateQuestionController : IQuestionUpdateQuestionController;
     IQuestionUpdateCacheController : IQuestionUpdateCacheController;
+
+    IGroupAddController : IGroupAddController;
+    IGroupCachedGetAllController : IGroupCachedGetAllController;
+    IGroupCachedGetWithCategoriesController : IGroupGetWithCategoriesController;
+    IGroupUpdateController : IGroupUpdateController;
+    IGroupDeleteController : IGroupDeleteController;
+    IGroupUpdateCacheController : IGroupUpdateCacheController;
+    IGroupUpdateCacheWithCategoriesController : IGroupUpdateCacheWithCategoriesController;
 }

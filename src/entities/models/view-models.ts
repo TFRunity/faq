@@ -1,27 +1,34 @@
-import { SelectCategory, SelectQuestion, SelectAnswer } from "@/drizzle/schema";
+import {SelectCategory, SelectQuestion, SelectAnswer, SelectGroup} from "@/drizzle/schema";
 
-//Когда хотим всю бд получить, (Пользователь)
+
 export interface CategoryWithQuestions {
     category : SelectCategory,
     questions : QuestionWithLatestAnswer[] | null
 }
 
-//Когда хотим обновить вопрос/ответ, (АДМИН)
+
 export interface QuestionWithLatestAnswer {
     question: SelectQuestion,
     answer : SelectAnswer | null
 }
 
-//Когда хотим просмотреть историю (АДМИН)
+
 export interface QuestionWithAnswers {
     question : SelectQuestion,
     answers : SelectAnswer[] | null,
+}
+
+
+export interface GroupWithCategories {
+    group : SelectGroup,
+    categories : CategoryWithQuestions[] | null
 }
 
 export type rawCategoryWithQuestionWithAnswer = {
     categories : {
         id : number,
         title : string | null
+        group_id : number | null,
     }
     questions : {
         id : number,

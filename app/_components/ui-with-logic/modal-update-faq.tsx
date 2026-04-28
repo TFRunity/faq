@@ -15,10 +15,11 @@ import Image from "next/image";
 export interface UpdateFaqProps {
     questionWithAnswer : QuestionWithAnswer,
     exitAction: () => void,
+    groupId : number | null
 }
 
 
-export default function ModalUpdateFaq({ questionWithAnswer, exitAction } : UpdateFaqProps) {
+export default function ModalUpdateFaq({ questionWithAnswer, exitAction, groupId } : UpdateFaqProps) {
     
     const dispatchCategories : ActionDispatch<[action : CategoryWithQuestionsWithAnswerActions]> = useContext(CategoriesDispatchContext)
     const dispatchQuestions : ActionDispatch<[action : QuestionWithAnswerActions]> = useContext(QuestionsDispatchContext)
@@ -35,7 +36,7 @@ export default function ModalUpdateFaq({ questionWithAnswer, exitAction } : Upda
 
         if (question !== questionWithAnswer.question.question) {
             try{
-                const updatedFaq : QuestionWithAnswer = await updateQuestionOfQuestion(questionWithAnswer.question.id, question)
+                const updatedFaq : QuestionWithAnswer = await updateQuestionOfQuestion(questionWithAnswer.question.id, question, groupId);
                 if (updatedFaq.question.category_id) {
                     dispatchCategories({
                         type: "UPDATE_QUESTION_QUESTION",
@@ -56,7 +57,7 @@ export default function ModalUpdateFaq({ questionWithAnswer, exitAction } : Upda
 
         if (answer !== questionWithAnswer.answer!.answer) {
             try{
-                const updatedFaq = await updateAnswerOfQuestion(questionWithAnswer.question.id, answer)
+                const updatedFaq = await updateAnswerOfQuestion(questionWithAnswer.question.id, answer, groupId);
                 if (updatedFaq.question.category_id) {
                     dispatchCategories({
                         type: "UPDATE_ANSWER",

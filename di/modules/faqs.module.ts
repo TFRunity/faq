@@ -9,6 +9,10 @@ import {MockCategoryRepository} from "@/src/infrastructure/repositories/MockCate
 import {MockQuestionRepository} from "@/src/infrastructure/repositories/MockQuestionRepository";
 import {CategoryCacheRepository} from "@/src/infrastructure/repositories/CategoryCacheRepository";
 import {QuestionCacheRepository} from "@/src/infrastructure/repositories/QuestionCacheRepository";
+import {GroupCacheRepository} from "@/src/infrastructure/repositories/GroupCacheRepository";
+import {MockGroupRepository} from "@/src/infrastructure/repositories/MockGroupRepository";
+import {GroupRepository} from "@/src/infrastructure/repositories/GroupRepository";
+import {SmartSearchRepository} from "@/src/infrastructure/repositories/SmartSearchRepository";
 
 export function createFaqModule() : Module {
     const faqModule : Module = createModule()
@@ -19,6 +23,12 @@ export function createFaqModule() : Module {
             DI_SYMBOLS.ICategoryRepository
         ])
 
+    faqModule.bind(DI_SYMBOLS.IGroupCacheRepository)
+        .toClass(GroupCacheRepository, [
+            DI_SYMBOLS.IGroupRepository,
+            DI_SYMBOLS.ISmartSearchRepository
+        ])
+
     faqModule.bind(DI_SYMBOLS.IQuestionCacheRepository)
         .toClass(QuestionCacheRepository, [
             DI_SYMBOLS.IQuestionRepository
@@ -27,7 +37,7 @@ export function createFaqModule() : Module {
     if (process.env.NODE_ENV === "test") {
         faqModule.bind(DI_SYMBOLS.ICategoryRepository)
             .toClass(MockCategoryRepository)
-    }else{
+    } else{
         faqModule.bind(DI_SYMBOLS.ICategoryRepository)
             .toClass(CategoryRepository, [
                 DI_SYMBOLS.IMappingFAQService,
@@ -37,7 +47,7 @@ export function createFaqModule() : Module {
     if (process.env.NODE_ENV === "test") {
         faqModule.bind(DI_SYMBOLS.IAnswerRepository)
             .toClass(MockAnswerRepository)
-    }else{
+    } else{
         faqModule.bind(DI_SYMBOLS.IAnswerRepository)
             .toClass(AnswerRepository)
     }
@@ -45,13 +55,25 @@ export function createFaqModule() : Module {
     if (process.env.NODE_ENV === "test") {
         faqModule.bind(DI_SYMBOLS.IQuestionRepository)
             .toClass(MockQuestionRepository)
-    }
-    else{
+    } else{
         faqModule.bind(DI_SYMBOLS.IQuestionRepository)
             .toClass(QuestionRepository, [
                 DI_SYMBOLS.IMappingFAQService,
             ])
     }
+
+    if(process.env.NODE_ENV === "test") {
+        faqModule.bind(DI_SYMBOLS.IGroupRepository)
+            .toClass(MockGroupRepository)
+    } else{
+        faqModule.bind(DI_SYMBOLS.IGroupRepository)
+            .toClass(GroupRepository, [
+                DI_SYMBOLS.ICategoryRepository
+            ])
+    }
+
+    faqModule.bind(DI_SYMBOLS.ISmartSearchRepository)
+        .toClass(SmartSearchRepository)
 
     faqModule.bind(DI_SYMBOLS.IMappingFAQService)
         .toClass(MappingFAQService)

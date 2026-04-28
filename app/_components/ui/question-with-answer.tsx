@@ -16,9 +16,10 @@ import styles from "@/app/_components/ui-with-logic/searchbar.module.css";
 export interface QuestionWithAnswerProps {
     questionWithAnswer: QuestionWithAnswer;
     permission : boolean;
+    groupId : number | null;
 }
 
-export default function Question({questionWithAnswer, permission} : QuestionWithAnswerProps) {
+export default function Question({questionWithAnswer, permission, groupId} : QuestionWithAnswerProps) {
 
     const [toggle, setToggle] = useState<boolean>(false);
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -63,7 +64,7 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
             <div className='m-1'>
                 <div className='rounded-lg bg-slate-100 flex justify-between'>
                     <div className='w-[80%] md:w-[60%] flex justify-between'>
-                        <h3 className=' text-slate-900 text-[80%] md:text-[120%] mt-3 ml-6 mb-3 columns-1'>{questionWithAnswer.question.question ? questionWithAnswer.question.question : "Пустой вопрос"}</h3>
+                        <h3 className=' text-slate-900 text-[90%] md:text-[120%] mt-3 ml-6 mb-3 columns-1'>{questionWithAnswer.question.question ? questionWithAnswer.question.question : "Пустой вопрос"}</h3>
                     </div>
                     <div className='w-[20%] md:w-[40%] flex justify-end'>
                         <div className=' flex text-slate-600 text-[130%] cursor-pointer mt-3 mr-3 mb-2'>
@@ -97,24 +98,24 @@ export default function Question({questionWithAnswer, permission} : QuestionWith
                     </div>
                 </div>
                 {showModalHistory && createPortal(
-                    <ModalHistoryAnswers questionToUpdate={questionWithAnswer.question} exitAction={closeModalHistory} />,
+                    <ModalHistoryAnswers groupId={groupId} questionToUpdate={questionWithAnswer.question} exitAction={closeModalHistory} />,
                     document.body
                 )}
                 {showModal && createPortal(
-                    <ModalUpdateFaq questionWithAnswer={questionWithAnswer} exitAction={closeModalChange} />,
+                    <ModalUpdateFaq groupId={groupId} questionWithAnswer={questionWithAnswer} exitAction={closeModalChange} />,
                     document.body
                 )}
                 {showModalDelete && createPortal(
-                    <ModalDeleteQuestion question={questionWithAnswer.question} exitAction={closeModalDelete} />,
+                    <ModalDeleteQuestion groupId={groupId} question={questionWithAnswer.question} exitAction={closeModalDelete} />,
                     document.body
                 )}
                 {showModalRelationship && createPortal(
-                    <ModalEditRelations questionWithAnswer={questionWithAnswer} exitAction={closeModalRelationship} />,
+                    <ModalEditRelations groupId={groupId} questionWithAnswer={questionWithAnswer} exitAction={closeModalRelationship} />,
                     document.body
                 )}
             </div>
             <div className='text-slate-600 mt-3 ml-3 mb-3 ml-7' style={{ display : toggle ? 'flex' : 'none' }}>
-                <h3 className='text-slate-700 text-[120%] '>{questionWithAnswer.answer && questionWithAnswer.answer.answer ? questionWithAnswer.answer.answer : "Нет ответа"}</h3>
+                <h3 className='text-slate-700 text-[85%] md:text-[120%] '>{questionWithAnswer.answer && questionWithAnswer.answer.answer ? questionWithAnswer.answer.answer : "Нет ответа"}</h3>
             </div>
         </div>
     )

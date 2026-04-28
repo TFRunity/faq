@@ -1,7 +1,7 @@
 'use client'
 
 import '@/app/global-styles.css'
-import React, {useContext, useEffect, useState} from "react";
+import React, {Suspense, useContext, useEffect, useState} from "react";
 import {CategoriesStateContext, QuestionsStateContext} from "@/app/providers";
 import {
     CategoryWithQuestionsWithAnswer,
@@ -11,38 +11,29 @@ import {
 import Questions from "@/app/_components/ui/questions-without-category";
 import {Category as CategoryModel} from "@/app/_actions/faq-actions";
 import Category from "@/app/_components/ui-with-logic/category-with-questions";
+import Loading from "@/app/loading";
 
 
 export interface ListProps {
     permission: boolean;
+    groupId: number;
 }
 
-export default function ListFaq( { permission } : ListProps) {
+export default function ListFaq( { permission, groupId } : ListProps) {
 
     const categories : CategoryWithQuestionsWithAnswer[] = useContext(CategoriesStateContext)
-    const [emptyCategoriesMapped, setCategoriesMapped] = useState<CategoryModel[]>([]);
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            const categories : CategoryModel[] = await getCategoriesWithoutQuestions()
-
-            setCategoriesMapped(categories)
-        }
-        fetchCategories()
-    }, [])
-
 
 
     if (categories.length == 0) {
         return (
             <>
                 {
-                    <div className='ml-7 mr-7 mb-4 mt-7'>
-                        <h2>Пока что нет ни вопросов, ни категорий</h2>
+                    <div className='text-center text-slate-400'>
+                        <h1 className='text-[150%]'>Загрузка вопросов</h1>
                     </div>
                 }
                 {permission &&
-                    <Questions permission={permission}/>
+                    <Questions groupId={groupId} permission={permission}/>
                 }
             </>
         )
@@ -53,29 +44,17 @@ export default function ListFaq( { permission } : ListProps) {
             {permission &&
                 categories.map(category => (
                     <div key={category.category.id} >
-                        <Category category={category} permission={permission}/>
+                        <Category groupId={groupId} category={category} permission={permission}/>
                     </div>
                 ))
             }
-            {permission && emptyCategoriesMapped.length > 0 &&
-                <div className='m-4'>
-                    <h2>Все категории</h2>
-                    {
-                        emptyCategoriesMapped.map(c => (
-                            <div key={c.id}>
-                                <h3 className='text-slate-600 mb-1 ml-1'>{c.title}</h3>
-                            </div>
-                        ))
-                    }
-                </div>
-            }
             {permission &&
-                <Questions permission={permission}/>
+                <Questions groupId={groupId} permission={permission}/>
             }
             {!permission &&
                 categories.map(category => (
                     <div key={category.category.id}>
-                        <Category category={category} permission={permission}/>
+                        <Category groupId={groupId} category={category} permission={permission}/>
                     </div>
                 ))
             }

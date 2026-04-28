@@ -3,7 +3,8 @@ import {InferInsertModel, InferSelectModel, relations} from "drizzle-orm";
 
 export const categories = pgTable('categories',{
     id: serial().primaryKey(),
-    title : varchar({length:300})
+    title : varchar({length:300}),
+    group_id : bigint({mode: 'number'})
 })
 
 //Ссылаемся на много questions
@@ -41,11 +42,16 @@ export const answers = pgTable('answers',{
 //     }),
 // }))
 
+export const groups = pgTable('groups',{
+    id: serial().primaryKey(),
+    image_src: text(),
+    title: text()
+})
+
 export type SelectCategory = InferSelectModel<typeof categories>
-export type InsertCategory = InferInsertModel<typeof categories>
 
 export type SelectQuestion = InferSelectModel<typeof questions>
-export type InsertQuestion = InferInsertModel<typeof questions>
 
 export type SelectAnswer = InferSelectModel<typeof answers>
-export type InsertAnswer = InferInsertModel<typeof answers>
+
+export type SelectGroup = InferSelectModel<typeof groups>

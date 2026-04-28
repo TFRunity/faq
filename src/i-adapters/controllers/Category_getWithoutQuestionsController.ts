@@ -5,6 +5,6 @@ export type ICategoryGetWithoutQuestionsController = ReturnType<typeof category_
 
 export const category_getWithoutQuestionsController = (
         categoryService : ICategoryRepository,
-    ) => async () : Promise<Category[]> => {
-        return await categoryService.getWithoutQuestions()
+    ) => async (group_id : number) : Promise<Category[]> => {
+        return await categoryService.getWithoutQuestions(group_id)
     }

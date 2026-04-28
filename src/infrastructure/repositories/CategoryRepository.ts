@@ -1,11 +1,13 @@
 import {ICategoryRepository} from "@/src/application/repositories/ICategoryRepository";
-import {CategoryWithQuestions, rawCategoryWithQuestionWithAnswer} from "@/src/entities/models/view-models";
+import {
+    CategoryWithQuestions,
+    rawCategoryWithQuestionWithAnswer
+} from "@/src/entities/models/view-models";
 import {Category} from "@/src/entities/models/category";
-import {answers, categories, questions} from "@/drizzle/schema";
+import {answers, categories, groups, questions} from "@/drizzle/schema";
 import {db} from "@/drizzle"
 import {IMappingFAQService} from "@/src/application/services/IMappingFAQService";
 import {eq} from "drizzle-orm";
-import {Question} from "@/app/_actions/faq-actions";
 
 export class CategoryRepository implements ICategoryRepository {
 
@@ -13,8 +15,8 @@ export class CategoryRepository implements ICategoryRepository {
         private readonly mappingService : IMappingFAQService
     ) {}
 
-    async addEmpty() : Promise<CategoryWithQuestions> {
-        const category : Category[] = await db!.insert(categories).values({title : "Новая категория"}).returning();
+    async addEmpty(group_id : number) : Promise<CategoryWithQuestions> {
+        const category : Category[] = await db!.insert(categories).values({title : "Новая категория", group_id : group_id}).returning();
         return {category : category![0], questions : []}
     }
 
@@ -38,8 +40,18 @@ export class CategoryRepository implements ICategoryRepository {
         return this.mappingService.convertRawCategoriesWithQuestions(raw)
     }
 
-    async getWithoutQuestions() : Promise<Category[]> {
+    async getWithoutQuestions(group_id : number) : Promise<Category[]> {
         return await db!.select()
             .from(categories)
+            .where(eq(categories.group_id, group_id))
+    }
+
+    async getAllOfGroup(group_id: number): Promise<CategoryWithQuestions[]> {
+        const raw: rawCategoryWithQuestionWithAnswer[]  = await db!.select()
+            .from(categories)
+            .where(eq(categories.group_id, group_id))
+            .innerJoin(questions, on => eq(categories.id, questions.category_id))
+            .innerJoin(answers, on => eq(answers.id, questions.answer_id))
+        return this.mappingService.convertRawCategoriesWithQuestions(raw)
     }
 }
