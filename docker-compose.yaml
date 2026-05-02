@@ -1,0 +1,58 @@
+services:
+  redis:
+    build: ./docker-apps/redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    container_name: REDIS
+  postgres:
+    build: ./docker-apps/postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    container_name: POSTGRES
+    #При запуске, также нужно мануально использовать команду, (github actions)
+    #docker exec -it POSTGRES pg_restore -U postgres -d faq /tmp/backup.backup
+
+  typesense:
+    build: ./docker-apps/typesense
+    volumes:
+      - typesense_data:/data
+    restart: unless-stopped
+    environment:
+      - TYPESENSE_API_KEY=${API_KEY_TYPESENSE}
+      - TYPESENSE_SEARCH_ONLY_API_KEY=${NEXT_PUBLIC_TYPESENSE_SEARCH_ONLY_API_KEY}
+      - TYPESENSE_DATA_DIR=/data
+      - TYPESENSE_ENABLE_CORS=true
+    container_name: TYPESENSE
+    ports:
+      - "8108:8108"
+
+  faq:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - typesense
+      - postgres
+      - redis
+    environment:
+      NODE_EXTRA_CA_CERTS: /usr/local/rootCA.pem
+    container_name: FAQ
+
+  nginx:
+    build: ./docker-apps/nginx
+    container_name: NGINX
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    depends_on:
+      - faq
+volumes:
+  postgresql_data:
+  typesense_data:

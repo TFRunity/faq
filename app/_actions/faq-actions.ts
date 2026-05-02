@@ -113,7 +113,7 @@ export async function updateGroup(group : Group) : Promise<boolean> {
     const result : boolean = await updateGroupController(group)
     const updateCacheWithCategoriesController = getInjection('IGroupUpdateCacheWithCategoriesController')
     await updateCacheWithCategoriesController(group.id)
-    const updateCacheController = getInjection('IGroupUpdateCacheController')
+    const updateCacheController  = getInjection('IGroupUpdateCacheController')
     await updateCacheController()
     return result
 }
