@@ -6,20 +6,22 @@ export const typesenseAdapter = new TypesenseInstantSearchAdapter({
         apiKey: process.env.NEXT_PUBLIC_TYPESENSE_SEARCH_ONLY_API_KEY!,
         nodes: [{
             host: "localhost",
-            port: 8108,
-            protocol: "http"
+            port: Number(process.env.NEXT_PUBLIC_TYPESENSE_PORT!),
+            protocol: process.env.NEXT_PUBLIC_TYPESENSE_PROTOCOL!
         }],
+        connectionTimeoutSeconds: 2
     },
-    additionalSearchParameters: { query_by: "question,answer" }
+    additionalSearchParameters: { query_by: "question,answer" },
 })
 
 export const client = new Typesense.Client({
     nodes: [{
-        host: 'localhost',
-        port: 8108,
-        protocol: 'http'
+        host: process.env.NEXT_PUBLIC_TYPESENSE_HOST!,
+        port: Number(process.env.NEXT_PUBLIC_TYPESENSE_PORT!),
+        protocol: process.env.NEXT_PUBLIC_TYPESENSE_PROTOCOL!
     }],
     apiKey: process.env.NEXT_PUBLIC_TYPESENSE_SEARCH_ONLY_API_KEY!, // ключ из настроек Docker
+    connectionTimeoutSeconds: 2
 });
 
 export const searchClient = typesenseAdapter.searchClient;

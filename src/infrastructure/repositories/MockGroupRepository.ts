@@ -4,11 +4,11 @@ import {GroupWithCategories} from "@/src/entities/models/view-models";
 
 
 export class MockGroupRepository implements IGroupRepository {
-    addGroup(title: string): Promise<boolean> {
-        return Promise.resolve(true);
+    addGroup(title: string): Promise<Group> {
+        return Promise.resolve({ id : 1, title : title, image_src : null });
     }
 
-    changeTitle(group: Group): Promise<boolean> {
+    updateGroup(group: Group): Promise<boolean> {
         return Promise.resolve(group.id > 0);
     }
 
@@ -17,7 +17,7 @@ export class MockGroupRepository implements IGroupRepository {
     }
 
     getAll(): Promise<Group[]> {
-        return Promise.resolve([]);
+        return Promise.resolve([{title : "Общее", id : 1, image_src : null}]);
     }
 
     getGroupWithCategories(group_id: number): Promise<GroupWithCategories> {
